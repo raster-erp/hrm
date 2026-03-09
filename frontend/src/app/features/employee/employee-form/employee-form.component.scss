@@ -1,0 +1,53 @@
+.employee-form-container {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+  padding: 24px 0;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.step-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+::ng-deep .mat-stepper-horizontal {
+  .mat-horizontal-content-container {
+    padding: 16px 0;
+  }
+}

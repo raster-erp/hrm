@@ -31,9 +31,9 @@
 | Backend Development | Implement file-upload API for employee photo and documents | Not Started |
 | Backend Development | Add search and filter API (by name, department, status, joining date range) | Done |
 | Backend Development | Implement bulk-import API (CSV/Excel) for employee master data | Not Started |
-| Frontend Development | Build employee list page with pagination, search, and filter controls | Not Started |
-| Frontend Development | Build employee creation/edit form with field validations | Not Started |
-| Frontend Development | Build employee profile detail view with tabbed sections | Not Started |
+| Frontend Development | Build employee list page with pagination, search, and filter controls | Done |
+| Frontend Development | Build employee creation/edit form with field validations | Done |
+| Frontend Development | Build employee profile detail view with tabbed sections | Done |
 | Frontend Development | Implement profile photo upload with preview and crop | Not Started |
 | Integration Testing | Validate end-to-end CRUD operations for employee records | Not Started |
 | Integration Testing | Verify file upload, storage, and retrieval workflows | Not Started |
