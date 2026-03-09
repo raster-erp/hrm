@@ -2,6 +2,20 @@
 
 ---
 
+## Technical Stack
+
+| Layer | Technology | Details |
+|-------|-----------|---------|
+| Backend Framework | Spring Boot | REST API development with Spring Boot |
+| Language | Java 21 | LTS release with virtual threads, pattern matching, and record patterns |
+| Frontend Framework | Angular | Single-page application with TypeScript |
+| Build & Dependency Management | Gradle | Build automation and library management |
+| Production Database | PostgreSQL | Primary relational database for all environments |
+| Development Database | H2 | In-memory database for local development and testing |
+| Database Versioning | Flyway | Schema migration and version control for database changes |
+
+---
+
 ## Milestone 1: Employee Management
 
 ### 1.1 Employee Master & Profile
