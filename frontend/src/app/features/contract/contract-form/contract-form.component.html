@@ -1,0 +1,101 @@
+<div class="contract-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>{{ isEditMode ? 'Edit Contract' : 'New Contract' }}</h2>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="contractForm" (ngSubmit)="onSubmit()" class="contract-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Employee</mat-label>
+              <mat-select formControlName="employeeId">
+                @for (employee of employees; track employee.id) {
+                  <mat-option [value]="employee.id">
+                    {{ employee.firstName }} {{ employee.lastName }} ({{ employee.employeeCode }})
+                  </mat-option>
+                }
+              </mat-select>
+              @if (contractForm.get('employeeId')?.hasError('required') && contractForm.get('employeeId')?.touched) {
+                <mat-error>Employee is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Contract Type</mat-label>
+              <mat-select formControlName="contractType">
+                @for (type of contractTypes; track type) {
+                  <mat-option [value]="type">{{ formatType(type) }}</mat-option>
+                }
+              </mat-select>
+              @if (contractForm.get('contractType')?.hasError('required') && contractForm.get('contractType')?.touched) {
+                <mat-error>Contract type is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+              <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              @if (contractForm.get('startDate')?.hasError('required') && contractForm.get('startDate')?.touched) {
+                <mat-error>Start date is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+              <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              @if (contractForm.get('endDate')?.hasError('required') && contractForm.get('endDate')?.touched) {
+                <mat-error>End date is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                @for (status of statuses; track status) {
+                  <mat-option [value]="status">{{ status }}</mat-option>
+                }
+              </mat-select>
+              @if (contractForm.get('status')?.hasError('required') && contractForm.get('status')?.touched) {
+                <mat-error>Status is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row full-width">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Terms</mat-label>
+              <textarea matInput formControlName="terms" rows="4"
+                        placeholder="Enter contract terms..."></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Create' }}
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

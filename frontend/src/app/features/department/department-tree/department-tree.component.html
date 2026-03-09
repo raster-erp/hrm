@@ -1,0 +1,90 @@
+<div class="department-tree-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>Departments</h2>
+          <button mat-raised-button color="primary" (click)="addRootDepartment()">
+            <mat-icon>add</mat-icon>
+            Add Root Department
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      }
+
+      @if (!loading && dataSource.data.length === 0) {
+        <div class="no-data">
+          <mat-icon>account_tree</mat-icon>
+          <p>No departments found. Add a root department to get started.</p>
+        </div>
+      }
+
+      @if (!loading && dataSource.data.length > 0) {
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="department-tree">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <div class="node-content">
+              <div class="node-info">
+                <span class="node-name">{{ node.name }}</span>
+                <span class="node-code">({{ node.code }})</span>
+                @if (node.active) {
+                  <span class="status-badge active">Active</span>
+                } @else {
+                  <span class="status-badge inactive">Inactive</span>
+                }
+              </div>
+              <div class="node-actions">
+                <button mat-icon-button matTooltip="Add Child" color="primary" (click)="addChildDepartment(node)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Edit" color="accent" (click)="editDepartment(node)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteDepartment(node)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-tree-node>
+
+          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+              <mat-icon>
+                {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+              </mat-icon>
+            </button>
+            <div class="node-content">
+              <div class="node-info">
+                <span class="node-name">{{ node.name }}</span>
+                <span class="node-code">({{ node.code }})</span>
+                @if (node.active) {
+                  <span class="status-badge active">Active</span>
+                } @else {
+                  <span class="status-badge inactive">Inactive</span>
+                }
+              </div>
+              <div class="node-actions">
+                <button mat-icon-button matTooltip="Add Child" color="primary" (click)="addChildDepartment(node)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Edit" color="accent" (click)="editDepartment(node)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteDepartment(node)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-tree-node>
+        </mat-tree>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

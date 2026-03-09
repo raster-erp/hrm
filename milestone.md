@@ -31,9 +31,9 @@
 | Backend Development | Implement file-upload API for employee photo and documents | Not Started |
 | Backend Development | Add search and filter API (by name, department, status, joining date range) | Done |
 | Backend Development | Implement bulk-import API (CSV/Excel) for employee master data | Not Started |
-| Frontend Development | Build employee list page with pagination, search, and filter controls | Not Started |
-| Frontend Development | Build employee creation/edit form with field validations | Not Started |
-| Frontend Development | Build employee profile detail view with tabbed sections | Not Started |
+| Frontend Development | Build employee list page with pagination, search, and filter controls | Done |
+| Frontend Development | Build employee creation/edit form with field validations | Done |
+| Frontend Development | Build employee profile detail view with tabbed sections | Done |
 | Frontend Development | Implement profile photo upload with preview and crop | Not Started |
 | Integration Testing | Validate end-to-end CRUD operations for employee records | Not Started |
 | Integration Testing | Verify file upload, storage, and retrieval workflows | Not Started |
@@ -51,8 +51,8 @@
 | Backend Development | Build CRUD APIs for departments with hierarchy support | Done |
 | Backend Development | Build CRUD APIs for designations with grade linkage | Done |
 | Backend Development | Add validation to prevent deletion of departments/designations in use | Done |
-| Frontend Development | Build department tree view with drag-and-drop reordering | Not Started |
-| Frontend Development | Build designation list and form with grade selection | Not Started |
+| Frontend Development | Build department tree view with drag-and-drop reordering | Done |
+| Frontend Development | Build designation list and form with grade selection | Done |
 | Integration Testing | Validate hierarchy creation, reordering, and deletion constraints | Not Started |
 | UAT & QA | Conduct user acceptance testing for department and designation setup | Not Started |
 | Deployment | Deploy department and designation module to staging and production | Not Started |
@@ -68,9 +68,9 @@
 | Backend Development | Build CRUD APIs for contract creation, amendment, and renewal | Done |
 | Backend Development | Implement automated alerts for contracts approaching expiry | Done |
 | Backend Development | Build contract PDF generation API with template support | Not Started |
-| Frontend Development | Build contract list view with status filters (active, expired, renewed) | Not Started |
-| Frontend Development | Build contract form with clause editor and digital signature placeholder | Not Started |
-| Frontend Development | Add contract timeline visualization for each employee | Not Started |
+| Frontend Development | Build contract list view with status filters (active, expired, renewed) | Done |
+| Frontend Development | Build contract form with clause editor and digital signature placeholder | Done |
+| Frontend Development | Add contract timeline visualization for each employee | Done |
 | Integration Testing | Validate contract lifecycle transitions and renewal workflows | Not Started |
 | UAT & QA | Conduct user acceptance testing for contract management flows | Not Started |
 | Deployment | Deploy contract management module to staging and production | Not Started |
@@ -86,9 +86,9 @@
 | Backend Development | Build CRUD APIs for credential records with file attachments | Done |
 | Backend Development | Implement scheduled job for expiry notifications (email/SMS) | Not Started |
 | Backend Development | Build credential verification status API (verified, pending, expired) | Done |
-| Frontend Development | Build credential list and detail view per employee | Not Started |
-| Frontend Development | Build credential form with document upload and expiry date picker | Not Started |
-| Frontend Development | Add dashboard widget for credentials expiring within 30/60/90 days | Not Started |
+| Frontend Development | Build credential list and detail view per employee | Done |
+| Frontend Development | Build credential form with document upload and expiry date picker | Done |
+| Frontend Development | Add dashboard widget for credentials expiring within 30/60/90 days | Done |
 | Integration Testing | Validate expiry notification triggers and credential lifecycle | Not Started |
 | UAT & QA | Conduct user acceptance testing for credential tracking | Not Started |
 | Deployment | Deploy credential tracking module to staging and production | Not Started |

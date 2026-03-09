@@ -1,0 +1,117 @@
+<div class="contract-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>Contracts</h2>
+          <button mat-raised-button color="primary" routerLink="/contracts/new">
+            <mat-icon>add</mat-icon>
+            Add Contract
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Filters -->
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="selectedStatus" (selectionChange)="onStatusFilter()">
+            <mat-option value="">All Statuses</mat-option>
+            @for (status of statuses; track status) {
+              <mat-option [value]="status">{{ status }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button matTooltip="Clear Filters" (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+
+      <!-- Loading Spinner -->
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      }
+
+      <!-- Table -->
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="contract-table">
+          <ng-container matColumnDef="employeeName">
+            <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+            <td mat-cell *matCellDef="let contract">
+              <a class="contract-link" (click)="viewContract(contract)">
+                {{ contract.employeeName }}
+              </a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="contractType">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let contract">{{ formatType(contract.contractType) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef>Start Date</th>
+            <td mat-cell *matCellDef="let contract">{{ contract.startDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="endDate">
+            <th mat-header-cell *matHeaderCellDef>End Date</th>
+            <td mat-cell *matCellDef="let contract">{{ contract.endDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let contract">
+              <span class="status-chip" [class]="'status-' + contract.status.toLowerCase()">
+                {{ contract.status }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let contract">
+              <button mat-icon-button color="primary" matTooltip="View"
+                      (click)="viewContract(contract); $event.stopPropagation()">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Edit"
+                      (click)="editContract(contract); $event.stopPropagation()">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" matTooltip="Renew"
+                      (click)="renewContract(contract); $event.stopPropagation()">
+                <mat-icon>autorenew</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+              (click)="viewContract(row)" class="clickable-row"></tr>
+        </table>
+
+        @if (!loading && dataSource.data.length === 0) {
+          <div class="no-data">
+            <mat-icon>description</mat-icon>
+            <p>No contracts found</p>
+          </div>
+        }
+      </div>
+
+      <mat-paginator
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

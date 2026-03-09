@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Department' : 'Add Department' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="department-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Department name">
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <mat-error>Name is required</mat-error>
+      }
+      @if (form.get('name')?.hasError('maxlength')) {
+        <mat-error>Name must be at most 100 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" placeholder="Department code">
+      @if (form.get('code')?.hasError('required') && form.get('code')?.touched) {
+        <mat-error>Code is required</mat-error>
+      }
+      @if (form.get('code')?.hasError('maxlength')) {
+        <mat-error>Code must be at most 20 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Description" rows="3"></textarea>
+      @if (form.get('description')?.hasError('maxlength')) {
+        <mat-error>Description must be at most 500 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-checkbox formControlName="active" color="primary">Active</mat-checkbox>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>

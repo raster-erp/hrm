@@ -1,0 +1,23 @@
+.app-container {
+  height: 100vh;
+}
+
+.app-sidenav {
+  width: 250px;
+}
+
+.app-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-area {
+  padding: 24px;
+  flex: 1;
+  overflow: auto;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.04);
+}

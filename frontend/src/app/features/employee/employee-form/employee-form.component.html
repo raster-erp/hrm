@@ -1,0 +1,285 @@
+<div class="employee-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <mat-stepper linear #stepper>
+          <!-- Step 1: Personal Information -->
+          <mat-step [stepControl]="personalInfoForm" label="Personal Info">
+            <form [formGroup]="personalInfoForm">
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input matInput formControlName="firstName" placeholder="Enter first name">
+                  @if (personalInfoForm.get('firstName')?.hasError('required') && personalInfoForm.get('firstName')?.touched) {
+                    <mat-error>First name is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput formControlName="lastName" placeholder="Enter last name">
+                  @if (personalInfoForm.get('lastName')?.hasError('required') && personalInfoForm.get('lastName')?.touched) {
+                    <mat-error>Last name is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email" placeholder="Enter email" type="email">
+                  @if (personalInfoForm.get('email')?.hasError('required') && personalInfoForm.get('email')?.touched) {
+                    <mat-error>Email is required</mat-error>
+                  }
+                  @if (personalInfoForm.get('email')?.hasError('email') && personalInfoForm.get('email')?.touched) {
+                    <mat-error>Please enter a valid email</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone</mat-label>
+                  <input matInput formControlName="phone" placeholder="Enter phone number">
+                  @if (personalInfoForm.get('phone')?.hasError('required') && personalInfoForm.get('phone')?.touched) {
+                    <mat-error>Phone is required</mat-error>
+                  }
+                  @if (personalInfoForm.get('phone')?.hasError('pattern') && personalInfoForm.get('phone')?.touched) {
+                    <mat-error>Please enter a valid phone number</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Date of Birth</mat-label>
+                  <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
+                  <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #dobPicker></mat-datepicker>
+                  @if (personalInfoForm.get('dateOfBirth')?.hasError('required') && personalInfoForm.get('dateOfBirth')?.touched) {
+                    <mat-error>Date of birth is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Gender</mat-label>
+                  <mat-select formControlName="gender">
+                    @for (gender of genders; track gender) {
+                      <mat-option [value]="gender">{{ gender }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (personalInfoForm.get('gender')?.hasError('required') && personalInfoForm.get('gender')?.touched) {
+                    <mat-error>Gender is required</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="step-actions">
+                <button mat-button (click)="onCancel()">Cancel</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 2: Contact Information -->
+          <mat-step [stepControl]="contactInfoForm" label="Contact Info">
+            <form [formGroup]="contactInfoForm">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Address</mat-label>
+                  <textarea matInput formControlName="address" placeholder="Enter address" rows="3"></textarea>
+                  @if (contactInfoForm.get('address')?.hasError('required') && contactInfoForm.get('address')?.touched) {
+                    <mat-error>Address is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>City</mat-label>
+                  <input matInput formControlName="city" placeholder="Enter city">
+                  @if (contactInfoForm.get('city')?.hasError('required') && contactInfoForm.get('city')?.touched) {
+                    <mat-error>City is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>State</mat-label>
+                  <input matInput formControlName="state" placeholder="Enter state">
+                  @if (contactInfoForm.get('state')?.hasError('required') && contactInfoForm.get('state')?.touched) {
+                    <mat-error>State is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Country</mat-label>
+                  <input matInput formControlName="country" placeholder="Enter country">
+                  @if (contactInfoForm.get('country')?.hasError('required') && contactInfoForm.get('country')?.touched) {
+                    <mat-error>Country is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>ZIP Code</mat-label>
+                  <input matInput formControlName="zipCode" placeholder="Enter ZIP code">
+                  @if (contactInfoForm.get('zipCode')?.hasError('required') && contactInfoForm.get('zipCode')?.touched) {
+                    <mat-error>ZIP code is required</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 3: Emergency Contact -->
+          <mat-step [stepControl]="emergencyContactForm" label="Emergency Contact">
+            <form [formGroup]="emergencyContactForm">
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>Emergency Contact Name</mat-label>
+                  <input matInput formControlName="emergencyContactName" placeholder="Enter contact name">
+                  @if (emergencyContactForm.get('emergencyContactName')?.hasError('required') && emergencyContactForm.get('emergencyContactName')?.touched) {
+                    <mat-error>Emergency contact name is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Emergency Contact Phone</mat-label>
+                  <input matInput formControlName="emergencyContactPhone" placeholder="Enter contact phone">
+                  @if (emergencyContactForm.get('emergencyContactPhone')?.hasError('required') && emergencyContactForm.get('emergencyContactPhone')?.touched) {
+                    <mat-error>Emergency contact phone is required</mat-error>
+                  }
+                  @if (emergencyContactForm.get('emergencyContactPhone')?.hasError('pattern') && emergencyContactForm.get('emergencyContactPhone')?.touched) {
+                    <mat-error>Please enter a valid phone number</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 4: Bank Details -->
+          <mat-step [stepControl]="bankDetailsForm" label="Bank Details">
+            <form [formGroup]="bankDetailsForm">
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>Bank Name</mat-label>
+                  <input matInput formControlName="bankName" placeholder="Enter bank name">
+                  @if (bankDetailsForm.get('bankName')?.hasError('required') && bankDetailsForm.get('bankName')?.touched) {
+                    <mat-error>Bank name is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Account Number</mat-label>
+                  <input matInput formControlName="bankAccountNumber" placeholder="Enter account number">
+                  @if (bankDetailsForm.get('bankAccountNumber')?.hasError('required') && bankDetailsForm.get('bankAccountNumber')?.touched) {
+                    <mat-error>Account number is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>IFSC Code</mat-label>
+                  <input matInput formControlName="bankIfscCode" placeholder="Enter IFSC code">
+                  @if (bankDetailsForm.get('bankIfscCode')?.hasError('required') && bankDetailsForm.get('bankIfscCode')?.touched) {
+                    <mat-error>IFSC code is required</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 5: Employment Information -->
+          <mat-step [stepControl]="employmentInfoForm" label="Employment Info">
+            <form [formGroup]="employmentInfoForm">
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>Employee Code</mat-label>
+                  <input matInput formControlName="employeeCode" placeholder="Enter employee code">
+                  @if (employmentInfoForm.get('employeeCode')?.hasError('required') && employmentInfoForm.get('employeeCode')?.touched) {
+                    <mat-error>Employee code is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Department</mat-label>
+                  <mat-select formControlName="departmentId"
+                              (selectionChange)="onDepartmentChange($event.value)">
+                    @for (dept of departments; track dept.id) {
+                      <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (employmentInfoForm.get('departmentId')?.hasError('required') && employmentInfoForm.get('departmentId')?.touched) {
+                    <mat-error>Department is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Designation</mat-label>
+                  <mat-select formControlName="designationId">
+                    @for (desig of filteredDesignations; track desig.id) {
+                      <mat-option [value]="desig.id">{{ desig.title }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (employmentInfoForm.get('designationId')?.hasError('required') && employmentInfoForm.get('designationId')?.touched) {
+                    <mat-error>Designation is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Joining Date</mat-label>
+                  <input matInput [matDatepicker]="joiningPicker" formControlName="joiningDate">
+                  <mat-datepicker-toggle matIconSuffix [for]="joiningPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #joiningPicker></mat-datepicker>
+                  @if (employmentInfoForm.get('joiningDate')?.hasError('required') && employmentInfoForm.get('joiningDate')?.touched) {
+                    <mat-error>Joining date is required</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Employment Status</mat-label>
+                  <mat-select formControlName="employmentStatus">
+                    @for (status of statuses; track status) {
+                      <mat-option [value]="status">{{ status }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (employmentInfoForm.get('employmentStatus')?.hasError('required') && employmentInfoForm.get('employmentStatus')?.touched) {
+                    <mat-error>Employment status is required</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="saving">
+                  @if (saving) {
+                    <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+                  }
+                  {{ isEditMode ? 'Update' : 'Create' }} Employee
+                </button>
+                <button mat-button (click)="onCancel()">Cancel</button>
+              </div>
+            </form>
+          </mat-step>
+        </mat-stepper>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
