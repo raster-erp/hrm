@@ -68,9 +68,9 @@
 | Backend Development | Build CRUD APIs for contract creation, amendment, and renewal | Done |
 | Backend Development | Implement automated alerts for contracts approaching expiry | Done |
 | Backend Development | Build contract PDF generation API with template support | Not Started |
-| Frontend Development | Build contract list view with status filters (active, expired, renewed) | Not Started |
-| Frontend Development | Build contract form with clause editor and digital signature placeholder | Not Started |
-| Frontend Development | Add contract timeline visualization for each employee | Not Started |
+| Frontend Development | Build contract list view with status filters (active, expired, renewed) | Done |
+| Frontend Development | Build contract form with clause editor and digital signature placeholder | Done |
+| Frontend Development | Add contract timeline visualization for each employee | Done |
 | Integration Testing | Validate contract lifecycle transitions and renewal workflows | Not Started |
 | UAT & QA | Conduct user acceptance testing for contract management flows | Not Started |
 | Deployment | Deploy contract management module to staging and production | Not Started |

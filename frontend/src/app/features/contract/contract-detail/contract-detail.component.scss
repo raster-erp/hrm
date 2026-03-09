@@ -1,0 +1,219 @@
+.contract-detail-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  h2, h3 {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.label {
+  font-weight: 500;
+  color: #666;
+  min-width: 150px;
+  display: inline-block;
+}
+
+.value {
+  color: #333;
+}
+
+.terms-value {
+  white-space: pre-wrap;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-expired {
+  background-color: #fce4ec;
+  color: #c62828;
+}
+
+.status-renewed {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-terminated {
+  background-color: #ffebee;
+  color: #b71c1c;
+}
+
+// Timeline styles
+.timeline {
+  position: relative;
+  padding: 16px 0;
+  padding-left: 32px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e0e0e0;
+  }
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 24px;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -27px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #1976d2;
+  background-color: white;
+}
+
+.timeline-start .timeline-dot {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.timeline-end .timeline-dot {
+  background-color: #f44336;
+  border-color: #f44336;
+}
+
+.timeline-amendment .timeline-dot {
+  background-color: #ff9800;
+  border-color: #ff9800;
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeline-date {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}
+
+.timeline-label {
+  font-size: 14px;
+  color: #333;
+}
+
+// Amendment form
+.amendment-form-container {
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #fafafa;
+  border-radius: 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-field {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+
+  mat-spinner {
+    display: inline-block;
+    margin-right: 8px;
+  }
+}
+
+// Amendment details
+.amendment-detail {
+  padding: 8px 0;
+}
+
+.terms-section {
+  margin-bottom: 12px;
+
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+  }
+
+  p {
+    margin: 0;
+    white-space: pre-wrap;
+    color: #333;
+  }
+}
+
+.amendment-meta {
+  margin-top: 8px;
+  color: #999;
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0;
+  color: #999;
+
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+}
