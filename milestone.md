@@ -27,9 +27,9 @@
 | Database Design | Design `employees` table with all demographic and employment columns | Done |
 | Database Design | Design `employee_documents` table for uploaded files (photo, ID proof, etc.) | Done |
 | Database Design | Create indexes on employee code, department, and status columns | Done |
-| Backend Development | Build CRUD APIs for employee creation, update, retrieval, and soft-delete | Not Started |
+| Backend Development | Build CRUD APIs for employee creation, update, retrieval, and soft-delete | Done |
 | Backend Development | Implement file-upload API for employee photo and documents | Not Started |
-| Backend Development | Add search and filter API (by name, department, status, joining date range) | Not Started |
+| Backend Development | Add search and filter API (by name, department, status, joining date range) | Done |
 | Backend Development | Implement bulk-import API (CSV/Excel) for employee master data | Not Started |
 | Frontend Development | Build employee list page with pagination, search, and filter controls | Not Started |
 | Frontend Development | Build employee creation/edit form with field validations | Not Started |
