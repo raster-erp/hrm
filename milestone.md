@@ -86,9 +86,9 @@
 | Backend Development | Build CRUD APIs for credential records with file attachments | Done |
 | Backend Development | Implement scheduled job for expiry notifications (email/SMS) | Not Started |
 | Backend Development | Build credential verification status API (verified, pending, expired) | Done |
-| Frontend Development | Build credential list and detail view per employee | Not Started |
-| Frontend Development | Build credential form with document upload and expiry date picker | Not Started |
-| Frontend Development | Add dashboard widget for credentials expiring within 30/60/90 days | Not Started |
+| Frontend Development | Build credential list and detail view per employee | Done |
+| Frontend Development | Build credential form with document upload and expiry date picker | Done |
+| Frontend Development | Add dashboard widget for credentials expiring within 30/60/90 days | Done |
 | Integration Testing | Validate expiry notification triggers and credential lifecycle | Not Started |
 | UAT & QA | Conduct user acceptance testing for credential tracking | Not Started |
 | Deployment | Deploy credential tracking module to staging and production | Not Started |
