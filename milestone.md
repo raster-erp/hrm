@@ -106,7 +106,7 @@
 | Backend Development | Add bulk ID card printing support (batch PDF generation) | Not Started |
 | Frontend Development | Build ID card preview and print interface | Not Started |
 | Frontend Development | Build uniform catalog management and allocation form | Not Started |
-| Integration Testing | Validate ID card generation, printing, and uniform allocation flows | Not Started |
+| Integration Testing | Validate ID card generation, printing, and uniform allocation flows | In Progress |
 | UAT & QA | Conduct user acceptance testing for ID card and uniform modules | Not Started |
 | Deployment | Deploy ID card and uniform module to staging and production | Not Started |
 
