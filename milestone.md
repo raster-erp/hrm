@@ -101,8 +101,8 @@
 | Requirements | Define uniform catalog (sizes, types) and allocation rules | Not Started |
 | Database Design | Design `id_cards` table with card number, issue date, and status | Done |
 | Database Design | Design `uniforms` and `uniform_allocations` tables | Done |
-| Backend Development | Build ID card generation API with photo, barcode/QR code support | Not Started |
-| Backend Development | Build uniform allocation and return tracking APIs | Not Started |
+| Backend Development | Build ID card generation API with photo, barcode/QR code support | Done |
+| Backend Development | Build uniform allocation and return tracking APIs | Done |
 | Backend Development | Add bulk ID card printing support (batch PDF generation) | Not Started |
 | Frontend Development | Build ID card preview and print interface | Not Started |
 | Frontend Development | Build uniform catalog management and allocation form | Not Started |
@@ -118,10 +118,10 @@
 | Requirements | Define promotion criteria and approval workflow rules | Not Started |
 | Database Design | Design `transfers` table with from/to department, branch, and effective date | Done |
 | Database Design | Design `promotions` table with old/new designation, grade, and effective date | Done |
-| Backend Development | Build transfer request, approval, and execution APIs | Not Started |
-| Backend Development | Build promotion initiation, approval, and execution APIs | Not Started |
-| Backend Development | Implement automatic update of employee record upon approval | Not Started |
-| Backend Development | Build transfer/promotion history API for audit trail | Not Started |
+| Backend Development | Build transfer request, approval, and execution APIs | Done |
+| Backend Development | Build promotion initiation, approval, and execution APIs | Done |
+| Backend Development | Implement automatic update of employee record upon approval | Done |
+| Backend Development | Build transfer/promotion history API for audit trail | Done |
 | Frontend Development | Build transfer request form with branch/department selectors | Not Started |
 | Frontend Development | Build promotion form with designation and grade selectors | Not Started |
 | Frontend Development | Build approval workflow UI with multi-level approver support | Not Started |
@@ -138,8 +138,8 @@
 | Requirements | Define exit checklist items and no-dues clearance process | Not Started |
 | Database Design | Design `separations` table with type, notice period, and last working day | Done |
 | Database Design | Design `exit_checklists` and `no_dues` tables | Done |
-| Backend Development | Build separation initiation and approval APIs | Not Started |
-| Backend Development | Build exit checklist and no-dues clearance APIs | Not Started |
+| Backend Development | Build separation initiation and approval APIs | Done |
+| Backend Development | Build exit checklist and no-dues clearance APIs | Done |
 | Backend Development | Implement full-and-final settlement computation API | Not Started |
 | Backend Development | Build exit interview feedback capture API | Not Started |
 | Frontend Development | Build separation request form with reason and notice period fields | Not Started |
