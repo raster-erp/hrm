@@ -44,13 +44,13 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define department hierarchy model (parent-child departments) | Not Started |
-| Requirements | Define designation levels and mapping to pay grades | Not Started |
+| Requirements | Define department hierarchy model (parent-child departments) | Done |
+| Requirements | Define designation levels and mapping to pay grades | Done |
 | Database Design | Design `departments` table with self-referencing parent column for hierarchy | Done |
 | Database Design | Design `designations` table with level, grade, and department linkage | Done |
-| Backend Development | Build CRUD APIs for departments with hierarchy support | Not Started |
-| Backend Development | Build CRUD APIs for designations with grade linkage | Not Started |
-| Backend Development | Add validation to prevent deletion of departments/designations in use | Not Started |
+| Backend Development | Build CRUD APIs for departments with hierarchy support | Done |
+| Backend Development | Build CRUD APIs for designations with grade linkage | Done |
+| Backend Development | Add validation to prevent deletion of departments/designations in use | Done |
 | Frontend Development | Build department tree view with drag-and-drop reordering | Not Started |
 | Frontend Development | Build designation list and form with grade selection | Not Started |
 | Integration Testing | Validate hierarchy creation, reordering, and deletion constraints | Not Started |
