@@ -113,7 +113,7 @@
 - **Target: 100% code coverage** for all new code across both backend and frontend.
 - Every public class, method, and branch must have corresponding unit tests.
 - Use **JUnit 5** and **Mockito** for Java backend unit tests.
-- Use **Jasmine** and **Karma** (or **Jest**) for Angular frontend unit tests.
+- Use **Jest** with **Jasmine** for Angular frontend unit tests.
 - Write integration tests for all REST API endpoints using `@SpringBootTest` and `MockMvc` or `WebTestClient`.
 - Write end-to-end tests for critical user workflows using **Cypress** or **Playwright**.
 - Do not merge any pull request with coverage below 100% for new or changed lines.
