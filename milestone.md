@@ -106,7 +106,7 @@
 | Backend Development | Add bulk ID card printing support (batch PDF generation) | Not Started |
 | Frontend Development | Build ID card preview and print interface | Not Started |
 | Frontend Development | Build uniform catalog management and allocation form | Not Started |
-| Integration Testing | Validate ID card generation, printing, and uniform allocation flows | In Progress |
+| Integration Testing | Validate ID card generation, printing, and uniform allocation flows | Not Started |
 | UAT & QA | Conduct user acceptance testing for ID card and uniform modules | Not Started |
 | Deployment | Deploy ID card and uniform module to staging and production | Not Started |
 
@@ -138,8 +138,8 @@
 | Requirements | Define exit checklist items and no-dues clearance process | Not Started |
 | Database Design | Design `separations` table with type, notice period, and last working day | Done |
 | Database Design | Design `exit_checklists` and `no_dues` tables | Done |
-| Backend Development | Build separation initiation and approval APIs | Not Started |
-| Backend Development | Build exit checklist and no-dues clearance APIs | Not Started |
+| Backend Development | Build separation initiation and approval APIs | Done |
+| Backend Development | Build exit checklist and no-dues clearance APIs | Done |
 | Backend Development | Implement full-and-final settlement computation API | Not Started |
 | Backend Development | Build exit interview feedback capture API | Not Started |
 | Frontend Development | Build separation request form with reason and notice period fields | Not Started |
