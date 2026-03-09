@@ -122,6 +122,19 @@
 
 ---
 
+## Milestone Tracking
+
+- The file `milestone.md` in the repository root tracks all project milestones, features, and tasks with their current status.
+- **Whenever you complete a feature or task**, you **must** update `milestone.md` to reflect the progress:
+  1. Identify the relevant milestone section and task row(s) that correspond to the work you completed.
+  2. Change the status value from `Not Started` to `Done` for each completed task.
+  3. If a task is partially completed, change the status to `In Progress`.
+- Always update `milestone.md` in the **same commit or pull request** as the feature code changes.
+- Do not change the status of tasks that were not part of the current work.
+- When all tasks under a subsection (e.g., "1.1 Employee Master & Profile") are marked `Done`, consider the subsection complete.
+
+---
+
 ## General Guidelines
 
 - Write clean, self-documenting code; add comments only when the intent is not obvious from the code itself.
