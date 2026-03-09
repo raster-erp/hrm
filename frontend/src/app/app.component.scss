@@ -1,23 +1,226 @@
+@use 'styles/variables' as *;
+
+// ──────────────────────────────────────────
+// App shell
+// ──────────────────────────────────────────
 .app-container {
   height: 100vh;
 }
 
-.app-sidenav {
-  width: 250px;
+// ──────────────────────────────────────────
+// Toolbar – M3 surface-container + tint
+// ──────────────────────────────────────────
+.app-toolbar {
+  background: linear-gradient(var(--m3-tint-2), var(--m3-tint-2)), var(--m3-toolbar-bg);
+  color: var(--m3-toolbar-text);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-shadow: var(--m3-elevation-2);
+  height: $toolbar-height;
+  padding: 0 $spacing-md;
 }
 
+.menu-button {
+  color: var(--m3-on-surface);
+  margin-right: $spacing-sm;
+}
+
+.toolbar-title {
+  // M3 Title Large: 22/28
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  color: var(--m3-on-surface);
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.toolbar-action {
+  color: var(--m3-on-surface-variant);
+
+  &:hover {
+    color: var(--m3-on-surface);
+  }
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;  // 5 × 8dp
+  height: 40px;
+  border-radius: 50%;
+  background: var(--m3-primary-container);
+  margin-left: $spacing-sm;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  mat-icon {
+    color: var(--m3-on-primary-container);
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    background: var(--m3-primary-fixed-dim);
+  }
+}
+
+// ──────────────────────────────────────────
+// Sidenav – M3 navigation rail / drawer
+// ──────────────────────────────────────────
+.app-sidenav {
+  width: $sidenav-width;
+  border-right: none;
+  background-color: var(--m3-sidenav-bg);
+  box-shadow: none;
+}
+
+.sidenav-brand {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: 0 $spacing-lg;
+  height: $toolbar-height;
+  box-sizing: border-box;
+  background: linear-gradient(var(--m3-tint-2), var(--m3-tint-2)), var(--m3-surface-container);
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;  // 5 × 8dp
+    height: 40px;
+    border-radius: var(--m3-shape-md);
+    background: var(--m3-primary-container);
+
+    mat-icon {
+      color: var(--m3-on-primary-container);
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .brand-title {
+    // M3 Title Medium: 16/24 · 500
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--m3-on-surface);
+    letter-spacing: 0.15px;
+  }
+
+  .brand-subtitle {
+    // M3 Body Small: 12/16
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--m3-on-surface-variant);
+    line-height: 16px;
+  }
+}
+
+.sidenav-nav {
+  padding: $spacing-md 0 $spacing-md;
+  overflow-y: auto;
+  flex: 1;
+
+  .nav-group {
+    margin-bottom: $spacing-xs;
+  }
+
+  .nav-group-label {
+    padding: $spacing-md $spacing-lg $spacing-sm;
+    // M3 Label Small: 11/16 · 500
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--m3-on-surface-variant);
+  }
+
+  mat-nav-list {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  a[mat-list-item] {
+    margin: 2px $spacing-md;
+    border-radius: var(--m3-shape-xl);
+    height: $spacing-3xl; // 48px = 6 × 8dp
+    color: var(--m3-on-surface);
+    // M3 Label Large: 14/20 · 500
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    transition: all 0.15s ease;
+
+    mat-icon {
+      color: var(--m3-on-surface-variant);
+      margin-right: $spacing-md;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      background-color: var(--m3-surface-container-high);
+    }
+  }
+}
+
+.active-link {
+  background-color: var(--m3-sidenav-active-bg) !important;
+  color: var(--m3-sidenav-active-text) !important;
+
+  mat-icon {
+    color: var(--m3-sidenav-active-text) !important;
+  }
+}
+
+// ──────────────────────────────────────────
+// Content area
+// ──────────────────────────────────────────
 .app-content {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: var(--m3-surface);
 }
 
 .content-area {
-  padding: 24px;
+  padding: $content-padding;
   flex: 1;
   overflow: auto;
 }
 
-.active-link {
-  background-color: rgba(0, 0, 0, 0.04);
+// ──────────────────────────────────────────
+// Responsive
+// ──────────────────────────────────────────
+@media (max-width: $breakpoint-md) {
+  .content-area {
+    padding: $content-padding-mobile;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .app-toolbar {
+    height: 56px; // 7 × 8dp
+  }
+  .sidenav-brand {
+    height: 56px;
+    padding: 0 $spacing-md;
+  }
+  .toolbar-title {
+    font-size: 18px;
+  }
 }

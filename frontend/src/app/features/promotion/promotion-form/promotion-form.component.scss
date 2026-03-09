@@ -1,0 +1,15 @@
+@use 'styles/variables' as *;
+
+.promotion-form-container {
+  max-width: $form-max-width-md;
+  margin: 0 auto;
+}
+
+.promotion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+

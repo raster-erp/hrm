@@ -1,0 +1,81 @@
+<div class="separation-form">
+  <div class="page-header">
+    <h2>New Separation</h2>
+    <button mat-stroked-button (click)="cancel()">
+      <mat-icon>arrow_back</mat-icon> Back
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="separationForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee</mat-label>
+            <mat-select formControlName="employeeId">
+              @for (emp of employees; track emp.id) {
+                <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+              }
+            </mat-select>
+            @if (separationForm.get('employeeId')?.hasError('required')) {
+              <mat-error>Employee is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Separation Type</mat-label>
+            <mat-select formControlName="separationType">
+              @for (type of separationTypes; track type) {
+                <mat-option [value]="type">{{ type }}</mat-option>
+              }
+            </mat-select>
+            @if (separationForm.get('separationType')?.hasError('required')) {
+              <mat-error>Type is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Notice Date</mat-label>
+            <input matInput [matDatepicker]="noticePicker" formControlName="noticeDate">
+            <mat-datepicker-toggle matIconSuffix [for]="noticePicker"></mat-datepicker-toggle>
+            <mat-datepicker #noticePicker></mat-datepicker>
+            @if (separationForm.get('noticeDate')?.hasError('required')) {
+              <mat-error>Notice date is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Working Day</mat-label>
+            <input matInput [matDatepicker]="lwdPicker" formControlName="lastWorkingDay">
+            <mat-datepicker-toggle matIconSuffix [for]="lwdPicker"></mat-datepicker-toggle>
+            <mat-datepicker #lwdPicker></mat-datepicker>
+            @if (separationForm.get('lastWorkingDay')?.hasError('required')) {
+              <mat-error>Last working day is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Reason</mat-label>
+          <textarea matInput formControlName="reason" rows="3"></textarea>
+          @if (separationForm.get('reason')?.hasError('required')) {
+            <mat-error>Reason is required</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="separationForm.invalid || saving">
+            @if (saving) {
+              <mat-spinner diameter="20"></mat-spinner>
+            }
+            Submit
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

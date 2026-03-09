@@ -1,0 +1,65 @@
+<div class="id-card-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit ID Card' : 'Issue ID Card' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="idCardForm" (ngSubmit)="onSubmit()" class="id-card-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Employee</mat-label>
+              <mat-select formControlName="employeeId">
+                @for (emp of employees; track emp.id) {
+                  <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }} ({{ emp.employeeCode }})</mat-option>
+                }
+              </mat-select>
+              @if (idCardForm.get('employeeId')?.hasError('required') && idCardForm.get('employeeId')?.touched) {
+                <mat-error>Employee is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Issue Date</mat-label>
+              <input matInput [matDatepicker]="issuePicker" formControlName="issueDate">
+              <mat-datepicker-toggle matIconSuffix [for]="issuePicker"></mat-datepicker-toggle>
+              <mat-datepicker #issuePicker></mat-datepicker>
+              @if (idCardForm.get('issueDate')?.hasError('required') && idCardForm.get('issueDate')?.touched) {
+                <mat-error>Issue date is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Expiry Date</mat-label>
+              <input matInput [matDatepicker]="expiryPicker" formControlName="expiryDate">
+              <mat-datepicker-toggle matIconSuffix [for]="expiryPicker"></mat-datepicker-toggle>
+              <mat-datepicker #expiryPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="cancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20"></mat-spinner>
+              } @else {
+                {{ isEditMode ? 'Update' : 'Issue Card' }}
+              }
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

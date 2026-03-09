@@ -1,0 +1,103 @@
+<div class="id-card-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>ID Cards</h2>
+          <div class="header-actions">
+            <button mat-raised-button color="primary" routerLink="/id-cards/new">
+              <mat-icon>add</mat-icon>
+              Issue ID Card
+            </button>
+          </div>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      }
+
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="full-width">
+          <ng-container matColumnDef="cardNumber">
+            <th mat-header-cell *matHeaderCellDef>Card Number</th>
+            <td mat-cell *matCellDef="let card">
+              <a class="data-link" (click)="viewIdCard(card)">{{ card.cardNumber }}</a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="employeeName">
+            <th mat-header-cell *matHeaderCellDef>Employee</th>
+            <td mat-cell *matCellDef="let card">{{ card.employeeName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="employeeCode">
+            <th mat-header-cell *matHeaderCellDef>Employee Code</th>
+            <td mat-cell *matCellDef="let card">{{ card.employeeCode }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="issueDate">
+            <th mat-header-cell *matHeaderCellDef>Issue Date</th>
+            <td mat-cell *matCellDef="let card">{{ card.issueDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="expiryDate">
+            <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+            <td mat-cell *matCellDef="let card">{{ card.expiryDate || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let card">
+              <span class="status-chip" [class]="'status-' + card.status.toLowerCase()">
+                {{ card.status }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let card">
+              <button mat-icon-button color="primary" matTooltip="View"
+                      (click)="viewIdCard(card); $event.stopPropagation()">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Edit"
+                      (click)="editIdCard(card); $event.stopPropagation()">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="Delete"
+                      (click)="deleteIdCard(card); $event.stopPropagation()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+              (click)="viewIdCard(row)" class="clickable-row"></tr>
+        </table>
+
+        @if (!loading && dataSource.data.length === 0) {
+          <div class="no-data">
+            <mat-icon>credit_card</mat-icon>
+            <p>No ID cards found</p>
+          </div>
+        }
+      </div>
+
+      <mat-paginator
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

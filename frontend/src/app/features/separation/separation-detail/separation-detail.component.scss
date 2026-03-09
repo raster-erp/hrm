@@ -1,0 +1,33 @@
+@use 'styles/variables' as *;
+
+.separation-detail {
+  width: 100%;
+}
+
+.section-divider {
+  margin: 24px 0;
+}
+
+.tab-content {
+  padding: 16px 0;
+}
+
+.inline-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: $surface-variant;
+  border-radius: 8px;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 150px;
+  }
+
+  button {
+    margin-top: 4px;
+  }
+}

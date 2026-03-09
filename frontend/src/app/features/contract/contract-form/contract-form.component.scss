@@ -1,6 +1,7 @@
+@use 'styles/variables' as *;
+
 .contract-form-container {
-  padding: 24px;
-  max-width: 800px;
+  max-width: $form-max-width-sm;
   margin: 0 auto;
 }
 
@@ -10,12 +11,6 @@ h2 {
   font-weight: 500;
 }
 
-.loading-container {
-  display: flex;
-  justify-content: center;
-  padding: 48px 0;
-}
-
 .contract-form {
   display: flex;
   flex-direction: column;
@@ -23,33 +18,8 @@ h2 {
   padding-top: 16px;
 }
 
-.form-row {
-  display: flex;
-  gap: 16px;
-
-  &.full-width {
-    .form-field {
-      flex: 1;
-    }
-  }
-}
-
 .form-field {
   flex: 1;
 }
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 16px;
 
-  button {
-    min-width: 120px;
-  }
-
-  mat-spinner {
-    display: inline-block;
-    margin-right: 8px;
-  }
-}

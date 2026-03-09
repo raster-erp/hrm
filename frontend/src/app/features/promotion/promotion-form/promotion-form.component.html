@@ -1,0 +1,97 @@
+<div class="promotion-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>New Promotion</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="promotionForm" (ngSubmit)="onSubmit()" class="promotion-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Employee</mat-label>
+            <mat-select formControlName="employeeId" (selectionChange)="onEmployeeSelected()">
+              @for (emp of employees; track emp.id) {
+                <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+              }
+            </mat-select>
+            @if (promotionForm.get('employeeId')?.hasError('required') && promotionForm.get('employeeId')?.touched) {
+              <mat-error>Employee is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Current Designation</mat-label>
+            <mat-select formControlName="oldDesignationId">
+              @for (d of designations; track d.id) {
+                <mat-option [value]="d.id">{{ d.title }}</mat-option>
+              }
+            </mat-select>
+            @if (promotionForm.get('oldDesignationId')?.hasError('required') && promotionForm.get('oldDesignationId')?.touched) {
+              <mat-error>Current designation is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>New Designation</mat-label>
+            <mat-select formControlName="newDesignationId">
+              @for (d of designations; track d.id) {
+                <mat-option [value]="d.id">{{ d.title }}</mat-option>
+              }
+            </mat-select>
+            @if (promotionForm.get('newDesignationId')?.hasError('required') && promotionForm.get('newDesignationId')?.touched) {
+              <mat-error>New designation is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Current Grade</mat-label>
+            <input matInput formControlName="oldGrade" placeholder="e.g., G5">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>New Grade</mat-label>
+            <input matInput formControlName="newGrade" placeholder="e.g., G6">
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Effective Date</mat-label>
+            <input matInput [matDatepicker]="datePicker" formControlName="effectiveDate">
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+            @if (promotionForm.get('effectiveDate')?.hasError('required') && promotionForm.get('effectiveDate')?.touched) {
+              <mat-error>Effective date is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field full-width">
+            <mat-label>Reason</mat-label>
+            <textarea matInput formControlName="reason" rows="3" placeholder="Reason for promotion"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+            @if (saving) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Submit Promotion
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

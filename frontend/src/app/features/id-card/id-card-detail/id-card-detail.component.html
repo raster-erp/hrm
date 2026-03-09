@@ -1,0 +1,72 @@
+<div class="id-card-detail">
+  @if (loading) {
+    <mat-spinner diameter="40"></mat-spinner>
+  } @else if (idCard) {
+    <div class="page-header">
+      <h2>ID Card Details</h2>
+      <div class="action-buttons">
+        <button mat-stroked-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon> Back
+        </button>
+        <button mat-raised-button color="primary" (click)="editIdCard()">
+          <mat-icon>edit</mat-icon> Edit
+        </button>
+      </div>
+    </div>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ idCard.cardNumber }}</mat-card-title>
+        <mat-card-subtitle>{{ idCard.employeeName }} ({{ idCard.employeeCode }})</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="label">Card Number</span>
+            <span class="value">{{ idCard.cardNumber }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Employee</span>
+            <span class="value">{{ idCard.employeeName }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Employee Code</span>
+            <span class="value">{{ idCard.employeeCode }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Issue Date</span>
+            <span class="value">{{ idCard.issueDate }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Expiry Date</span>
+            <span class="value">{{ idCard.expiryDate || 'N/A' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Status</span>
+            <span class="value">
+              <button mat-stroked-button [matMenuTriggerFor]="statusMenu">
+                <span class="status-chip" [class]="'status-' + idCard.status.toLowerCase()">
+                  {{ idCard.status }}
+                </span>
+                <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+              <mat-menu #statusMenu="matMenu">
+                @for (status of statuses; track status) {
+                  <button mat-menu-item (click)="updateStatus(status)">{{ status }}</button>
+                }
+              </mat-menu>
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Created At</span>
+            <span class="value">{{ idCard.createdAt }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Updated At</span>
+            <span class="value">{{ idCard.updatedAt }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

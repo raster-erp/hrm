@@ -1,44 +1,7 @@
+@use 'styles/variables' as *;
+
 .department-tree-container {
-  padding: 24px;
-}
-
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
-
-  h2 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 500;
-  }
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  padding: 48px 0;
-}
-
-.no-data {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 48px 0;
-  color: #999;
-
-  mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
-    margin-bottom: 8px;
-  }
-
-  p {
-    font-size: 16px;
-    margin: 0;
-  }
 }
 
 .department-tree {
@@ -65,30 +28,13 @@
 }
 
 .node-code {
-  color: #666;
+  color: $text-secondary;
   font-size: 13px;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-
-  &.active {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-  }
-
-  &.inactive {
-    background-color: #fce4ec;
-    color: #c62828;
-  }
 }
 
 .node-actions {
   display: flex;
   gap: 4px;
 }
+
+

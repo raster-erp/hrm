@@ -1,0 +1,15 @@
+@use 'styles/variables' as *;
+
+.id-card-form-container {
+  max-width: $form-max-width-md;
+  margin: 0 auto;
+}
+
+.id-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+
