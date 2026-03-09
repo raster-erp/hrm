@@ -22,14 +22,14 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Gather employee data fields (personal, contact, emergency, bank details) | Not Started |
+| Requirements | Gather employee data fields (personal, contact, emergency, bank details) | Done |
 | Requirements | Define role-based access rules for profile viewing and editing | Not Started |
-| Database Design | Design `employees` table with all demographic and employment columns | Not Started |
-| Database Design | Design `employee_documents` table for uploaded files (photo, ID proof, etc.) | Not Started |
-| Database Design | Create indexes on employee code, department, and status columns | Not Started |
-| Backend Development | Build CRUD APIs for employee creation, update, retrieval, and soft-delete | Not Started |
+| Database Design | Design `employees` table with all demographic and employment columns | Done |
+| Database Design | Design `employee_documents` table for uploaded files (photo, ID proof, etc.) | Done |
+| Database Design | Create indexes on employee code, department, and status columns | Done |
+| Backend Development | Build CRUD APIs for employee creation, update, retrieval, and soft-delete | Done |
 | Backend Development | Implement file-upload API for employee photo and documents | Not Started |
-| Backend Development | Add search and filter API (by name, department, status, joining date range) | Not Started |
+| Backend Development | Add search and filter API (by name, department, status, joining date range) | Done |
 | Backend Development | Implement bulk-import API (CSV/Excel) for employee master data | Not Started |
 | Frontend Development | Build employee list page with pagination, search, and filter controls | Not Started |
 | Frontend Development | Build employee creation/edit form with field validations | Not Started |
@@ -44,13 +44,13 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define department hierarchy model (parent-child departments) | Not Started |
-| Requirements | Define designation levels and mapping to pay grades | Not Started |
-| Database Design | Design `departments` table with self-referencing parent column for hierarchy | Not Started |
-| Database Design | Design `designations` table with level, grade, and department linkage | Not Started |
-| Backend Development | Build CRUD APIs for departments with hierarchy support | Not Started |
-| Backend Development | Build CRUD APIs for designations with grade linkage | Not Started |
-| Backend Development | Add validation to prevent deletion of departments/designations in use | Not Started |
+| Requirements | Define department hierarchy model (parent-child departments) | Done |
+| Requirements | Define designation levels and mapping to pay grades | Done |
+| Database Design | Design `departments` table with self-referencing parent column for hierarchy | Done |
+| Database Design | Design `designations` table with level, grade, and department linkage | Done |
+| Backend Development | Build CRUD APIs for departments with hierarchy support | Done |
+| Backend Development | Build CRUD APIs for designations with grade linkage | Done |
+| Backend Development | Add validation to prevent deletion of departments/designations in use | Done |
 | Frontend Development | Build department tree view with drag-and-drop reordering | Not Started |
 | Frontend Development | Build designation list and form with grade selection | Not Started |
 | Integration Testing | Validate hierarchy creation, reordering, and deletion constraints | Not Started |
@@ -61,12 +61,12 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define contract types (permanent, probation, fixed-term, consultant) | Not Started |
-| Requirements | Define contract lifecycle states and renewal rules | Not Started |
-| Database Design | Design `employment_contracts` table with type, start/end dates, and terms | Not Started |
-| Database Design | Design `contract_amendments` table for tracking modifications | Not Started |
-| Backend Development | Build CRUD APIs for contract creation, amendment, and renewal | Not Started |
-| Backend Development | Implement automated alerts for contracts approaching expiry | Not Started |
+| Requirements | Define contract types (permanent, probation, fixed-term, consultant) | Done |
+| Requirements | Define contract lifecycle states and renewal rules | Done |
+| Database Design | Design `employment_contracts` table with type, start/end dates, and terms | Done |
+| Database Design | Design `contract_amendments` table for tracking modifications | Done |
+| Backend Development | Build CRUD APIs for contract creation, amendment, and renewal | Done |
+| Backend Development | Implement automated alerts for contracts approaching expiry | Done |
 | Backend Development | Build contract PDF generation API with template support | Not Started |
 | Frontend Development | Build contract list view with status filters (active, expired, renewed) | Not Started |
 | Frontend Development | Build contract form with clause editor and digital signature placeholder | Not Started |
@@ -79,13 +79,13 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Identify credential/license types (medical license, certifications, etc.) | Not Started |
-| Requirements | Define expiry notification rules and renewal workflows | Not Started |
-| Database Design | Design `credentials` table with type, issue date, expiry date, and issuer | Not Started |
-| Database Design | Design `credential_attachments` table for uploaded certificates | Not Started |
-| Backend Development | Build CRUD APIs for credential records with file attachments | Not Started |
+| Requirements | Identify credential/license types (medical license, certifications, etc.) | Done |
+| Requirements | Define expiry notification rules and renewal workflows | Done |
+| Database Design | Design `credentials` table with type, issue date, expiry date, and issuer | Done |
+| Database Design | Design `credential_attachments` table for uploaded certificates | Done |
+| Backend Development | Build CRUD APIs for credential records with file attachments | Done |
 | Backend Development | Implement scheduled job for expiry notifications (email/SMS) | Not Started |
-| Backend Development | Build credential verification status API (verified, pending, expired) | Not Started |
+| Backend Development | Build credential verification status API (verified, pending, expired) | Done |
 | Frontend Development | Build credential list and detail view per employee | Not Started |
 | Frontend Development | Build credential form with document upload and expiry date picker | Not Started |
 | Frontend Development | Add dashboard widget for credentials expiring within 30/60/90 days | Not Started |
@@ -99,8 +99,8 @@
 |-------|------|--------|
 | Requirements | Define ID card template fields and layout options | Not Started |
 | Requirements | Define uniform catalog (sizes, types) and allocation rules | Not Started |
-| Database Design | Design `id_cards` table with card number, issue date, and status | Not Started |
-| Database Design | Design `uniforms` and `uniform_allocations` tables | Not Started |
+| Database Design | Design `id_cards` table with card number, issue date, and status | Done |
+| Database Design | Design `uniforms` and `uniform_allocations` tables | Done |
 | Backend Development | Build ID card generation API with photo, barcode/QR code support | Not Started |
 | Backend Development | Build uniform allocation and return tracking APIs | Not Started |
 | Backend Development | Add bulk ID card printing support (batch PDF generation) | Not Started |
@@ -116,8 +116,8 @@
 |-------|------|--------|
 | Requirements | Define transfer types (inter-department, inter-branch, inter-company) | Not Started |
 | Requirements | Define promotion criteria and approval workflow rules | Not Started |
-| Database Design | Design `transfers` table with from/to department, branch, and effective date | Not Started |
-| Database Design | Design `promotions` table with old/new designation, grade, and effective date | Not Started |
+| Database Design | Design `transfers` table with from/to department, branch, and effective date | Done |
+| Database Design | Design `promotions` table with old/new designation, grade, and effective date | Done |
 | Backend Development | Build transfer request, approval, and execution APIs | Not Started |
 | Backend Development | Build promotion initiation, approval, and execution APIs | Not Started |
 | Backend Development | Implement automatic update of employee record upon approval | Not Started |
@@ -136,8 +136,8 @@
 |-------|------|--------|
 | Requirements | Define separation types (resignation, termination, retirement, absconding) | Not Started |
 | Requirements | Define exit checklist items and no-dues clearance process | Not Started |
-| Database Design | Design `separations` table with type, notice period, and last working day | Not Started |
-| Database Design | Design `exit_checklists` and `no_dues` tables | Not Started |
+| Database Design | Design `separations` table with type, notice period, and last working day | Done |
+| Database Design | Design `exit_checklists` and `no_dues` tables | Done |
 | Backend Development | Build separation initiation and approval APIs | Not Started |
 | Backend Development | Build exit checklist and no-dues clearance APIs | Not Started |
 | Backend Development | Implement full-and-final settlement computation API | Not Started |
