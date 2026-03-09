@@ -61,12 +61,12 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define contract types (permanent, probation, fixed-term, consultant) | Not Started |
-| Requirements | Define contract lifecycle states and renewal rules | Not Started |
+| Requirements | Define contract types (permanent, probation, fixed-term, consultant) | Done |
+| Requirements | Define contract lifecycle states and renewal rules | Done |
 | Database Design | Design `employment_contracts` table with type, start/end dates, and terms | Done |
 | Database Design | Design `contract_amendments` table for tracking modifications | Done |
-| Backend Development | Build CRUD APIs for contract creation, amendment, and renewal | Not Started |
-| Backend Development | Implement automated alerts for contracts approaching expiry | Not Started |
+| Backend Development | Build CRUD APIs for contract creation, amendment, and renewal | Done |
+| Backend Development | Implement automated alerts for contracts approaching expiry | Done |
 | Backend Development | Build contract PDF generation API with template support | Not Started |
 | Frontend Development | Build contract list view with status filters (active, expired, renewed) | Not Started |
 | Frontend Development | Build contract form with clause editor and digital signature placeholder | Not Started |
