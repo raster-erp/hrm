@@ -22,7 +22,7 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Gather employee data fields (personal, contact, emergency, bank details) | Not Started |
+| Requirements | Gather employee data fields (personal, contact, emergency, bank details) | Done |
 | Requirements | Define role-based access rules for profile viewing and editing | Not Started |
 | Database Design | Design `employees` table with all demographic and employment columns | Done |
 | Database Design | Design `employee_documents` table for uploaded files (photo, ID proof, etc.) | Done |
@@ -79,13 +79,13 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Identify credential/license types (medical license, certifications, etc.) | Not Started |
-| Requirements | Define expiry notification rules and renewal workflows | Not Started |
+| Requirements | Identify credential/license types (medical license, certifications, etc.) | Done |
+| Requirements | Define expiry notification rules and renewal workflows | Done |
 | Database Design | Design `credentials` table with type, issue date, expiry date, and issuer | Done |
 | Database Design | Design `credential_attachments` table for uploaded certificates | Done |
-| Backend Development | Build CRUD APIs for credential records with file attachments | Not Started |
+| Backend Development | Build CRUD APIs for credential records with file attachments | Done |
 | Backend Development | Implement scheduled job for expiry notifications (email/SMS) | Not Started |
-| Backend Development | Build credential verification status API (verified, pending, expired) | Not Started |
+| Backend Development | Build credential verification status API (verified, pending, expired) | Done |
 | Frontend Development | Build credential list and detail view per employee | Not Started |
 | Frontend Development | Build credential form with document upload and expiry date picker | Not Started |
 | Frontend Development | Add dashboard widget for credentials expiring within 30/60/90 days | Not Started |
