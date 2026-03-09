@@ -101,8 +101,8 @@
 | Requirements | Define uniform catalog (sizes, types) and allocation rules | Not Started |
 | Database Design | Design `id_cards` table with card number, issue date, and status | Done |
 | Database Design | Design `uniforms` and `uniform_allocations` tables | Done |
-| Backend Development | Build ID card generation API with photo, barcode/QR code support | Not Started |
-| Backend Development | Build uniform allocation and return tracking APIs | Not Started |
+| Backend Development | Build ID card generation API with photo, barcode/QR code support | Done |
+| Backend Development | Build uniform allocation and return tracking APIs | Done |
 | Backend Development | Add bulk ID card printing support (batch PDF generation) | Not Started |
 | Frontend Development | Build ID card preview and print interface | Not Started |
 | Frontend Development | Build uniform catalog management and allocation form | Not Started |
