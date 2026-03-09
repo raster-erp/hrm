@@ -118,10 +118,10 @@
 | Requirements | Define promotion criteria and approval workflow rules | Not Started |
 | Database Design | Design `transfers` table with from/to department, branch, and effective date | Done |
 | Database Design | Design `promotions` table with old/new designation, grade, and effective date | Done |
-| Backend Development | Build transfer request, approval, and execution APIs | Not Started |
-| Backend Development | Build promotion initiation, approval, and execution APIs | Not Started |
-| Backend Development | Implement automatic update of employee record upon approval | Not Started |
-| Backend Development | Build transfer/promotion history API for audit trail | Not Started |
+| Backend Development | Build transfer request, approval, and execution APIs | Done |
+| Backend Development | Build promotion initiation, approval, and execution APIs | Done |
+| Backend Development | Implement automatic update of employee record upon approval | Done |
+| Backend Development | Build transfer/promotion history API for audit trail | Done |
 | Frontend Development | Build transfer request form with branch/department selectors | Not Started |
 | Frontend Development | Build promotion form with designation and grade selectors | Not Started |
 | Frontend Development | Build approval workflow UI with multi-level approver support | Not Started |
