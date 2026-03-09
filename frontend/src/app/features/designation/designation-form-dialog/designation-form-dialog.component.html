@@ -1,0 +1,78 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Designation' : 'Add Designation' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="designation-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Designation title">
+      @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
+        <mat-error>Title is required</mat-error>
+      }
+      @if (form.get('title')?.hasError('maxlength')) {
+        <mat-error>Title must be at most 100 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" placeholder="Designation code">
+      @if (form.get('code')?.hasError('required') && form.get('code')?.touched) {
+        <mat-error>Code is required</mat-error>
+      }
+      @if (form.get('code')?.hasError('maxlength')) {
+        <mat-error>Code must be at most 20 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Level</mat-label>
+        <input matInput type="number" formControlName="level" placeholder="Level">
+        @if (form.get('level')?.hasError('required') && form.get('level')?.touched) {
+          <mat-error>Level is required</mat-error>
+        }
+        @if (form.get('level')?.hasError('min')) {
+          <mat-error>Level must be at least 1</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Grade</mat-label>
+        <input matInput formControlName="grade" placeholder="Grade">
+        @if (form.get('grade')?.hasError('required') && form.get('grade')?.touched) {
+          <mat-error>Grade is required</mat-error>
+        }
+        @if (form.get('grade')?.hasError('maxlength')) {
+          <mat-error>Grade must be at most 20 characters</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="departmentId">
+        @for (dept of departments; track dept.id) {
+          <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('departmentId')?.hasError('required') && form.get('departmentId')?.touched) {
+        <mat-error>Department is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Description" rows="3"></textarea>
+      @if (form.get('description')?.hasError('maxlength')) {
+        <mat-error>Description must be at most 500 characters</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>

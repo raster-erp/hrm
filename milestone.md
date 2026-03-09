@@ -51,8 +51,8 @@
 | Backend Development | Build CRUD APIs for departments with hierarchy support | Done |
 | Backend Development | Build CRUD APIs for designations with grade linkage | Done |
 | Backend Development | Add validation to prevent deletion of departments/designations in use | Done |
-| Frontend Development | Build department tree view with drag-and-drop reordering | Not Started |
-| Frontend Development | Build designation list and form with grade selection | Not Started |
+| Frontend Development | Build department tree view with drag-and-drop reordering | Done |
+| Frontend Development | Build designation list and form with grade selection | Done |
 | Integration Testing | Validate hierarchy creation, reordering, and deletion constraints | Not Started |
 | UAT & QA | Conduct user acceptance testing for department and designation setup | Not Started |
 | Deployment | Deploy department and designation module to staging and production | Not Started |

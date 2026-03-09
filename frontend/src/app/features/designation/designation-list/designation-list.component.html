@@ -1,0 +1,88 @@
+<div class="designation-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>Designations</h2>
+          <button mat-raised-button color="primary" (click)="addDesignation()">
+            <mat-icon>add</mat-icon>
+            Add Designation
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Filter by Department</mat-label>
+          <mat-select [(ngModel)]="selectedDepartmentId" (selectionChange)="onDepartmentFilterChange()">
+            <mat-option [value]="null">All Departments</mat-option>
+            @for (dept of departments; track dept.id) {
+              <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      }
+
+      @if (!loading && dataSource.data.length === 0) {
+        <div class="no-data">
+          <mat-icon>work_outline</mat-icon>
+          <p>No designations found.</p>
+        </div>
+      }
+
+      @if (!loading && dataSource.data.length > 0) {
+        <div class="table-container">
+          <table mat-table [dataSource]="dataSource" class="designation-table">
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+              <td mat-cell *matCellDef="let designation">{{ designation.title }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef>Code</th>
+              <td mat-cell *matCellDef="let designation">{{ designation.code }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="level">
+              <th mat-header-cell *matHeaderCellDef>Level</th>
+              <td mat-cell *matCellDef="let designation">{{ designation.level }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="grade">
+              <th mat-header-cell *matHeaderCellDef>Grade</th>
+              <td mat-cell *matCellDef="let designation">{{ designation.grade }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="departmentName">
+              <th mat-header-cell *matHeaderCellDef>Department</th>
+              <td mat-cell *matCellDef="let designation">{{ designation.departmentName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let designation">
+                <button mat-icon-button matTooltip="Edit" color="accent" (click)="editDesignation(designation)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteDesignation(designation)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
