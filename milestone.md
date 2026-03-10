@@ -204,7 +204,7 @@
 | Backend Development | Build overtime request, calculation, and approval APIs | Not Started |
 | Backend Development | Implement auto-detection of overtime from attendance punch data | Not Started |
 | Backend Development | Build overtime summary API for payroll integration | Not Started |
-| Frontend Development | Build overtime policy setup form with rate slab configuration | In Progress |
+| Frontend Development | Build overtime policy setup form with rate slab configuration | Done |
 | Frontend Development | Build overtime request and approval interface | In Progress |
 | Frontend Development | Build overtime summary dashboard with charts and drill-down | In Progress |
 | Integration Testing | Validate overtime calculation against multiple rate slabs | Not Started |
