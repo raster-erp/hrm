@@ -1,0 +1,43 @@
+@use 'styles/variables' as *;
+
+.punch-list-container {
+  width: 100%;
+}
+
+.punch-table {
+  width: 100%;
+}
+
+.device-serial {
+  color: var(--text-secondary);
+  font-size: 0.85em;
+}
+
+.direction-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.direction-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.direction-in {
+  color: var(--status-success);
+}
+
+.direction-out {
+  color: var(--status-error);
+}
+
+.normalized-yes {
+  color: var(--status-success);
+}
+
+.normalized-no {
+  color: var(--text-tertiary);
+}

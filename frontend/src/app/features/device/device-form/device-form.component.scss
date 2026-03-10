@@ -1,0 +1,32 @@
+@use 'styles/variables' as *;
+
+.device-form-container {
+  max-width: $form-max-width-md;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+  padding: $content-padding 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@media (max-width: $bp-mobile) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

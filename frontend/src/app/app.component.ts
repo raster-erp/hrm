@@ -50,6 +50,13 @@ export class AppComponent implements OnInit {
       ]
     },
     {
+      label: 'Attendance',
+      items: [
+        { path: '/devices', label: 'Devices', icon: 'devices' },
+        { path: '/attendance-punches', label: 'Punch Log', icon: 'schedule' },
+      ]
+    },
+    {
       label: 'Actions',
       items: [
         { path: '/transfers', label: 'Transfers', icon: 'swap_horiz' },

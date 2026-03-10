@@ -41,5 +41,13 @@ export const routes: Routes = [
   {
     path: 'separations',
     loadChildren: () => import('./features/separation/separation.routes').then(m => m.SEPARATION_ROUTES)
+  },
+  {
+    path: 'devices',
+    loadChildren: () => import('./features/device/device.routes').then(m => m.DEVICE_ROUTES)
+  },
+  {
+    path: 'attendance-punches',
+    loadChildren: () => import('./features/attendance/attendance.routes').then(m => m.ATTENDANCE_ROUTES)
   }
 ];

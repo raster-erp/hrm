@@ -26,12 +26,12 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('OneHealth HRM');
   });
 
-  it('should have 3 navigation groups with 10 total items', () => {
+  it('should have 4 navigation groups with 12 total items', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.navGroups.length).toBe(3);
+    expect(app.navGroups.length).toBe(4);
     const totalItems = app.navGroups.reduce((sum, g) => sum + g.items.length, 0);
-    expect(totalItems).toBe(10);
+    expect(totalItems).toBe(12);
   });
 
   it('should render navigation items', () => {
@@ -39,6 +39,6 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const navItems = compiled.querySelectorAll('.nav-item');
-    expect(navItems.length).toBe(10);
+    expect(navItems.length).toBe(12);
   });
 });
