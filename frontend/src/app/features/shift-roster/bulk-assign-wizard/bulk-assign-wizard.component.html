@@ -1,0 +1,176 @@
+<div class="bulk-assign-wizard-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Bulk Roster Assignment</h2>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <mat-stepper linear #stepper>
+          <!-- Step 1: Select Employees -->
+          <mat-step [completed]="isEmployeeStepValid">
+            <ng-template matStepLabel>Select Employees</ng-template>
+
+            <div class="step-content">
+              <div class="filter-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Filter by Department</mat-label>
+                  <mat-select [value]="selectedDepartmentId"
+                              (selectionChange)="onDepartmentFilterChange($event.value)">
+                    <mat-option [value]="null">All Departments</mat-option>
+                    @for (dept of departments; track dept.id) {
+                      <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <div class="selection-actions">
+                  <button mat-stroked-button type="button" (click)="selectAll()">Select All</button>
+                  <button mat-stroked-button type="button" (click)="deselectAll()">Deselect All</button>
+                </div>
+              </div>
+
+              <div class="selected-count">
+                {{ selectedEmployeeIds.size }} employee(s) selected
+              </div>
+
+              <div class="employee-list">
+                @for (employee of filteredEmployees; track employee.id) {
+                  <mat-checkbox
+                    [checked]="isEmployeeSelected(employee.id)"
+                    (change)="toggleEmployee(employee.id)">
+                    {{ employee.employeeCode }} — {{ employee.firstName }} {{ employee.lastName }}
+                  </mat-checkbox>
+                }
+                @if (filteredEmployees.length === 0) {
+                  <p class="no-data">No employees found.</p>
+                }
+              </div>
+
+              <div class="step-actions">
+                <button mat-button type="button" (click)="onCancel()">Cancel</button>
+                <button mat-raised-button color="primary" matStepperNext
+                        [disabled]="!isEmployeeStepValid">
+                  Next
+                </button>
+              </div>
+            </div>
+          </mat-step>
+
+          <!-- Step 2: Configure Shift -->
+          <mat-step [stepControl]="shiftForm">
+            <ng-template matStepLabel>Configure Shift</ng-template>
+
+            <div class="step-content">
+              <form [formGroup]="shiftForm">
+                <div class="form-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Shift</mat-label>
+                    <mat-select formControlName="shiftId">
+                      @for (shift of shifts; track shift.id) {
+                        <mat-option [value]="shift.id">{{ shift.name }} ({{ shift.startTime }} - {{ shift.endTime }})</mat-option>
+                      }
+                    </mat-select>
+                    @if (shiftForm.get('shiftId')?.hasError('required') && shiftForm.get('shiftId')?.touched) {
+                      <mat-error>Shift is required</mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput type="date" formControlName="effectiveDate">
+                    @if (shiftForm.get('effectiveDate')?.hasError('required') && shiftForm.get('effectiveDate')?.touched) {
+                      <mat-error>Effective date is required</mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>End Date</mat-label>
+                    <input matInput type="date" formControlName="endDate">
+                    <mat-hint>Leave empty for ongoing assignment</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Rotation Pattern (Optional)</mat-label>
+                    <mat-select formControlName="rotationPatternId">
+                      <mat-option [value]="null">None</mat-option>
+                      @for (pattern of rotationPatterns; track pattern.id) {
+                        <mat-option [value]="pattern.id">{{ pattern.name }} ({{ pattern.rotationDays }} days)</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </form>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" matStepperNext
+                        [disabled]="shiftForm.invalid">
+                  Next
+                </button>
+              </div>
+            </div>
+          </mat-step>
+
+          <!-- Step 3: Review & Confirm -->
+          <mat-step>
+            <ng-template matStepLabel>Review &amp; Confirm</ng-template>
+
+            <div class="step-content">
+              <div class="review-section">
+                <h3>Summary</h3>
+                <div class="review-grid">
+                  <div class="review-item">
+                    <span class="review-label">Selected Employees</span>
+                    <span class="review-value">{{ selectedEmployeeIds.size }}</span>
+                  </div>
+                  <div class="review-item">
+                    <span class="review-label">Shift</span>
+                    <span class="review-value">{{ selectedShiftName }}</span>
+                  </div>
+                  <div class="review-item">
+                    <span class="review-label">Effective Date</span>
+                    <span class="review-value">{{ shiftForm.value.effectiveDate }}</span>
+                  </div>
+                  <div class="review-item">
+                    <span class="review-label">End Date</span>
+                    <span class="review-value">{{ shiftForm.value.endDate || 'Ongoing' }}</span>
+                  </div>
+                  <div class="review-item">
+                    <span class="review-label">Rotation Pattern</span>
+                    <span class="review-value">{{ selectedRotationPatternName || 'None' }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-section">
+                <h3>Employees</h3>
+                <mat-list>
+                  @for (employee of selectedEmployees; track employee.id) {
+                    <mat-list-item>{{ employee.employeeCode }} — {{ employee.firstName }} {{ employee.lastName }}</mat-list-item>
+                  }
+                </mat-list>
+              </div>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="submitting">
+                  @if (submitting) {
+                    <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+                  }
+                  Submit
+                </button>
+              </div>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
