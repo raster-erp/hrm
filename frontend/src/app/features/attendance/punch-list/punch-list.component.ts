@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable } from 'rxjs';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AttendancePunchService } from '../../../services/attendance-punch.service';
 import { NotificationService } from '../../../services/notification.service';
 import { AttendancePunchResponse } from '../../../models/attendance-punch.model';
+import { Page } from '../../../models/page.model';
 
 @Component({
   selector: 'app-punch-list',
@@ -74,67 +76,37 @@ export class PunchListComponent implements OnInit {
     const hasDateRange = this.dateFrom && this.dateTo;
     const hasEmployee = this.employeeId;
 
+    let source$: Observable<Page<AttendancePunchResponse>>;
+
     if (hasEmployee && hasDateRange) {
-      this.punchService.getByEmployeeAndDateRange(
+      source$ = this.punchService.getByEmployeeAndDateRange(
         this.employeeId!, this.formatDate(this.dateFrom!), this.formatDate(this.dateTo!),
         this.pageIndex, this.pageSize
-      ).pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: page => {
-            this.dataSource.data = page.content;
-            this.totalElements = page.totalElements;
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load punch records');
-            this.loading = false;
-          }
-        });
+      );
     } else if (hasEmployee) {
-      this.punchService.getByEmployee(this.employeeId!, this.pageIndex, this.pageSize)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: page => {
-            this.dataSource.data = page.content;
-            this.totalElements = page.totalElements;
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load punch records');
-            this.loading = false;
-          }
-        });
+      source$ = this.punchService.getByEmployee(this.employeeId!, this.pageIndex, this.pageSize);
     } else if (hasDateRange) {
-      this.punchService.getByDateRange(
+      source$ = this.punchService.getByDateRange(
         this.formatDate(this.dateFrom!), this.formatDate(this.dateTo!),
         this.pageIndex, this.pageSize
-      ).pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: page => {
-            this.dataSource.data = page.content;
-            this.totalElements = page.totalElements;
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load punch records');
-            this.loading = false;
-          }
-        });
+      );
     } else {
-      this.punchService.getAll(this.pageIndex, this.pageSize)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: page => {
-            this.dataSource.data = page.content;
-            this.totalElements = page.totalElements;
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load punch records');
-            this.loading = false;
-          }
-        });
+      source$ = this.punchService.getAll(this.pageIndex, this.pageSize);
     }
+
+    source$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: page => {
+          this.dataSource.data = page.content;
+          this.totalElements = page.totalElements;
+          this.loading = false;
+        },
+        error: () => {
+          this.notificationService.error('Failed to load punch records');
+          this.loading = false;
+        }
+      });
   }
 
   onPageChange(event: PageEvent): void {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, map } from 'rxjs';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -74,57 +75,15 @@ export class DeviceListComponent implements OnInit {
     this.loading = true;
 
     if (this.selectedStatus && !this.selectedType) {
-      this.deviceService.getByStatus(this.selectedStatus)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: devices => {
-            this.totalElements = devices.length;
-            this.dataSource.data = devices.slice(
-              this.pageIndex * this.pageSize,
-              (this.pageIndex + 1) * this.pageSize
-            );
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load devices');
-            this.loading = false;
-          }
-        });
+      this.handleListResult(this.deviceService.getByStatus(this.selectedStatus));
     } else if (this.selectedType && !this.selectedStatus) {
-      this.deviceService.getByType(this.selectedType)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: devices => {
-            this.totalElements = devices.length;
-            this.dataSource.data = devices.slice(
-              this.pageIndex * this.pageSize,
-              (this.pageIndex + 1) * this.pageSize
-            );
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load devices');
-            this.loading = false;
-          }
-        });
+      this.handleListResult(this.deviceService.getByType(this.selectedType));
     } else if (this.selectedStatus && this.selectedType) {
-      this.deviceService.getByStatus(this.selectedStatus)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: devices => {
-            const filtered = devices.filter(d => d.type === this.selectedType);
-            this.totalElements = filtered.length;
-            this.dataSource.data = filtered.slice(
-              this.pageIndex * this.pageSize,
-              (this.pageIndex + 1) * this.pageSize
-            );
-            this.loading = false;
-          },
-          error: () => {
-            this.notificationService.error('Failed to load devices');
-            this.loading = false;
-          }
-        });
+      this.handleListResult(
+        this.deviceService.getByStatus(this.selectedStatus).pipe(
+          map(devices => devices.filter(d => d.type === this.selectedType))
+        )
+      );
     } else {
       this.deviceService.getAll(this.pageIndex, this.pageSize)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -140,6 +99,25 @@ export class DeviceListComponent implements OnInit {
           }
         });
     }
+  }
+
+  private handleListResult(source$: Observable<DeviceResponse[]>): void {
+    source$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: devices => {
+          this.totalElements = devices.length;
+          this.dataSource.data = devices.slice(
+            this.pageIndex * this.pageSize,
+            (this.pageIndex + 1) * this.pageSize
+          );
+          this.loading = false;
+        },
+        error: () => {
+          this.notificationService.error('Failed to load devices');
+          this.loading = false;
+        }
+      });
   }
 
   onPageChange(event: PageEvent): void {
