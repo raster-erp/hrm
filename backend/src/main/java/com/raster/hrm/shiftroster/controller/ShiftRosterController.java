@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -43,6 +45,13 @@ public class ShiftRosterController {
     @GetMapping("/employee/{employeeId}")
     public ResponseEntity<List<ShiftRosterResponse>> getByEmployeeId(@PathVariable Long employeeId) {
         return ResponseEntity.ok(shiftRosterService.getByEmployeeId(employeeId));
+    }
+
+    @GetMapping("/date-range")
+    public ResponseEntity<List<ShiftRosterResponse>> getByDateRange(
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate) {
+        return ResponseEntity.ok(shiftRosterService.getByDateRange(startDate, endDate));
     }
 
     @PostMapping

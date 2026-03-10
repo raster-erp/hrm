@@ -36,6 +36,12 @@ public interface ShiftRosterRepository extends JpaRepository<ShiftRoster, Long> 
             @Param("endDate") LocalDate endDate,
             @Param("excludeId") Long excludeId);
 
+    @Query("SELECT sr FROM ShiftRoster sr WHERE sr.effectiveDate <= :endDate " +
+           "AND (sr.endDate IS NULL OR sr.endDate >= :startDate)")
+    List<ShiftRoster> findByDateRange(
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
+
     Page<ShiftRoster> findAll(Pageable pageable);
 
     Page<ShiftRoster> findByEmployeeId(Long employeeId, Pageable pageable);
