@@ -1,0 +1,22 @@
+@use 'styles/variables' as *;
+
+.device-list-container {
+  width: 100%;
+}
+
+.device-table {
+  width: 100%;
+}
+
+.type-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.type-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+}
