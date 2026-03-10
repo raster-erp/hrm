@@ -14,6 +14,13 @@
   align-items: center;
   flex: 1;
   min-height: 40px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-smooth);
+
+  &:hover {
+    background: var(--accent-subtle);
+  }
 }
 
 .node-info {
@@ -23,18 +30,24 @@
 }
 
 .node-name {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
+  color: var(--text-primary);
 }
 
 .node-code {
-  color: $text-secondary;
+  color: var(--text-tertiary);
   font-size: 13px;
+  font-weight: 500;
 }
 
 .node-actions {
   display: flex;
   gap: 4px;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
 }
 
-
+.node-content:hover .node-actions {
+  opacity: 1;
+}

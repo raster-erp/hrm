@@ -4,93 +4,87 @@
       <mat-spinner diameter="48"></mat-spinner>
     </div>
   } @else if (contract) {
-    <!-- Contract Details Card -->
-    <mat-card class="detail-card">
-      <mat-card-header>
-        <mat-card-title>
-          <div class="header-row">
-            <h2>Contract Details</h2>
-            <div class="header-actions">
-              <button mat-raised-button color="accent" matTooltip="Renew Contract"
-                      (click)="renewContract()">
-                <mat-icon>autorenew</mat-icon>
-                Renew
-              </button>
-              <button mat-raised-button color="primary" (click)="editContract()">
-                <mat-icon>edit</mat-icon>
-                Edit
-              </button>
-              <button mat-button (click)="goBack()">
-                <mat-icon>arrow_back</mat-icon>
-                Back
-              </button>
-            </div>
+    <div class="page-hero" style="background: var(--gradient-hero-cool)">
+      <div class="page-hero-content">
+        <div class="page-hero-info">
+          <div class="page-hero-icon">
+            <mat-icon>description</mat-icon>
           </div>
-        </mat-card-title>
-      </mat-card-header>
+          <div class="page-hero-text">
+            <h2>Contract Details</h2>
+            <p>{{ contract.employeeName }} &mdash; {{ formatType(contract.contractType) }}</p>
+          </div>
+        </div>
+        <div class="page-hero-actions">
+          <button mat-raised-button class="btn-hero" (click)="renewContract()">
+            <mat-icon>autorenew</mat-icon>
+            Renew
+          </button>
+          <button mat-raised-button class="btn-hero" (click)="editContract()">
+            <mat-icon>edit</mat-icon>
+            Edit
+          </button>
+          <button mat-raised-button class="btn-hero" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
 
+    <mat-card class="detail-card">
       <mat-card-content>
-        <mat-list>
-          <mat-list-item>
+        <div class="detail-grid">
+          <div class="detail-item">
             <span class="label">Employee</span>
             <span class="value">{{ contract.employeeName }} ({{ contract.employeeCode }})</span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-
-          <mat-list-item>
+          </div>
+          <div class="detail-item">
             <span class="label">Contract Type</span>
             <span class="value">{{ formatType(contract.contractType) }}</span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-
-          <mat-list-item>
+          </div>
+          <div class="detail-item">
             <span class="label">Status</span>
             <span class="value">
               <span class="status-chip" [class]="'status-' + contract.status.toLowerCase()">
                 {{ contract.status }}
               </span>
             </span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-
-          <mat-list-item>
+          </div>
+          <div class="detail-item">
             <span class="label">Start Date</span>
             <span class="value">{{ contract.startDate }}</span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-
-          <mat-list-item>
+          </div>
+          <div class="detail-item">
             <span class="label">End Date</span>
             <span class="value">{{ contract.endDate }}</span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-
+          </div>
           @if (contract.terms) {
-            <mat-list-item>
+            <div class="detail-item full-width">
               <span class="label">Terms</span>
               <span class="value terms-value">{{ contract.terms }}</span>
-            </mat-list-item>
-            <mat-divider></mat-divider>
+            </div>
           }
-
-          <mat-list-item>
+          <div class="detail-item">
             <span class="label">Created</span>
             <span class="value">{{ contract.createdAt | date:'medium' }}</span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-
-          <mat-list-item>
+          </div>
+          <div class="detail-item">
             <span class="label">Last Updated</span>
             <span class="value">{{ contract.updatedAt | date:'medium' }}</span>
-          </mat-list-item>
-        </mat-list>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
 
     <!-- Timeline Card -->
     <mat-card class="timeline-card">
       <mat-card-header>
-        <mat-card-title><h3>Contract Timeline</h3></mat-card-title>
+        <mat-card-title>
+          <div class="info-section" style="padding: 0;">
+            <h3>Contract Timeline</h3>
+          </div>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="timeline">
@@ -111,8 +105,10 @@
     <mat-card class="amendments-card">
       <mat-card-header>
         <mat-card-title>
-          <div class="header-row">
-            <h3>Amendments</h3>
+          <div class="header-row" style="margin-bottom: 0;">
+            <div class="info-section" style="padding: 0;">
+              <h3>Amendments</h3>
+            </div>
             <button mat-raised-button color="primary" (click)="toggleAmendmentForm()">
               <mat-icon>{{ showAmendmentForm ? 'close' : 'add' }}</mat-icon>
               {{ showAmendmentForm ? 'Cancel' : 'Add Amendment' }}
@@ -122,7 +118,6 @@
       </mat-card-header>
 
       <mat-card-content>
-        <!-- Amendment Form -->
         @if (showAmendmentForm) {
           <div class="amendment-form-container">
             <form [formGroup]="amendmentForm" (ngSubmit)="submitAmendment()">
@@ -175,14 +170,12 @@
           </div>
         }
 
-        <!-- Amendments Loading -->
         @if (amendmentsLoading) {
           <div class="loading-container">
             <mat-spinner diameter="32"></mat-spinner>
           </div>
         }
 
-        <!-- Amendments List -->
         @if (!amendmentsLoading && amendments.length === 0) {
           <div class="no-data">
             <p>No amendments recorded</p>

@@ -6,43 +6,57 @@
 
 // Profile Header
 .profile-header-card {
-  margin-bottom: $spacing-lg;
+  margin-bottom: 24px;
   overflow: hidden;
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--border) !important;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-brand);
+  }
 }
 
 .profile-header {
   display: flex;
   align-items: flex-start;
-  gap: $spacing-lg;
-  padding: $spacing-lg;
+  gap: 24px;
+  padding: 28px 24px 24px;
 }
 
 .profile-photo {
   flex-shrink: 0;
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 96px;
+    height: 96px;
     border-radius: var(--radius-xl);
     object-fit: cover;
     box-shadow: var(--shadow-md);
+    border: 3px solid var(--surface-card);
   }
 }
 
 .photo-placeholder {
-  width: 100px;
-  height: 100px;
+  width: 96px;
+  height: 96px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  background: var(--gradient-brand);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-colored);
 
   mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
+    font-size: 44px;
+    width: 44px;
+    height: 44px;
     color: rgba(255, 255, 255, 0.9);
   }
 }
@@ -52,21 +66,22 @@
 
   h1 {
     margin: 0 0 4px;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
+    color: var(--text-primary);
     letter-spacing: -0.02em;
   }
 
   .employee-code {
     margin: 0 0 4px;
-    color: $text-hint;
+    color: var(--text-tertiary);
     font-size: 13px;
     font-weight: 500;
   }
 
   .designation {
-    margin: 0 0 10px;
-    color: $text-secondary;
+    margin: 0 0 12px;
+    color: var(--text-secondary);
     font-size: 14px;
     font-weight: 500;
   }
@@ -81,21 +96,23 @@
 // Tabs
 .tabs-card {
   padding: 0;
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--border) !important;
 }
 
 .tab-content {
-  padding: $spacing-lg;
+  padding: 24px;
 }
 
 // Info Sections
 .info-section {
-  padding: $spacing-md 0;
+  padding: 16px 0;
 
   h3 {
-    margin: 0 0 $spacing-md;
+    margin: 0 0 16px;
     font-size: 15px;
     font-weight: 600;
-    color: $text-primary;
+    color: var(--text-primary);
     letter-spacing: -0.01em;
   }
 }
@@ -105,7 +122,7 @@
   width: 100%;
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: $bp-tablet) {
   .profile-header {
     flex-direction: column;
     align-items: center;
@@ -117,9 +134,9 @@
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: $bp-mobile) {
   .profile-summary h1 {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   .photo-placeholder,
@@ -129,8 +146,8 @@
   }
 
   .photo-placeholder mat-icon {
-    font-size: 40px;
-    width: 40px;
-    height: 40px;
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
   }
 }

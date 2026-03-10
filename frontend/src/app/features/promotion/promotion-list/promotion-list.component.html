@@ -1,94 +1,100 @@
 <div class="promotion-list-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <div class="header-row">
-          <h2>Employee Promotions</h2>
-          <div class="header-actions">
-            <button mat-raised-button color="primary" routerLink="/promotions/new">
-              <mat-icon>add</mat-icon>
-              New Promotion
+  <div class="page-hero" style="background: var(--gradient-hero-green)">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Promotions</h2>
+          <p>Track employee career advancements</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" routerLink="/promotions/new">
+          <mat-icon>add</mat-icon>
+          New Promotion
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="full-width">
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <td mat-cell *matCellDef="let p">
+          <a class="employee-link" (click)="viewPromotion(p)">{{ p.employeeName }}</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="oldDesignationName">
+        <th mat-header-cell *matHeaderCellDef>From</th>
+        <td mat-cell *matCellDef="let p">{{ p.oldDesignationName || '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="newDesignationName">
+        <th mat-header-cell *matHeaderCellDef>To</th>
+        <td mat-cell *matCellDef="let p">
+          <span class="fw-600">{{ p.newDesignationName || '—' }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="effectiveDate">
+        <th mat-header-cell *matHeaderCellDef>Effective Date</th>
+        <td mat-cell *matCellDef="let p">{{ p.effectiveDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let p">
+          <span class="status-chip" [class]="'status-' + p.status.toLowerCase()">
+            {{ p.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let p">
+          <div class="row-actions">
+            <button mat-icon-button matTooltip="View"
+                    (click)="viewPromotion(p); $event.stopPropagation()">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deletePromotion(p); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
             </button>
           </div>
-        </div>
-      </mat-card-title>
-    </mat-card-header>
+        </td>
+      </ng-container>
 
-    <mat-card-content>
-      @if (loading) {
-        <div class="loading-container">
-          <mat-spinner diameter="48"></mat-spinner>
-        </div>
-      }
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="viewPromotion(row)" class="clickable-row"></tr>
+    </table>
 
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="full-width">
-          <ng-container matColumnDef="employeeName">
-            <th mat-header-cell *matHeaderCellDef>Employee</th>
-            <td mat-cell *matCellDef="let p">
-              <a class="data-link" (click)="viewPromotion(p)">{{ p.employeeName }}</a>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="oldDesignationName">
-            <th mat-header-cell *matHeaderCellDef>From Designation</th>
-            <td mat-cell *matCellDef="let p">{{ p.oldDesignationName || '—' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="newDesignationName">
-            <th mat-header-cell *matHeaderCellDef>To Designation</th>
-            <td mat-cell *matCellDef="let p">{{ p.newDesignationName || '—' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="effectiveDate">
-            <th mat-header-cell *matHeaderCellDef>Effective Date</th>
-            <td mat-cell *matCellDef="let p">{{ p.effectiveDate }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let p">
-              <span class="status-chip" [class]="'status-' + p.status.toLowerCase()">
-                {{ p.status }}
-              </span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let p">
-              <button mat-icon-button color="primary" matTooltip="View"
-                      (click)="viewPromotion(p); $event.stopPropagation()">
-                <mat-icon>visibility</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" matTooltip="Delete"
-                      (click)="deletePromotion(p); $event.stopPropagation()">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-              (click)="viewPromotion(row)" class="clickable-row"></tr>
-        </table>
-
-        @if (!loading && dataSource.data.length === 0) {
-          <div class="no-data">
-            <mat-icon>trending_up</mat-icon>
-            <p>No promotions found</p>
-          </div>
-        }
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>trending_up</mat-icon>
+        <p>No promotions found</p>
       </div>
+    }
+  </div>
 
-      <mat-paginator
-        [length]="totalElements"
-        [pageSize]="pageSize"
-        [pageIndex]="pageIndex"
-        [pageSizeOptions]="[5, 10, 25, 50]"
-        (page)="onPageChange($event)"
-        showFirstLastButtons>
-      </mat-paginator>
-    </mat-card-content>
-  </mat-card>
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
 </div>

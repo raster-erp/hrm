@@ -1,34 +1,46 @@
 <div class="transfer-detail">
   @if (loading) {
-    <mat-spinner diameter="40"></mat-spinner>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
   } @else if (transfer) {
-    <div class="page-header">
-      <h2>Transfer Details</h2>
-      <div class="action-buttons">
-        <button mat-stroked-button (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon> Back
-        </button>
-        @if (transfer.status === 'PENDING') {
-          <button mat-raised-button color="primary" (click)="approve()">
-            <mat-icon>check</mat-icon> Approve
+    <div class="page-hero" style="background: var(--gradient-hero-cool)">
+      <div class="page-hero-content">
+        <div class="page-hero-info">
+          <div class="page-hero-icon">
+            <mat-icon>swap_horiz</mat-icon>
+          </div>
+          <div class="page-hero-text">
+            <h2>Transfer &mdash; {{ transfer.employeeName }}</h2>
+            <p>{{ transfer.transferType }} Transfer</p>
+          </div>
+        </div>
+        <div class="page-hero-actions">
+          <button mat-raised-button class="btn-hero" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Back
           </button>
-          <button mat-raised-button color="warn" (click)="reject()">
-            <mat-icon>close</mat-icon> Reject
-          </button>
-        }
-        @if (transfer.status === 'APPROVED') {
-          <button mat-raised-button color="accent" (click)="execute()">
-            <mat-icon>play_arrow</mat-icon> Execute
-          </button>
-        }
+          @if (transfer.status === 'PENDING') {
+            <button mat-raised-button class="btn-hero" (click)="approve()">
+              <mat-icon>check</mat-icon>
+              Approve
+            </button>
+            <button mat-raised-button class="btn-hero" (click)="reject()">
+              <mat-icon>close</mat-icon>
+              Reject
+            </button>
+          }
+          @if (transfer.status === 'APPROVED') {
+            <button mat-raised-button class="btn-hero" (click)="execute()">
+              <mat-icon>play_arrow</mat-icon>
+              Execute
+            </button>
+          }
+        </div>
       </div>
     </div>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ transfer.employeeName }}</mat-card-title>
-        <mat-card-subtitle>{{ transfer.transferType }} Transfer</mat-card-subtitle>
-      </mat-card-header>
+    <mat-card class="detail-card">
       <mat-card-content>
         <div class="detail-grid">
           <div class="detail-item">
@@ -45,7 +57,7 @@
           </div>
           <div class="detail-item">
             <span class="label">To Department</span>
-            <span class="value">{{ transfer.toDepartmentName || '—' }}</span>
+            <span class="value fw-600">{{ transfer.toDepartmentName || '—' }}</span>
           </div>
           @if (transfer.fromBranch) {
             <div class="detail-item">
@@ -56,7 +68,7 @@
           @if (transfer.toBranch) {
             <div class="detail-item">
               <span class="label">To Branch</span>
-              <span class="value">{{ transfer.toBranch }}</span>
+              <span class="value fw-600">{{ transfer.toBranch }}</span>
             </div>
           }
           <div class="detail-item">

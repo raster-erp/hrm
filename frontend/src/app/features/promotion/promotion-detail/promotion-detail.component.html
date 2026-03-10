@@ -1,34 +1,46 @@
 <div class="promotion-detail">
   @if (loading) {
-    <mat-spinner diameter="40"></mat-spinner>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
   } @else if (promotion) {
-    <div class="page-header">
-      <h2>Promotion Details</h2>
-      <div class="action-buttons">
-        <button mat-stroked-button (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon> Back
-        </button>
-        @if (promotion.status === 'PENDING') {
-          <button mat-raised-button color="primary" (click)="approve()">
-            <mat-icon>check</mat-icon> Approve
+    <div class="page-hero" style="background: var(--gradient-hero-green)">
+      <div class="page-hero-content">
+        <div class="page-hero-info">
+          <div class="page-hero-icon">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+          <div class="page-hero-text">
+            <h2>Promotion &mdash; {{ promotion.employeeName }}</h2>
+            <p>{{ promotion.oldDesignationName }} → {{ promotion.newDesignationName }}</p>
+          </div>
+        </div>
+        <div class="page-hero-actions">
+          <button mat-raised-button class="btn-hero" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Back
           </button>
-          <button mat-raised-button color="warn" (click)="reject()">
-            <mat-icon>close</mat-icon> Reject
-          </button>
-        }
-        @if (promotion.status === 'APPROVED') {
-          <button mat-raised-button color="accent" (click)="execute()">
-            <mat-icon>play_arrow</mat-icon> Execute
-          </button>
-        }
+          @if (promotion.status === 'PENDING') {
+            <button mat-raised-button class="btn-hero" (click)="approve()">
+              <mat-icon>check</mat-icon>
+              Approve
+            </button>
+            <button mat-raised-button class="btn-hero" (click)="reject()">
+              <mat-icon>close</mat-icon>
+              Reject
+            </button>
+          }
+          @if (promotion.status === 'APPROVED') {
+            <button mat-raised-button class="btn-hero" (click)="execute()">
+              <mat-icon>play_arrow</mat-icon>
+              Execute
+            </button>
+          }
+        </div>
       </div>
     </div>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ promotion.employeeName }}</mat-card-title>
-        <mat-card-subtitle>Promotion Record</mat-card-subtitle>
-      </mat-card-header>
+    <mat-card class="detail-card">
       <mat-card-content>
         <div class="detail-grid">
           <div class="detail-item">
@@ -41,7 +53,7 @@
           </div>
           <div class="detail-item">
             <span class="label">New Designation</span>
-            <span class="value">{{ promotion.newDesignationName }}</span>
+            <span class="value fw-600">{{ promotion.newDesignationName }}</span>
           </div>
           @if (promotion.oldGrade) {
             <div class="detail-item">
@@ -52,7 +64,7 @@
           @if (promotion.newGrade) {
             <div class="detail-item">
               <span class="label">New Grade</span>
-              <span class="value">{{ promotion.newGrade }}</span>
+              <span class="value fw-600">{{ promotion.newGrade }}</span>
             </div>
           }
           <div class="detail-item">

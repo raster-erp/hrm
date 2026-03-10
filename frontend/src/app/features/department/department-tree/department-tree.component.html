@@ -1,21 +1,29 @@
 <div class="department-tree-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <div class="header-row">
-          <h2>Departments</h2>
-          <button mat-raised-button color="primary" (click)="addRootDepartment()">
-            <mat-icon>add</mat-icon>
-            Add Root Department
-          </button>
+  <div class="page-hero" style="background: var(--gradient-hero-green)">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>account_tree</mat-icon>
         </div>
-      </mat-card-title>
-    </mat-card-header>
+        <div class="page-hero-text">
+          <h2>Departments</h2>
+          <p>Organize your department hierarchy</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" (click)="addRootDepartment()">
+          <mat-icon>add</mat-icon>
+          Add Root Department
+        </button>
+      </div>
+    </div>
+  </div>
 
+  <mat-card>
     <mat-card-content>
       @if (loading) {
         <div class="loading-container">
-          <mat-spinner diameter="48"></mat-spinner>
+          <mat-spinner diameter="40"></mat-spinner>
         </div>
       }
 
@@ -41,14 +49,14 @@
                 }
               </div>
               <div class="node-actions">
-                <button mat-icon-button matTooltip="Add Child" color="primary" (click)="addChildDepartment(node)">
+                <button mat-icon-button matTooltip="Add Child" (click)="addChildDepartment(node)">
                   <mat-icon>add</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Edit" color="accent" (click)="editDepartment(node)">
+                <button mat-icon-button matTooltip="Edit" (click)="editDepartment(node)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteDepartment(node)">
-                  <mat-icon>delete</mat-icon>
+                <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteDepartment(node)">
+                  <mat-icon>delete_outline</mat-icon>
                 </button>
               </div>
             </div>
@@ -71,14 +79,14 @@
                 }
               </div>
               <div class="node-actions">
-                <button mat-icon-button matTooltip="Add Child" color="primary" (click)="addChildDepartment(node)">
+                <button mat-icon-button matTooltip="Add Child" (click)="addChildDepartment(node)">
                   <mat-icon>add</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Edit" color="accent" (click)="editDepartment(node)">
+                <button mat-icon-button matTooltip="Edit" (click)="editDepartment(node)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteDepartment(node)">
-                  <mat-icon>delete</mat-icon>
+                <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteDepartment(node)">
+                  <mat-icon>delete_outline</mat-icon>
                 </button>
               </div>
             </div>

@@ -7,14 +7,17 @@
 }
 
 .label {
-  font-weight: 500;
-  color: $text-secondary;
+  font-weight: 600;
+  color: var(--text-tertiary);
   min-width: 150px;
   display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .value {
-  color: $text-primary;
+  color: var(--text-primary);
 }
 
 .terms-value {
@@ -34,7 +37,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background-color: $border-color;
+    background: var(--border);
   }
 }
 
@@ -54,23 +57,28 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid $link-color;
-  background-color: white;
+  border: 2px solid var(--accent);
+  background-color: var(--surface-card);
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.timeline-item:hover .timeline-dot {
+  transform: scale(1.2);
 }
 
 .timeline-start .timeline-dot {
-  background-color: $color-green;
-  border-color: $color-green;
+  background-color: var(--status-success);
+  border-color: var(--status-success);
 }
 
 .timeline-end .timeline-dot {
-  background-color: $color-red;
-  border-color: $color-red;
+  background-color: var(--status-error);
+  border-color: var(--status-error);
 }
 
 .timeline-amendment .timeline-dot {
-  background-color: $color-orange;
-  border-color: $color-orange;
+  background-color: var(--status-warning);
+  border-color: var(--status-warning);
 }
 
 .timeline-content {
@@ -81,21 +89,22 @@
 
 .timeline-date {
   font-size: 12px;
-  color: $text-hint;
-  font-weight: 500;
+  color: var(--text-tertiary);
+  font-weight: 600;
 }
 
 .timeline-label {
   font-size: 14px;
-  color: $text-primary;
+  color: var(--text-primary);
 }
 
 // Amendment form
 .amendment-form-container {
   padding: 16px;
   margin-bottom: 16px;
-  background-color: $surface-variant;
-  border-radius: 8px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
 }
 
 .form-field {
@@ -113,18 +122,19 @@
   h4 {
     margin: 0 0 4px 0;
     font-size: 14px;
-    font-weight: 500;
-    color: $text-secondary;
+    font-weight: 600;
+    color: var(--text-secondary);
   }
 
   p {
     margin: 0;
     white-space: pre-wrap;
-    color: $text-primary;
+    color: var(--text-primary);
   }
 }
 
 .amendment-meta {
   margin-top: 8px;
-  color: $text-hint;
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
 }

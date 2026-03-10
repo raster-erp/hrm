@@ -1,85 +1,61 @@
-// ──────────────────────────────────────────
-// Status colors — SCSS aliases to CSS vars
-// (used in component files; resolved at runtime)
-// ──────────────────────────────────────────
-$status-success-bg: var(--status-success-bg);
-$status-success-text: var(--status-success-text);
+// ─── Layout ───────────────────────────────────────────────────────────
+$sidenav-width: 260px;
+$sidenav-collapsed-width: 68px;
+$toolbar-height: 56px;
+$content-padding: 28px;
+$content-padding-mobile: 16px;
 
-$status-error-bg: var(--status-error-bg);
-$status-error-text: var(--status-error-text);
+// ─── Breakpoints ──────────────────────────────────────────────────────
+$bp-mobile: 600px;
+$bp-tablet: 960px;
+$bp-desktop: 1280px;
+$bp-wide: 1920px;
 
-$status-warning-bg: var(--status-warning-bg);
-$status-warning-text: var(--status-warning-text);
+// ─── Form widths ──────────────────────────────────────────────────────
+$form-max-width-sm: 640px;
+$form-max-width-md: 800px;
+$form-max-width-lg: 960px;
 
-$status-info-bg: var(--status-info-bg);
-$status-info-text: var(--status-info-text);
+// ─── Z-index ─────────────────────────────────────────────────────────
+$z-sidebar: 1000;
+$z-topbar: 900;
+$z-backdrop: 800;
+$z-dropdown: 1100;
+$z-modal: 1200;
+$z-toast: 1300;
 
-$status-danger-bg: var(--status-error-bg);
-$status-danger-text: var(--status-error-text);
+// ─── Spacing ─────────────────────────────────────────────────────────
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+$space-10: 40px;
+$space-12: 48px;
+$space-16: 64px;
 
-// ──────────────────────────────────────────
-// Text hierarchy — SCSS aliases to CSS vars
-// ──────────────────────────────────────────
+// ─── Legacy Aliases ──────────────────────────────────────────────────
 $text-primary: var(--text-primary);
 $text-secondary: var(--text-secondary);
 $text-hint: var(--text-tertiary);
-$text-label: var(--text-secondary);
-
-// ──────────────────────────────────────────
-// Surfaces & borders — SCSS aliases to CSS vars
-// ──────────────────────────────────────────
-$surface-variant: var(--surface-sunken);
-$surface-hover: var(--surface);
+$link-color: var(--accent);
 $border-color: var(--border);
-$placeholder-bg: var(--surface-sunken);
-$placeholder-icon: var(--text-tertiary);
-$upload-border: var(--border);
-
-// ──────────────────────────────────────────
-// Link / accent
-// ──────────────────────────────────────────
-$link-color: var(--accent-dark);
-
-// ──────────────────────────────────────────
-// Accent indicator colors — SCSS aliases
-// ──────────────────────────────────────────
+$surface-variant: var(--surface-sunken);
+$upload-border: var(--border-strong);
 $color-green: var(--status-success);
 $color-red: var(--status-error);
 $color-orange: var(--status-warning);
 $color-blue: var(--status-info);
-$color-purple: #8b5cf6;
 
-// ──────────────────────────────────────────
-// Layout (compile-time constants)
-// ──────────────────────────────────────────
 $spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 $spacing-xl: 32px;
-$spacing-2xl: 40px;
-$spacing-3xl: 48px;
 
-$content-padding: 32px;
-$content-padding-mobile: $spacing-md;
-$sidenav-width: 260px;
-$toolbar-height: 60px;
-$form-max-width-sm: 800px;
-$form-max-width-md: 904px;
-$form-max-width-lg: 960px;
-$content-max-width: 1200px;
-$dashboard-max-width: 1400px;
-
-// Table — SCSS aliases to CSS vars
-$table-header-bg: var(--table-header-bg);
-$table-row-hover: var(--table-row-hover);
-$table-row-alt: var(--surface-sunken);
-$table-border: var(--table-border);
-
-// ──────────────────────────────────────────
-// Breakpoints
-// ──────────────────────────────────────────
-$breakpoint-sm: 600px;
-$breakpoint-md: 960px;
-$breakpoint-lg: 1280px;
-$breakpoint-xl: 1920px;
+$breakpoint-sm: $bp-mobile;
+$breakpoint-md: $bp-tablet;
+$breakpoint-lg: $bp-desktop;
+$breakpoint-xl: $bp-wide;

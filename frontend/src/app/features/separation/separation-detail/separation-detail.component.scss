@@ -19,8 +19,9 @@
   flex-wrap: wrap;
   margin-bottom: 16px;
   padding: 16px;
-  background-color: $surface-variant;
-  border-radius: 8px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
 
   mat-form-field {
     flex: 1;

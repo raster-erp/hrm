@@ -1,29 +1,39 @@
 <div class="id-card-detail">
   @if (loading) {
-    <mat-spinner diameter="40"></mat-spinner>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
   } @else if (idCard) {
-    <div class="page-header">
-      <h2>ID Card Details</h2>
-      <div class="action-buttons">
-        <button mat-stroked-button (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon> Back
-        </button>
-        <button mat-raised-button color="primary" (click)="editIdCard()">
-          <mat-icon>edit</mat-icon> Edit
-        </button>
+    <div class="page-hero">
+      <div class="page-hero-content">
+        <div class="page-hero-info">
+          <div class="page-hero-icon">
+            <mat-icon>badge</mat-icon>
+          </div>
+          <div class="page-hero-text">
+            <h2>ID Card &mdash; {{ idCard.cardNumber }}</h2>
+            <p>{{ idCard.employeeName }} ({{ idCard.employeeCode }})</p>
+          </div>
+        </div>
+        <div class="page-hero-actions">
+          <button mat-raised-button class="btn-hero" (click)="editIdCard()">
+            <mat-icon>edit</mat-icon>
+            Edit
+          </button>
+          <button mat-raised-button class="btn-hero" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Back
+          </button>
+        </div>
       </div>
     </div>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ idCard.cardNumber }}</mat-card-title>
-        <mat-card-subtitle>{{ idCard.employeeName }} ({{ idCard.employeeCode }})</mat-card-subtitle>
-      </mat-card-header>
+    <mat-card class="detail-card">
       <mat-card-content>
         <div class="detail-grid">
           <div class="detail-item">
             <span class="label">Card Number</span>
-            <span class="value">{{ idCard.cardNumber }}</span>
+            <span class="value"><span class="code-badge">{{ idCard.cardNumber }}</span></span>
           </div>
           <div class="detail-item">
             <span class="label">Employee</span>
@@ -31,7 +41,7 @@
           </div>
           <div class="detail-item">
             <span class="label">Employee Code</span>
-            <span class="value">{{ idCard.employeeCode }}</span>
+            <span class="value"><span class="code-badge">{{ idCard.employeeCode }}</span></span>
           </div>
           <div class="detail-item">
             <span class="label">Issue Date</span>

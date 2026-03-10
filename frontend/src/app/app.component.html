@@ -8,10 +8,12 @@
   <aside class="sidebar" [class.open]="mobileMenuOpen">
     <div class="sidebar-head">
       <div class="logo">
-        <div class="logo-mark"><span>O</span></div>
+        <div class="logo-mark">
+          <span>H</span>
+        </div>
         <div class="logo-text">
-          <span class="logo-name">OneHealth</span>
-          <span class="logo-badge">HRM</span>
+          <span class="logo-name">HRM</span>
+          <span class="logo-badge">Pro</span>
         </div>
       </div>
     </div>
@@ -38,7 +40,7 @@
     <div class="sidebar-foot">
       @if (!isMobile) {
         <button class="sidebar-collapse" (click)="toggleSidebar()"
-                [matTooltip]="sidebarCollapsed ? 'Expand sidebar' : ''"
+                [matTooltip]="sidebarCollapsed ? 'Expand' : ''"
                 matTooltipPosition="right">
           <mat-icon>{{ sidebarCollapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
           <span class="collapse-text">Collapse</span>
@@ -46,7 +48,7 @@
       }
       <div class="user-block">
         <div class="user-avatar">
-          <mat-icon>person</mat-icon>
+          <span>AU</span>
         </div>
         <div class="user-meta">
           <span class="user-name">Admin User</span>
@@ -58,6 +60,7 @@
 
   <!-- Main -->
   <div class="main">
+    <div class="topbar-accent"></div>
     <header class="topbar">
       <div class="topbar-left">
         @if (isMobile) {
@@ -65,12 +68,15 @@
             <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
           </button>
         }
-        <h1 class="topbar-title">{{ title }}</h1>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item">{{ title }}</span>
+        </div>
       </div>
       <div class="topbar-right">
         <div class="topbar-search">
           <mat-icon class="topbar-search-icon">search</mat-icon>
           <input class="topbar-search-input" type="text" placeholder="Search..." />
+          <span class="search-shortcut">⌘K</span>
         </div>
         <div class="topbar-actions">
           <button mat-icon-button class="topbar-btn theme-toggle"
@@ -81,9 +87,6 @@
           <button mat-icon-button class="topbar-btn" matTooltip="Notifications">
             <mat-icon>notifications_none</mat-icon>
             <span class="notif-dot"></span>
-          </button>
-          <button mat-icon-button class="topbar-btn" matTooltip="Settings">
-            <mat-icon>settings</mat-icon>
           </button>
         </div>
       </div>

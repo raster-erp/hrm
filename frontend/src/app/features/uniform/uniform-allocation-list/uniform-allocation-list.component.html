@@ -1,88 +1,93 @@
 <div class="allocation-list-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <div class="header-row">
+  <div class="page-hero" style="background: var(--gradient-hero-cool)">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>assignment</mat-icon>
+        </div>
+        <div class="page-hero-text">
           <h2>Uniform Allocations</h2>
-          <div class="header-actions">
-            <button mat-stroked-button (click)="goBack()">
-              <mat-icon>arrow_back</mat-icon> Back to Catalog
-            </button>
-            <button mat-raised-button color="primary" (click)="openAllocationDialog()">
-              <mat-icon>add</mat-icon>
-              Allocate Uniform
-            </button>
-          </div>
+          <p>Track uniform distribution to employees</p>
         </div>
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      @if (loading) {
-        <div class="loading-container">
-          <mat-spinner diameter="48"></mat-spinner>
-        </div>
-      }
-
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="full-width">
-          <ng-container matColumnDef="employeeName">
-            <th mat-header-cell *matHeaderCellDef>Employee</th>
-            <td mat-cell *matCellDef="let a">{{ a.employeeName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="uniformName">
-            <th mat-header-cell *matHeaderCellDef>Uniform</th>
-            <td mat-cell *matCellDef="let a">{{ a.uniformName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="allocatedDate">
-            <th mat-header-cell *matHeaderCellDef>Allocated</th>
-            <td mat-cell *matCellDef="let a">{{ a.allocatedDate }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="returnedDate">
-            <th mat-header-cell *matHeaderCellDef>Returned</th>
-            <td mat-cell *matCellDef="let a">{{ a.returnedDate || '—' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef>Qty</th>
-            <td mat-cell *matCellDef="let a">{{ a.quantity }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let a">
-              <span class="status-chip" [class]="'status-' + a.status.toLowerCase()">
-                {{ a.status }}
-              </span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let a">
-              @if (a.status === 'ALLOCATED') {
-                <button mat-icon-button color="primary" matTooltip="Mark Returned"
-                        (click)="returnUniform(a); $event.stopPropagation()">
-                  <mat-icon>assignment_return</mat-icon>
-                </button>
-              }
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-
-        @if (!loading && dataSource.data.length === 0) {
-          <div class="no-data">
-            <mat-icon>checkroom</mat-icon>
-            <p>No allocations found</p>
-          </div>
-        }
       </div>
-    </mat-card-content>
-  </mat-card>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Catalog
+        </button>
+        <button mat-raised-button class="btn-hero" (click)="openAllocationDialog()">
+          <mat-icon>add</mat-icon>
+          Allocate Uniform
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="full-width">
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <td mat-cell *matCellDef="let a">{{ a.employeeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="uniformName">
+        <th mat-header-cell *matHeaderCellDef>Uniform</th>
+        <td mat-cell *matCellDef="let a">
+          <span class="fw-600">{{ a.uniformName }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="allocatedDate">
+        <th mat-header-cell *matHeaderCellDef>Allocated</th>
+        <td mat-cell *matCellDef="let a">{{ a.allocatedDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="returnedDate">
+        <th mat-header-cell *matHeaderCellDef>Returned</th>
+        <td mat-cell *matCellDef="let a">{{ a.returnedDate || '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Qty</th>
+        <td mat-cell *matCellDef="let a">{{ a.quantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let a">
+          <span class="status-chip" [class]="'status-' + a.status.toLowerCase()">
+            {{ a.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let a">
+          @if (a.status === 'ALLOCATED') {
+            <button mat-icon-button color="primary" matTooltip="Mark Returned"
+                    (click)="returnUniform(a); $event.stopPropagation()">
+              <mat-icon>assignment_return</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>checkroom</mat-icon>
+        <p>No allocations found</p>
+      </div>
+    }
+  </div>
 </div>
