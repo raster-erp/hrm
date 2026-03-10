@@ -186,8 +186,8 @@
 | Backend Development | Implement auto-rotation engine based on defined patterns | Done |
 | Backend Development | Add conflict detection (overlapping shifts, insufficient rest gap) | Done |
 | Frontend Development | Build shift master setup form with time pickers and grace settings | Done |
-| Frontend Development | Build roster calendar view with drag-and-drop assignment | Done |
-| Frontend Development | Build bulk roster assignment wizard (by department, team, or group) | Done |
+| Frontend Development | Build roster calendar view with drag-and-drop assignment | In Progress |
+| Frontend Development | Build bulk roster assignment wizard (by department, team, or group) | In Progress |
 | Integration Testing | Validate roster assignment, rotation, and conflict detection | Not Started |
 | UAT & QA | Conduct user acceptance testing for shift roster planning | Not Started |
 | Deployment | Deploy shift roster module to staging and production | Not Started |
