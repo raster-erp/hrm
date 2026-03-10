@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -25,7 +25,6 @@ import { UniformAllocationDialogComponent } from '../uniform-allocation-dialog/u
   ],
   templateUrl: './uniform-allocation-list.component.html',
   styleUrl: './uniform-allocation-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UniformAllocationListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

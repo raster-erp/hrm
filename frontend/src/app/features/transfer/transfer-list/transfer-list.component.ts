@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -24,7 +24,6 @@ import { TransferResponse } from '../../../models/transfer.model';
   ],
   templateUrl: './transfer-list.component.html',
   styleUrl: './transfer-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransferListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

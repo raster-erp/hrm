@@ -1,51 +1,95 @@
-<mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav [mode]="sidenavMode" [opened]="sidenavOpened"
-               class="app-sidenav" (closedStart)="sidenavOpened = false">
-    <div class="sidenav-brand">
-      <div class="brand-logo">
-        <mat-icon>hub</mat-icon>
-      </div>
-      <div class="brand-text">
-        <span class="brand-title">OneHealth</span>
-        <span class="brand-subtitle">HR Management</span>
+<div class="shell" [class.collapsed]="sidebarCollapsed && !isMobile">
+  <!-- Backdrop -->
+  @if (mobileMenuOpen) {
+    <div class="backdrop" (click)="mobileMenuOpen = false"></div>
+  }
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.open]="mobileMenuOpen">
+    <div class="sidebar-head">
+      <div class="logo">
+        <div class="logo-mark"><span>O</span></div>
+        <div class="logo-text">
+          <span class="logo-name">OneHealth</span>
+          <span class="logo-badge">HRM</span>
+        </div>
       </div>
     </div>
 
-    <div class="sidenav-nav">
-      @for (group of navGroups; track group.label; let i = $index) {
+    <nav class="sidebar-body">
+      @for (group of navGroups; track group.label) {
         <div class="nav-group">
-          <div class="nav-group-label">{{ group.label }}</div>
-          <mat-nav-list dense>
-            @for (item of group.items; track item.path) {
-              <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link"
-                 (click)="onNavClick()">
-                <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-                <span matListItemTitle>{{ item.label }}</span>
-              </a>
-            }
-          </mat-nav-list>
+          <span class="nav-group-title">{{ group.label }}</span>
+          @for (item of group.items; track item.path) {
+            <a class="nav-item"
+               [routerLink]="item.path"
+               routerLinkActive="nav-item--active"
+               [matTooltip]="sidebarCollapsed && !isMobile ? item.label : ''"
+               matTooltipPosition="right"
+               (click)="onNavClick()">
+              <mat-icon class="nav-item-icon">{{ item.icon }}</mat-icon>
+              <span class="nav-item-text">{{ item.label }}</span>
+            </a>
+          }
         </div>
       }
-    </div>
-  </mat-sidenav>
+    </nav>
 
-  <mat-sidenav-content class="app-content">
-    <mat-toolbar class="app-toolbar">
-      <button mat-icon-button class="menu-button" (click)="sidenav.toggle()"
-              aria-label="Toggle navigation">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span class="toolbar-title">{{ title }}</span>
-      <span class="toolbar-spacer"></span>
-      <button mat-icon-button aria-label="Notifications" class="toolbar-action">
-        <mat-icon>notifications_none</mat-icon>
-      </button>
-      <div class="user-avatar">
-        <mat-icon>account_circle</mat-icon>
+    <div class="sidebar-foot">
+      @if (!isMobile) {
+        <button class="sidebar-collapse" (click)="toggleSidebar()"
+                [matTooltip]="sidebarCollapsed ? 'Expand sidebar' : ''"
+                matTooltipPosition="right">
+          <mat-icon>{{ sidebarCollapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
+          <span class="collapse-text">Collapse</span>
+        </button>
+      }
+      <div class="user-block">
+        <div class="user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="user-meta">
+          <span class="user-name">Admin User</span>
+          <span class="user-role">Administrator</span>
+        </div>
       </div>
-    </mat-toolbar>
-    <main class="content-area">
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        @if (isMobile) {
+          <button mat-icon-button class="menu-trigger" (click)="mobileMenuOpen = !mobileMenuOpen">
+            <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+          </button>
+        }
+        <h1 class="topbar-title">{{ title }}</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <mat-icon class="topbar-search-icon">search</mat-icon>
+          <input class="topbar-search-input" type="text" placeholder="Search..." />
+        </div>
+        <div class="topbar-actions">
+          <button mat-icon-button class="topbar-btn theme-toggle"
+                  (click)="themeService.toggle()"
+                  [matTooltip]="(themeService.isDark$ | async) ? 'Light mode' : 'Dark mode'">
+            <mat-icon>{{ (themeService.isDark$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+          </button>
+          <button mat-icon-button class="topbar-btn" matTooltip="Notifications">
+            <mat-icon>notifications_none</mat-icon>
+            <span class="notif-dot"></span>
+          </button>
+          <button mat-icon-button class="topbar-btn" matTooltip="Settings">
+            <mat-icon>settings</mat-icon>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="page-content">
       <router-outlet></router-outlet>
     </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,7 +30,6 @@ import { EmployeeResponse } from '../../../models/employee.model';
   ],
   templateUrl: './id-card-form.component.html',
   styleUrl: './id-card-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IdCardFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

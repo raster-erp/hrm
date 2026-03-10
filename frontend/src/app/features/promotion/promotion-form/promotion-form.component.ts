@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -31,7 +31,6 @@ import { DesignationResponse } from '../../../models/designation.model';
   ],
   templateUrl: './promotion-form.component.html',
   styleUrl: './promotion-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PromotionFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -19,7 +19,6 @@ import { SeparationResponse } from '../../../models/separation.model';
   ],
   templateUrl: './separation-list.component.html',
   styleUrl: './separation-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeparationListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

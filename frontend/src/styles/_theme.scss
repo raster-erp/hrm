@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 // ──────────────────────────────────────────
-// M3 Theme – Seed color #00cc99
+// M3 Themes – Seed #00cc99
 // ──────────────────────────────────────────
 $light-theme: mat.define-theme((
   color: (
@@ -10,8 +10,8 @@ $light-theme: mat.define-theme((
     tertiary: mat.$cyan-palette,
   ),
   typography: (
-    brand-family: '"Inter", "Roboto", system-ui, sans-serif',
-    plain-family: '"Inter", "Roboto", system-ui, sans-serif',
+    brand-family: '"Inter", system-ui, -apple-system, sans-serif',
+    plain-family: '"Inter", system-ui, -apple-system, sans-serif',
   ),
   density: (
     scale: 0,
@@ -25,8 +25,8 @@ $dark-theme: mat.define-theme((
     tertiary: mat.$cyan-palette,
   ),
   typography: (
-    brand-family: '"Inter", "Roboto", system-ui, sans-serif',
-    plain-family: '"Inter", "Roboto", system-ui, sans-serif',
+    brand-family: '"Inter", system-ui, -apple-system, sans-serif',
+    plain-family: '"Inter", system-ui, -apple-system, sans-serif',
   ),
   density: (
     scale: 0,
@@ -34,131 +34,159 @@ $dark-theme: mat.define-theme((
 ));
 
 // ──────────────────────────────────────────
-// M3 Design Tokens
+// Shared tokens (don't change between themes)
 // ──────────────────────────────────────────
 html {
-  // ── Primary tonal palette (seed #00cc99) ──
-  --m3-primary: #006b55;
-  --m3-on-primary: #ffffff;
-  --m3-primary-container: #7ef8d0;
-  --m3-on-primary-container: #002118;
-  --m3-primary-fixed-dim: #5edbb5;
+  // ── Radius ──
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
 
-  // ── Secondary (desaturated teal) ──
-  --m3-secondary: #4b635a;
-  --m3-on-secondary: #ffffff;
-  --m3-secondary-container: #cde9dc;
-  --m3-on-secondary-container: #072018;
+  // ── Transitions ──
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+}
 
-  // ── Tertiary (complementary blue) ──
-  --m3-tertiary: #406573;
-  --m3-on-tertiary: #ffffff;
-  --m3-tertiary-container: #c3eafb;
-  --m3-on-tertiary-container: #001f29;
+// ──────────────────────────────────────────
+// LIGHT THEME (default)
+// ──────────────────────────────────────────
+html, body {
+  // ── Brand accent (teal) ──
+  --accent: #00cc99;
+  --accent-dark: #00a67d;
+  --accent-darker: #008563;
+  --accent-light: #33d6ad;
+  --accent-lighter: #e6faf4;
+  --accent-subtle: rgba(0, 204, 153, 0.08);
+  --accent-hover: rgba(0, 204, 153, 0.12);
 
-  // ── Error ──
-  --m3-error: #ba1a1a;
-  --m3-on-error: #ffffff;
-  --m3-error-container: #ffdad6;
-  --m3-on-error-container: #410002;
+  // ── Sidebar (always dark) ──
+  --sidebar-bg: #0f172a;
+  --sidebar-bg-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-bg-active: rgba(0, 204, 153, 0.15);
+  --sidebar-text: #94a3b8;
+  --sidebar-text-active: #00cc99;
+  --sidebar-text-heading: #64748b;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-brand-gradient: linear-gradient(135deg, #00cc99 0%, #00a3cc 100%);
 
-  // ── Surface / Surface-container hierarchy ──
-  --m3-surface: #f5fbf7;
-  --m3-surface-dim: #d5dbd7;
-  --m3-surface-bright: #f5fbf7;
-  --m3-surface-container-lowest: #ffffff;
-  --m3-surface-container-low: #eff5f1;
-  --m3-surface-container: #e9efeb;
-  --m3-surface-container-high: #e3eae6;
-  --m3-surface-container-highest: #dee4e0;
-  --m3-on-surface: #171d1a;
-  --m3-on-surface-variant: #3f4945;
-  --m3-inverse-surface: #2c322f;
-  --m3-inverse-on-surface: #ecf2ee;
+  // ── Content surfaces ──
+  --surface: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f1f5f9;
+  --surface-overlay: rgba(15, 23, 42, 0.04);
 
-  // ── Outline ──
-  --m3-outline: #6f7975;
-  --m3-outline-variant: #bfc9c3;
+  // ── Text hierarchy ──
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
 
-  // ── Surface tint ──
-  --m3-surface-tint: #006b55;
+  // ── Borders ──
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-focus: #00cc99;
 
-  // ── Elevation via surface tint overlays (M3) ──
-  --m3-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --m3-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --m3-elevation-3: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 8px 3px rgba(0, 0, 0, 0.05);
-  --m3-tint-1: rgba(0, 107, 85, 0.05);
-  --m3-tint-2: rgba(0, 107, 85, 0.08);
-  --m3-tint-3: rgba(0, 107, 85, 0.11);
+  // ── Status ──
+  --status-success: #10b981;
+  --status-success-bg: #ecfdf5;
+  --status-success-text: #065f46;
+  --status-error: #ef4444;
+  --status-error-bg: #fef2f2;
+  --status-error-text: #991b1b;
+  --status-warning: #f59e0b;
+  --status-warning-bg: #fffbeb;
+  --status-warning-text: #92400e;
+  --status-info: #3b82f6;
+  --status-info-bg: #eff6ff;
+  --status-info-text: #1e40af;
 
-  // ── Shape (M3 extra-large / medium) ──
-  --m3-shape-xl: 28px;
-  --m3-shape-lg: 16px;
-  --m3-shape-md: 12px;
-  --m3-shape-sm: 8px;
-  --m3-shape-xs: 4px;
-  --m3-shape-full: 9999px;
+  // ── Table ──
+  --table-header-bg: #f8fafc;
+  --table-row-hover: #f1f5f9;
+  --table-border: #e2e8f0;
 
-  // ── Toolbar / navigation ──
-  --m3-toolbar-bg: var(--m3-surface-container);
-  --m3-toolbar-text: var(--m3-on-surface);
-  --m3-sidenav-bg: var(--m3-surface-container-low);
-  --m3-sidenav-active-bg: var(--m3-primary-container);
-  --m3-sidenav-active-text: var(--m3-on-primary-container);
+  // ── Shadows ──
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(0, 204, 153, 0.2);
 
   @include mat.all-component-themes($light-theme);
   @include mat.typography-hierarchy($light-theme);
 }
 
-.dark-theme {
-  --m3-primary: #5edbb5;
-  --m3-on-primary: #00382b;
-  --m3-primary-container: #005140;
-  --m3-on-primary-container: #7ef8d0;
-  --m3-primary-fixed-dim: #5edbb5;
+// ──────────────────────────────────────────
+// DARK THEME (toggled via .dark-theme on body)
+// ──────────────────────────────────────────
+body.dark-theme {
+  // ── Brand accent (brighter in dark) ──
+  --accent: #33d6ad;
+  --accent-dark: #00cc99;
+  --accent-darker: #00a67d;
+  --accent-light: #5ee0be;
+  --accent-lighter: #0d3028;
+  --accent-subtle: rgba(51, 214, 173, 0.1);
+  --accent-hover: rgba(51, 214, 173, 0.16);
 
-  --m3-secondary: #b2cdc1;
-  --m3-on-secondary: #1d352c;
-  --m3-secondary-container: #344c43;
-  --m3-on-secondary-container: #cde9dc;
+  // ── Sidebar (slightly darker) ──
+  --sidebar-bg: #080e1a;
+  --sidebar-bg-hover: rgba(255, 255, 255, 0.07);
+  --sidebar-bg-active: rgba(51, 214, 173, 0.15);
+  --sidebar-text: #8896ab;
+  --sidebar-text-active: #33d6ad;
+  --sidebar-text-heading: #4b5c72;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
 
-  --m3-tertiary: #a7cedf;
-  --m3-on-tertiary: #0b3443;
-  --m3-tertiary-container: #274b5a;
-  --m3-on-tertiary-container: #c3eafb;
+  // ── Content surfaces ──
+  --surface: #0f172a;
+  --surface-card: #1e293b;
+  --surface-raised: #1e293b;
+  --surface-sunken: #0b1120;
+  --surface-overlay: rgba(0, 0, 0, 0.3);
 
-  --m3-error: #ffb4ab;
-  --m3-on-error: #690005;
-  --m3-error-container: #93000a;
-  --m3-on-error-container: #ffdad6;
+  // ── Text hierarchy ──
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-inverse: #0f172a;
 
-  --m3-surface: #0e1512;
-  --m3-surface-dim: #0e1512;
-  --m3-surface-bright: #343b38;
-  --m3-surface-container-lowest: #090f0c;
-  --m3-surface-container-low: #171d1a;
-  --m3-surface-container: #1b211e;
-  --m3-surface-container-high: #252b28;
-  --m3-surface-container-highest: #303633;
-  --m3-on-surface: #dee4e0;
-  --m3-on-surface-variant: #bfc9c3;
-  --m3-inverse-surface: #dee4e0;
-  --m3-inverse-on-surface: #2c322f;
+  // ── Borders ──
+  --border: #334155;
+  --border-light: #1e293b;
+  --border-focus: #33d6ad;
 
-  --m3-outline: #89938e;
-  --m3-outline-variant: #3f4945;
+  // ── Status (adjusted for dark bg) ──
+  --status-success: #34d399;
+  --status-success-bg: rgba(16, 185, 129, 0.15);
+  --status-success-text: #6ee7b7;
+  --status-error: #f87171;
+  --status-error-bg: rgba(239, 68, 68, 0.15);
+  --status-error-text: #fca5a5;
+  --status-warning: #fbbf24;
+  --status-warning-bg: rgba(245, 158, 11, 0.15);
+  --status-warning-text: #fcd34d;
+  --status-info: #60a5fa;
+  --status-info-bg: rgba(59, 130, 246, 0.15);
+  --status-info-text: #93bbfd;
 
-  --m3-surface-tint: #5edbb5;
+  // ── Table ──
+  --table-header-bg: #1e293b;
+  --table-row-hover: rgba(51, 214, 173, 0.06);
+  --table-border: #334155;
 
-  --m3-tint-1: rgba(94, 219, 181, 0.05);
-  --m3-tint-2: rgba(94, 219, 181, 0.08);
-  --m3-tint-3: rgba(94, 219, 181, 0.11);
-
-  --m3-toolbar-bg: var(--m3-surface-container);
-  --m3-toolbar-text: var(--m3-on-surface);
-  --m3-sidenav-bg: var(--m3-surface-container-low);
-  --m3-sidenav-active-bg: var(--m3-primary-container);
-  --m3-sidenav-active-text: var(--m3-on-primary-container);
+  // ── Shadows (stronger opacity for dark) ──
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --shadow-focus: 0 0 0 3px rgba(51, 214, 173, 0.25);
 
   @include mat.all-component-colors($dark-theme);
 }

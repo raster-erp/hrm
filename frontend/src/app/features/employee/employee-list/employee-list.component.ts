@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -45,7 +45,6 @@ import { DepartmentResponse } from '../../../models/department.model';
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeeListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

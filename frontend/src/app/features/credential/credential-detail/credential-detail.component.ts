@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,7 +30,6 @@ import { CredentialResponse, CredentialAttachmentResponse } from '../../../model
   ],
   templateUrl: './credential-detail.component.html',
   styleUrl: './credential-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CredentialDetailComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

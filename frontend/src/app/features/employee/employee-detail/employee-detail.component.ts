@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,7 +35,6 @@ import { EmployeeResponse, EmployeeDocumentResponse } from '../../../models/empl
   ],
   templateUrl: './employee-detail.component.html',
   styleUrl: './employee-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeeDetailComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

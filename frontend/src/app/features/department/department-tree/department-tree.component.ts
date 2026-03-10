@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTreeModule, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -41,7 +41,6 @@ interface DepartmentFlatNode {
   ],
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentTreeComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

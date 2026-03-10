@@ -1,12 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ThemeService } from './services/theme.service';
 
 interface NavGroup {
   label: string;
@@ -19,75 +17,77 @@ interface NavGroup {
   imports: [
     CommonModule,
     RouterOutlet, RouterLink, RouterLinkActive,
-    MatSidenavModule, MatToolbarModule, MatListModule,
-    MatIconModule, MatButtonModule, MatDividerModule
+    MatIconModule, MatButtonModule, MatTooltipModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = 'HRM System';
-  sidenavMode: 'side' | 'over' = 'side';
-  sidenavOpened = true;
+  title = 'OneHealth HRM';
+  sidebarCollapsed = false;
+  mobileMenuOpen = false;
+  isMobile = false;
 
-  private readonly MOBILE_BREAKPOINT = 960;
+  private readonly MOBILE_BP = 960;
+  private readonly SIDEBAR_KEY = 'hrm-sidebar';
 
   navGroups: NavGroup[] = [
     {
-      label: 'Employee Management',
+      label: 'Organization',
       items: [
         { path: '/employees', label: 'Employees', icon: 'people' },
-        { path: '/departments', label: 'Departments', icon: 'business' },
+        { path: '/departments', label: 'Departments', icon: 'apartment' },
         { path: '/designations', label: 'Designations', icon: 'badge' },
       ]
     },
     {
-      label: 'Contracts & Credentials',
+      label: 'Records',
       items: [
         { path: '/contracts', label: 'Contracts', icon: 'description' },
         { path: '/credentials', label: 'Credentials', icon: 'verified' },
-      ]
-    },
-    {
-      label: 'ID Cards & Uniforms',
-      items: [
         { path: '/id-cards', label: 'ID Cards', icon: 'credit_card' },
         { path: '/uniforms', label: 'Uniforms', icon: 'checkroom' },
       ]
     },
     {
-      label: 'Transfers & Promotions',
+      label: 'Actions',
       items: [
         { path: '/transfers', label: 'Transfers', icon: 'swap_horiz' },
         { path: '/promotions', label: 'Promotions', icon: 'trending_up' },
-      ]
-    },
-    {
-      label: 'Exit Management',
-      items: [
         { path: '/separations', label: 'Separations', icon: 'exit_to_app' },
       ]
     }
   ];
 
+  constructor(public themeService: ThemeService) {
+    const saved = localStorage.getItem(this.SIDEBAR_KEY);
+    if (saved === 'true') this.sidebarCollapsed = true;
+  }
+
   ngOnInit(): void {
-    this.updateSidenavForScreenSize();
+    this.checkScreen();
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    this.updateSidenavForScreenSize();
+    this.checkScreen();
+  }
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+    localStorage.setItem(this.SIDEBAR_KEY, String(this.sidebarCollapsed));
   }
 
   onNavClick(): void {
-    if (this.sidenavMode === 'over') {
-      this.sidenavOpened = false;
+    if (this.isMobile) {
+      this.mobileMenuOpen = false;
     }
   }
 
-  private updateSidenavForScreenSize(): void {
-    const isMobile = window.innerWidth < this.MOBILE_BREAKPOINT;
-    this.sidenavMode = isMobile ? 'over' : 'side';
-    this.sidenavOpened = !isMobile;
+  private checkScreen(): void {
+    this.isMobile = window.innerWidth < this.MOBILE_BP;
+    if (this.isMobile) {
+      this.mobileMenuOpen = false;
+    }
   }
 }

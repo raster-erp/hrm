@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -29,7 +29,6 @@ import { IdCardResponse } from '../../../models/id-card.model';
   ],
   templateUrl: './id-card-list.component.html',
   styleUrl: './id-card-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IdCardListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

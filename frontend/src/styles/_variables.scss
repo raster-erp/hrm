@@ -1,82 +1,83 @@
 // ──────────────────────────────────────────
-// M3 Semantic status colors (seed #00cc99)
+// Status colors — SCSS aliases to CSS vars
+// (used in component files; resolved at runtime)
 // ──────────────────────────────────────────
-$status-success-bg: #d4f5e6;
-$status-success-text: #006b55;
+$status-success-bg: var(--status-success-bg);
+$status-success-text: var(--status-success-text);
 
-$status-error-bg: #ffdad6;
-$status-error-text: #ba1a1a;
+$status-error-bg: var(--status-error-bg);
+$status-error-text: var(--status-error-text);
 
-$status-warning-bg: #fff3cd;
-$status-warning-text: #7c5800;
+$status-warning-bg: var(--status-warning-bg);
+$status-warning-text: var(--status-warning-text);
 
-$status-info-bg: #c3eafb;
-$status-info-text: #274b5a;
+$status-info-bg: var(--status-info-bg);
+$status-info-text: var(--status-info-text);
 
-$status-danger-bg: #ffdad6;
-$status-danger-text: #ba1a1a;
-
-// ──────────────────────────────────────────
-// Text (M3 on-surface roles)
-// ──────────────────────────────────────────
-$text-primary: #171d1a;
-$text-secondary: #3f4945;
-$text-hint: #6f7975;
-$text-label: #3f4945;
+$status-danger-bg: var(--status-error-bg);
+$status-danger-text: var(--status-error-text);
 
 // ──────────────────────────────────────────
-// Surfaces & borders (M3 surface roles)
+// Text hierarchy — SCSS aliases to CSS vars
 // ──────────────────────────────────────────
-$surface-variant: #dee4e0;
-$surface-hover: #e9efeb;
-$border-color: #bfc9c3;
-$placeholder-bg: #e3eae6;
-$placeholder-icon: #6f7975;
-$upload-border: #bfc9c3;
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-hint: var(--text-tertiary);
+$text-label: var(--text-secondary);
 
 // ──────────────────────────────────────────
-// Link / accent colors
+// Surfaces & borders — SCSS aliases to CSS vars
 // ──────────────────────────────────────────
-$link-color: #006b55;
+$surface-variant: var(--surface-sunken);
+$surface-hover: var(--surface);
+$border-color: var(--border);
+$placeholder-bg: var(--surface-sunken);
+$placeholder-icon: var(--text-tertiary);
+$upload-border: var(--border);
 
 // ──────────────────────────────────────────
-// Accent indicator colors
+// Link / accent
 // ──────────────────────────────────────────
-$color-green: #006b55;
-$color-red: #ba1a1a;
-$color-orange: #7c5800;
-$color-blue: #406573;
-$color-purple: #6e5676;
+$link-color: var(--accent-dark);
 
 // ──────────────────────────────────────────
-// Layout – 8dp grid system
+// Accent indicator colors — SCSS aliases
 // ──────────────────────────────────────────
-$spacing-xs: 4px;   // 0.5 unit
-$spacing-sm: 8px;   // 1 unit
-$spacing-md: 16px;  // 2 units
-$spacing-lg: 24px;  // 3 units
-$spacing-xl: 32px;  // 4 units
-$spacing-2xl: 40px; // 5 units
-$spacing-3xl: 48px; // 6 units
+$color-green: var(--status-success);
+$color-red: var(--status-error);
+$color-orange: var(--status-warning);
+$color-blue: var(--status-info);
+$color-purple: #8b5cf6;
 
-$content-padding: $spacing-lg;
+// ──────────────────────────────────────────
+// Layout (compile-time constants)
+// ──────────────────────────────────────────
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 40px;
+$spacing-3xl: 48px;
+
+$content-padding: 32px;
 $content-padding-mobile: $spacing-md;
-$sidenav-width: 280px;
-$toolbar-height: 64px;
+$sidenav-width: 260px;
+$toolbar-height: 60px;
 $form-max-width-sm: 800px;
 $form-max-width-md: 904px;
 $form-max-width-lg: 960px;
 $content-max-width: 1200px;
 $dashboard-max-width: 1400px;
 
-// Table (M3 surface-container hierarchy)
-$table-header-bg: #e9efeb;
-$table-row-hover: #e3eae6;
-$table-row-alt: #eff5f1;
-$table-border: #bfc9c3;
+// Table — SCSS aliases to CSS vars
+$table-header-bg: var(--table-header-bg);
+$table-row-hover: var(--table-row-hover);
+$table-row-alt: var(--surface-sunken);
+$table-border: var(--table-border);
 
 // ──────────────────────────────────────────
-// Responsive breakpoints
+// Breakpoints
 // ──────────────────────────────────────────
 $breakpoint-sm: 600px;
 $breakpoint-md: 960px;

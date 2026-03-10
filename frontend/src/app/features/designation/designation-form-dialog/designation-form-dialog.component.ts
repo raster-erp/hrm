@@ -1,4 +1,4 @@
-import { Component, Inject, ChangeDetectionStrategy, OnInit, DestroyRef, inject } from '@angular/core';
+import { Component, Inject, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -29,7 +29,6 @@ export interface DesignationFormDialogData {
   ],
   templateUrl: './designation-form-dialog.component.html',
   styleUrl: './designation-form-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DesignationFormDialogComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

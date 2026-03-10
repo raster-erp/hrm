@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -25,7 +25,6 @@ import { UniformFormDialogComponent } from '../uniform-form-dialog/uniform-form-
   ],
   templateUrl: './uniform-list.component.html',
   styleUrl: './uniform-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UniformListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

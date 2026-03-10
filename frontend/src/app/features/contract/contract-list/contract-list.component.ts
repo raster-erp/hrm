@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +35,6 @@ import { ContractResponse } from '../../../models/contract.model';
   ],
   templateUrl: './contract-list.component.html',
   styleUrl: './contract-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContractListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

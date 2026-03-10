@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -20,7 +20,6 @@ import { IdCardResponse } from '../../../models/id-card.model';
   ],
   templateUrl: './id-card-detail.component.html',
   styleUrl: './id-card-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IdCardDetailComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

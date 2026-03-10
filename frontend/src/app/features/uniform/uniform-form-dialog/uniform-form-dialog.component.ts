@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, Inject, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,7 +22,6 @@ import { UniformRequest, UniformResponse } from '../../../models/uniform.model';
   ],
   templateUrl: './uniform-form-dialog.component.html',
   styleUrl: './uniform-form-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UniformFormDialogComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

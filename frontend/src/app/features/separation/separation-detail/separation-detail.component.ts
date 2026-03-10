@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -27,7 +27,6 @@ import { SeparationResponse, ExitChecklistResponse, NoDuesResponse } from '../..
   ],
   templateUrl: './separation-detail.component.html',
   styleUrl: './separation-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeparationDetailComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

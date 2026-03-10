@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,7 +27,6 @@ import { EmployeeResponse } from '../../../models/employee.model';
   ],
   templateUrl: './uniform-allocation-dialog.component.html',
   styleUrl: './uniform-allocation-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UniformAllocationDialogComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

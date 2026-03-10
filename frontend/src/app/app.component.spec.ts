@@ -20,30 +20,25 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'HRM System' title`, () => {
+  it(`should have the 'OneHealth HRM' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('HRM System');
+    expect(app.title).toEqual('OneHealth HRM');
   });
 
-  it('should have 10 navigation items', () => {
+  it('should have 3 navigation groups with 10 total items', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.navItems.length).toBe(10);
-  });
-
-  it('should render sidenav with title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('mat-toolbar')?.textContent).toContain('HRM System');
+    expect(app.navGroups.length).toBe(3);
+    const totalItems = app.navGroups.reduce((sum, g) => sum + g.items.length, 0);
+    expect(totalItems).toBe(10);
   });
 
   it('should render navigation items', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const navItems = compiled.querySelectorAll('a[mat-list-item]');
+    const navItems = compiled.querySelectorAll('.nav-item');
     expect(navItems.length).toBe(10);
   });
 });

@@ -1,4 +1,4 @@
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
@@ -27,7 +27,6 @@ export interface DepartmentFormDialogData {
   ],
   templateUrl: './department-form-dialog.component.html',
   styleUrl: './department-form-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentFormDialogComponent {
   form: FormGroup;

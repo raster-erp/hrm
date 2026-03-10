@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -31,7 +31,6 @@ import { DepartmentResponse } from '../../../models/department.model';
   ],
   templateUrl: './transfer-form.component.html',
   styleUrl: './transfer-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransferFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

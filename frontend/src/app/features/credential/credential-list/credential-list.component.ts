@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +37,6 @@ import { CredentialResponse } from '../../../models/credential.model';
   ],
   templateUrl: './credential-list.component.html',
   styleUrl: './credential-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CredentialListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

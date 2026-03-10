@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -40,7 +40,6 @@ import { DesignationResponse } from '../../../models/designation.model';
   ],
   templateUrl: './employee-form.component.html',
   styleUrl: './employee-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeeFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);

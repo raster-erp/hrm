@@ -6,41 +6,44 @@
 
 // Profile Header
 .profile-header-card {
-  margin-bottom: $content-padding;
+  margin-bottom: $spacing-lg;
+  overflow: hidden;
 }
 
 .profile-header {
   display: flex;
   align-items: flex-start;
-  gap: $content-padding;
-  padding: 16px;
+  gap: $spacing-lg;
+  padding: $spacing-lg;
 }
 
 .profile-photo {
   flex-shrink: 0;
 
   img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius-xl);
     object-fit: cover;
+    box-shadow: var(--shadow-md);
   }
 }
 
 .photo-placeholder {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: $placeholder-bg;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--shadow-md);
 
   mat-icon {
-    font-size: 64px;
-    width: 64px;
-    height: 64px;
-    color: $placeholder-icon;
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: rgba(255, 255, 255, 0.9);
   }
 }
 
@@ -49,20 +52,23 @@
 
   h1 {
     margin: 0 0 4px;
-    font-size: 28px;
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   .employee-code {
     margin: 0 0 4px;
-    color: $text-secondary;
-    font-size: 14px;
+    color: $text-hint;
+    font-size: 13px;
+    font-weight: 500;
   }
 
   .designation {
-    margin: 0 0 8px;
-    color: $text-primary;
-    font-size: 16px;
+    margin: 0 0 10px;
+    color: $text-secondary;
+    font-size: 14px;
+    font-weight: 500;
   }
 }
 
@@ -78,18 +84,19 @@
 }
 
 .tab-content {
-  padding: $content-padding;
+  padding: $spacing-lg;
 }
 
 // Info Sections
 .info-section {
-  padding: 16px 0;
+  padding: $spacing-md 0;
 
   h3 {
-    margin: 0 0 16px;
-    font-size: 18px;
-    font-weight: 500;
+    margin: 0 0 $spacing-md;
+    font-size: 15px;
+    font-weight: 600;
     color: $text-primary;
+    letter-spacing: -0.01em;
   }
 }
 
@@ -112,13 +119,13 @@
 
 @media (max-width: $breakpoint-sm) {
   .profile-summary h1 {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .photo-placeholder,
   .profile-photo img {
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
   }
 
   .photo-placeholder mat-icon {
