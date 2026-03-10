@@ -24,6 +24,11 @@ export class ShiftRosterService {
     return this.api.get<ShiftRosterResponse[]>(`${this.path}/employee/${employeeId}`);
   }
 
+  getByDateRange(startDate: string, endDate: string): Observable<ShiftRosterResponse[]> {
+    const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
+    return this.api.get<ShiftRosterResponse[]>(`${this.path}/date-range`, params);
+  }
+
   create(roster: ShiftRosterRequest): Observable<ShiftRosterResponse> {
     return this.api.post<ShiftRosterResponse>(this.path, roster);
   }

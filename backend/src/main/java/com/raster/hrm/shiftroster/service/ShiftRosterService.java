@@ -71,6 +71,13 @@ public class ShiftRosterService {
                 .map(this::mapToResponse);
     }
 
+    @Transactional(readOnly = true)
+    public List<ShiftRosterResponse> getByDateRange(LocalDate startDate, LocalDate endDate) {
+        return shiftRosterRepository.findByDateRange(startDate, endDate).stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
     public ShiftRosterResponse create(ShiftRosterRequest request) {
         var employee = employeeRepository.findById(request.employeeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", request.employeeId()));

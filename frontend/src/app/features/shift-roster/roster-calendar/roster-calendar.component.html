@@ -1,0 +1,91 @@
+<div class="roster-calendar-container">
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>calendar_view_week</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Roster Calendar</h2>
+          <p>Weekly view of employee shift assignments</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-toolbar">
+    <div class="nav-controls">
+      <button mat-icon-button (click)="previousWeek()" matTooltip="Previous week">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="goToToday()">Today</button>
+      <button mat-icon-button (click)="nextWeek()" matTooltip="Next week">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    <span class="week-label">{{ getWeekLabel() }}</span>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="calendar-grid-wrapper">
+      <table class="calendar-grid">
+        <thead>
+          <tr>
+            <th class="employee-header">Employee</th>
+            @for (day of weekDays; track day.date) {
+              <th class="day-header" [class.today]="day.isToday">
+                <span class="day-name">{{ day.dayOfWeek }}</span>
+                <span class="day-date">{{ day.label }}</span>
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of employeeRows; track row.employee.id) {
+            <tr>
+              <td class="employee-cell">
+                <span class="employee-name">{{ row.employee.firstName }} {{ row.employee.lastName }}</span>
+                <span class="employee-code">{{ row.employee.employeeCode }}</span>
+              </td>
+              @for (day of weekDays; track day.date) {
+                @if (getAssignment(row, day); as assignment) {
+                  <td
+                    class="day-cell assigned"
+                    [class.today]="day.isToday"
+                    (click)="onCellClick(row, day)"
+                    matTooltip="Edit {{ assignment.shiftName }}"
+                  >
+                    <span class="shift-badge">{{ assignment.shiftName }}</span>
+                  </td>
+                } @else {
+                  <td
+                    class="day-cell empty"
+                    [class.today]="day.isToday"
+                    (click)="onCellClick(row, day)"
+                    matTooltip="Assign shift"
+                  >
+                    <span class="empty-marker">—</span>
+                  </td>
+                }
+              }
+            </tr>
+          }
+          @if (employeeRows.length === 0) {
+            <tr>
+              <td class="no-data-cell" [attr.colspan]="weekDays.length + 1">
+                <div class="no-data">
+                  <mat-icon>event_busy</mat-icon>
+                  <p>No employees found</p>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -443,4 +443,31 @@ class ShiftRosterServiceTest {
         assertNotNull(result);
         assertNull(result.endDate());
     }
+
+    @Test
+    void getByDateRange_shouldReturnRosters() {
+        var employee = createEmployee(1L, "EMP-001");
+        var shift = createShift(1L, "Morning");
+        var rosters = List.of(createRoster(1L, employee, shift));
+        var startDate = LocalDate.of(2024, 1, 1);
+        var endDate = LocalDate.of(2024, 6, 30);
+        when(shiftRosterRepository.findByDateRange(startDate, endDate)).thenReturn(rosters);
+
+        var result = shiftRosterService.getByDateRange(startDate, endDate);
+
+        assertEquals(1, result.size());
+        assertEquals("EMP-001", result.get(0).employeeCode());
+        verify(shiftRosterRepository).findByDateRange(startDate, endDate);
+    }
+
+    @Test
+    void getByDateRange_shouldReturnEmptyList() {
+        var startDate = LocalDate.of(2024, 1, 1);
+        var endDate = LocalDate.of(2024, 6, 30);
+        when(shiftRosterRepository.findByDateRange(startDate, endDate)).thenReturn(List.of());
+
+        var result = shiftRosterService.getByDateRange(startDate, endDate);
+
+        assertTrue(result.isEmpty());
+    }
 }

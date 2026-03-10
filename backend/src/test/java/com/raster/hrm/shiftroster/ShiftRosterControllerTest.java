@@ -209,4 +209,19 @@ class ShiftRosterControllerTest {
         mockMvc.perform(delete(BASE_URL + "/999"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void getByDateRange_shouldReturnRosters() throws Exception {
+        var rosters = List.of(createResponse(1L, 1L, 1L));
+        when(shiftRosterService.getByDateRange(
+                LocalDate.of(2024, 7, 1), LocalDate.of(2024, 7, 7)))
+                .thenReturn(rosters);
+
+        mockMvc.perform(get(BASE_URL + "/date-range")
+                        .param("startDate", "2024-07-01")
+                        .param("endDate", "2024-07-07"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].employeeName").value("John Doe"));
+    }
 }
