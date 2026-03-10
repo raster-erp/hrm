@@ -2,7 +2,7 @@
 
 ---
 
-## Technical Stack
+## Technical Stack.
 
 | Layer | Technology | Details |
 |-------|-----------|---------|
