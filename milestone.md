@@ -157,18 +157,18 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Identify supported biometric/RFID device models and protocols | Not Started |
-| Requirements | Define punch data format and sync frequency requirements | Not Started |
-| Database Design | Design `attendance_punches` table with device ID, punch time, and direction | Not Started |
-| Database Design | Design `devices` table for registered biometric/RFID terminals | Not Started |
-| Backend Development | Build device registration and configuration APIs | Not Started |
-| Backend Development | Implement device data sync service (push/pull protocols) | Not Started |
-| Backend Development | Build raw punch data ingestion and normalization API | Not Started |
-| Backend Development | Add duplicate punch detection and filtering logic | Not Started |
+| Requirements | Identify supported biometric/RFID device models and protocols | Done |
+| Requirements | Define punch data format and sync frequency requirements | Done |
+| Database Design | Design `attendance_punches` table with device ID, punch time, and direction | Done |
+| Database Design | Design `devices` table for registered biometric/RFID terminals | Done |
+| Backend Development | Build device registration and configuration APIs | Done |
+| Backend Development | Implement device data sync service (push/pull protocols) | Done |
+| Backend Development | Build raw punch data ingestion and normalization API | Done |
+| Backend Development | Add duplicate punch detection and filtering logic | Done |
 | Frontend Development | Build device management dashboard (status, last sync, connectivity) | Not Started |
 | Frontend Development | Build raw punch log viewer with date and employee filters | Not Started |
 | Integration Testing | Test with physical devices for punch data capture and sync | Not Started |
-| Integration Testing | Validate duplicate detection and data normalization | Not Started |
+| Integration Testing | Validate duplicate detection and data normalization | Done |
 | UAT & QA | Conduct field testing at multiple locations with live devices | Not Started |
 | Deployment | Deploy biometric integration service to staging and production | Not Started |
 
