@@ -188,7 +188,7 @@
 | Frontend Development | Build shift master setup form with time pickers and grace settings | Done |
 | Frontend Development | Build roster calendar view with drag-and-drop assignment | Done |
 | Frontend Development | Build bulk roster assignment wizard (by department, team, or group) | Done |
-| Integration Testing | Validate roster assignment, rotation, and conflict detection | Not Started |
+| Integration Testing | Validate roster assignment, rotation, and conflict detection | Done |
 | UAT & QA | Conduct user acceptance testing for shift roster planning | Not Started |
 | Deployment | Deploy shift roster module to staging and production | Not Started |
 
