@@ -49,5 +49,17 @@ export const routes: Routes = [
   {
     path: 'attendance-punches',
     loadChildren: () => import('./features/attendance/attendance.routes').then(m => m.ATTENDANCE_ROUTES)
+  },
+  {
+    path: 'shifts',
+    loadChildren: () => import('./features/shift/shift.routes').then(m => m.SHIFT_ROUTES)
+  },
+  {
+    path: 'rotation-patterns',
+    loadChildren: () => import('./features/rotation-pattern/rotation-pattern.routes').then(m => m.ROTATION_PATTERN_ROUTES)
+  },
+  {
+    path: 'shift-rosters',
+    loadChildren: () => import('./features/shift-roster/shift-roster.routes').then(m => m.SHIFT_ROSTER_ROUTES)
   }
 ];

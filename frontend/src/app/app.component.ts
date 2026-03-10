@@ -54,6 +54,9 @@ export class AppComponent implements OnInit {
       items: [
         { path: '/devices', label: 'Devices', icon: 'devices' },
         { path: '/attendance-punches', label: 'Punch Log', icon: 'schedule' },
+        { path: '/shifts', label: 'Shifts', icon: 'access_time' },
+        { path: '/rotation-patterns', label: 'Rotation Patterns', icon: 'autorenew' },
+        { path: '/shift-rosters', label: 'Rosters', icon: 'calendar_month' },
       ]
     },
     {

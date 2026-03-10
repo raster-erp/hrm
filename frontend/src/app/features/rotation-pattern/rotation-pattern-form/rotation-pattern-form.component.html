@@ -1,0 +1,66 @@
+<div class="rotation-pattern-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit Rotation Pattern' : 'Add New Rotation Pattern' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="patternForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name" placeholder="Enter pattern name">
+              @if (patternForm.get('name')?.hasError('required') && patternForm.get('name')?.touched) {
+                <mat-error>Name is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Rotation Days</mat-label>
+              <input matInput type="number" formControlName="rotationDays" placeholder="7">
+              @if (patternForm.get('rotationDays')?.hasError('required') && patternForm.get('rotationDays')?.touched) {
+                <mat-error>Rotation days is required</mat-error>
+              }
+              @if (patternForm.get('rotationDays')?.hasError('min')) {
+                <mat-error>Must be at least 1</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Shift Sequence</mat-label>
+              <input matInput formControlName="shiftSequence" placeholder="e.g., 1,2,3,1,2,3,1">
+              @if (patternForm.get('shiftSequence')?.hasError('required') && patternForm.get('shiftSequence')?.touched) {
+                <mat-error>Shift sequence is required</mat-error>
+              }
+              <mat-hint>Comma-separated shift IDs defining the rotation order</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" placeholder="Enter description" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Create' }} Pattern
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
