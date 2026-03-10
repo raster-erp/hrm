@@ -196,19 +196,19 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define overtime eligibility rules and approval workflows | Not Started |
-| Requirements | Define overtime rate slabs (weekday, weekend, holiday, double-time) | Not Started |
-| Database Design | Design `overtime_policies` table with rate multipliers and caps | Not Started |
-| Database Design | Design `overtime_records` table with employee, hours, type, and approval status | Not Started |
-| Backend Development | Build overtime policy configuration APIs | Not Started |
-| Backend Development | Build overtime request, calculation, and approval APIs | Not Started |
-| Backend Development | Implement auto-detection of overtime from attendance punch data | Not Started |
-| Backend Development | Build overtime summary API for payroll integration | Not Started |
+| Requirements | Define overtime eligibility rules and approval workflows | Done |
+| Requirements | Define overtime rate slabs (weekday, weekend, holiday, double-time) | Done |
+| Database Design | Design `overtime_policies` table with rate multipliers and caps | Done |
+| Database Design | Design `overtime_records` table with employee, hours, type, and approval status | Done |
+| Backend Development | Build overtime policy configuration APIs | Done |
+| Backend Development | Build overtime request, calculation, and approval APIs | Done |
+| Backend Development | Implement auto-detection of overtime from attendance punch data | Done |
+| Backend Development | Build overtime summary API for payroll integration | Done |
 | Frontend Development | Build overtime policy setup form with rate slab configuration | Done |
 | Frontend Development | Build overtime request and approval interface | Done |
-| Frontend Development | Build overtime summary dashboard with charts and drill-down | In Progress |
-| Integration Testing | Validate overtime calculation against multiple rate slabs | Not Started |
-| Integration Testing | Verify overtime data flows correctly into payroll computation | Not Started |
+| Frontend Development | Build overtime summary dashboard with charts and drill-down | Done |
+| Integration Testing | Validate overtime calculation against multiple rate slabs | Done |
+| Integration Testing | Verify overtime data flows correctly into payroll computation | Done |
 | UAT & QA | Conduct user acceptance testing for overtime management | Not Started |
 | Deployment | Deploy overtime management module to staging and production | Not Started |
 
