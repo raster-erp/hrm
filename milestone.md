@@ -166,7 +166,7 @@
 | Backend Development | Build raw punch data ingestion and normalization API | Done |
 | Backend Development | Add duplicate punch detection and filtering logic | Done |
 | Frontend Development | Build device management dashboard (status, last sync, connectivity) | Done |
-| Frontend Development | Build raw punch log viewer with date and employee filters | Not Started |
+| Frontend Development | Build raw punch log viewer with date and employee filters | Done |
 | Integration Testing | Test with physical devices for punch data capture and sync | Not Started |
 | Integration Testing | Validate duplicate detection and data normalization | Done |
 | UAT & QA | Conduct field testing at multiple locations with live devices | Not Started |
