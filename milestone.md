@@ -176,18 +176,18 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define shift types (general, morning, evening, night, rotational, split) | Not Started |
-| Requirements | Define roster assignment rules and rotation patterns | Not Started |
-| Database Design | Design `shifts` table with start time, end time, break duration, and grace period | Not Started |
-| Database Design | Design `shift_rosters` table with employee, shift, and effective date range | Not Started |
-| Database Design | Design `rotation_patterns` table for automated rotation scheduling | Not Started |
-| Backend Development | Build CRUD APIs for shift master configuration | Not Started |
-| Backend Development | Build roster assignment API (individual and bulk) | Not Started |
-| Backend Development | Implement auto-rotation engine based on defined patterns | Not Started |
-| Backend Development | Add conflict detection (overlapping shifts, insufficient rest gap) | Not Started |
-| Frontend Development | Build shift master setup form with time pickers and grace settings | Not Started |
-| Frontend Development | Build roster calendar view with drag-and-drop assignment | Not Started |
-| Frontend Development | Build bulk roster assignment wizard (by department, team, or group) | Not Started |
+| Requirements | Define shift types (general, morning, evening, night, rotational, split) | Done |
+| Requirements | Define roster assignment rules and rotation patterns | Done |
+| Database Design | Design `shifts` table with start time, end time, break duration, and grace period | Done |
+| Database Design | Design `shift_rosters` table with employee, shift, and effective date range | Done |
+| Database Design | Design `rotation_patterns` table for automated rotation scheduling | Done |
+| Backend Development | Build CRUD APIs for shift master configuration | Done |
+| Backend Development | Build roster assignment API (individual and bulk) | Done |
+| Backend Development | Implement auto-rotation engine based on defined patterns | Done |
+| Backend Development | Add conflict detection (overlapping shifts, insufficient rest gap) | Done |
+| Frontend Development | Build shift master setup form with time pickers and grace settings | Done |
+| Frontend Development | Build roster calendar view with drag-and-drop assignment | Done |
+| Frontend Development | Build bulk roster assignment wizard (by department, team, or group) | Done |
 | Integration Testing | Validate roster assignment, rotation, and conflict detection | Not Started |
 | UAT & QA | Conduct user acceptance testing for shift roster planning | Not Started |
 | Deployment | Deploy shift roster module to staging and production | Not Started |

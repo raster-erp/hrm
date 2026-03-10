@@ -1,0 +1,91 @@
+<div class="rotation-pattern-list-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>autorenew</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Rotation Patterns</h2>
+          <p>Manage automated rotation scheduling patterns</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" routerLink="/rotation-patterns/new">
+          <mat-icon>add</mat-icon>
+          Add Pattern
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="rotation-pattern-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let pattern">{{ pattern.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let pattern">{{ pattern.description || '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="rotationDays">
+        <th mat-header-cell *matHeaderCellDef>Rotation Days</th>
+        <td mat-cell *matCellDef="let pattern">{{ pattern.rotationDays }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="shiftSequence">
+        <th mat-header-cell *matHeaderCellDef>Shift Sequence</th>
+        <td mat-cell *matCellDef="let pattern">
+          <span class="code-badge">{{ pattern.shiftSequence }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let pattern">
+          <div class="row-actions">
+            <button mat-icon-button matTooltip="Edit"
+                    (click)="editPattern(pattern); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deletePattern(pattern); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>autorenew</mat-icon>
+        <p>No rotation patterns found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

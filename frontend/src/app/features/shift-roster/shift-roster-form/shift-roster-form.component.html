@@ -1,0 +1,77 @@
+<div class="shift-roster-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit Roster Assignment' : 'New Roster Assignment' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="rosterForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Employee ID</mat-label>
+              <input matInput type="number" formControlName="employeeId" placeholder="Enter employee ID">
+              @if (rosterForm.get('employeeId')?.hasError('required') && rosterForm.get('employeeId')?.touched) {
+                <mat-error>Employee ID is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Shift</mat-label>
+              <mat-select formControlName="shiftId">
+                @for (shift of shifts; track shift.id) {
+                  <mat-option [value]="shift.id">{{ shift.name }} ({{ shift.startTime }} - {{ shift.endTime }})</mat-option>
+                }
+              </mat-select>
+              @if (rosterForm.get('shiftId')?.hasError('required') && rosterForm.get('shiftId')?.touched) {
+                <mat-error>Shift is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Effective Date</mat-label>
+              <input matInput type="date" formControlName="effectiveDate">
+              @if (rosterForm.get('effectiveDate')?.hasError('required') && rosterForm.get('effectiveDate')?.touched) {
+                <mat-error>Effective date is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input matInput type="date" formControlName="endDate">
+              <mat-hint>Leave empty for ongoing assignment</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Rotation Pattern (Optional)</mat-label>
+              <mat-select formControlName="rotationPatternId">
+                <mat-option [value]="null">None</mat-option>
+                @for (pattern of rotationPatterns; track pattern.id) {
+                  <mat-option [value]="pattern.id">{{ pattern.name }} ({{ pattern.rotationDays }} days)</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Assign' }} Roster
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
