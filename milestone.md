@@ -232,12 +232,12 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define regularization request types (missed punch, on-duty, client visit) | Not Started |
-| Requirements | Define approval hierarchy and auto-approval rules | Not Started |
-| Database Design | Design `regularization_requests` table with type, reason, and corrected times | Not Started |
-| Backend Development | Build regularization request submission API | Not Started |
-| Backend Development | Build multi-level approval workflow API | Not Started |
-| Backend Development | Implement auto-update of attendance records upon approval | Not Started |
+| Requirements | Define regularization request types (missed punch, on-duty, client visit) | Done |
+| Requirements | Define approval hierarchy and auto-approval rules | Done |
+| Database Design | Design `regularization_requests` table with type, reason, and corrected times | Done |
+| Backend Development | Build regularization request submission API | Done |
+| Backend Development | Build multi-level approval workflow API | Done |
+| Backend Development | Implement auto-update of attendance records upon approval | Done |
 | Frontend Development | Build regularization request form with reason dropdown and time correction | Not Started |
 | Frontend Development | Build approval inbox with bulk approve/reject capability | Not Started |
 | Frontend Development | Show regularization history on employee attendance detail page | Not Started |
