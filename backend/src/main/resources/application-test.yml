@@ -13,3 +13,11 @@ spring:
       enabled: true
   flyway:
     enabled: true
+  mail:
+    host: localhost
+    port: 1025
+
+hrm:
+  report:
+    schedule:
+      enabled: false
