@@ -255,11 +255,11 @@
 | Database Design | Design `wfh_activity_logs` table for check-in/check-out tracking | Done |
 | Backend Development | Build WFH request and approval APIs | Done |
 | Backend Development | Build WFH check-in/check-out API with IP/location validation | Done |
-| Backend Development | Implement WFH attendance integration (mark as present-WFH) | Not Started |
+| Backend Development | Implement WFH attendance integration (mark as present-WFH) | Done |
 | Frontend Development | Build WFH request form with date picker and reason field | Done |
 | Frontend Development | Build WFH check-in/check-out interface with status indicator | Done |
 | Frontend Development | Build WFH dashboard showing team WFH distribution | Done |
-| Integration Testing | Validate WFH request, approval, and attendance marking | Not Started |
+| Integration Testing | Validate WFH request, approval, and attendance marking | Done |
 | UAT & QA | Conduct user acceptance testing for WFH tracking | Not Started |
 | Deployment | Deploy WFH tracking module to staging and production | Not Started |
 
