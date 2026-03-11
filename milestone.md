@@ -300,10 +300,10 @@
 | Backend Development | Build CRUD APIs for leave policy configuration | Done |
 | Backend Development | Build policy assignment API (by grade, department, or individual) | Done |
 | Backend Development | Implement accrual engine (scheduled job for periodic credit) | Done |
-| Frontend Development | Build leave type master list and form | Not Started |
-| Frontend Development | Build leave policy configuration wizard with accrual rule builder | Not Started |
-| Frontend Development | Build policy assignment interface with employee group selector | Not Started |
-| Integration Testing | Validate accrual computations across different policy configurations | Not Started |
+| Frontend Development | Build leave type master list and form | Done |
+| Frontend Development | Build leave policy configuration wizard with accrual rule builder | Done |
+| Frontend Development | Build policy assignment interface with employee group selector | Done |
+| Integration Testing | Validate accrual computations across different policy configurations | Done |
 | UAT & QA | Conduct user acceptance testing for leave type and policy setup | Not Started |
 | Deployment | Deploy leave policy module to staging and production | Not Started |
 

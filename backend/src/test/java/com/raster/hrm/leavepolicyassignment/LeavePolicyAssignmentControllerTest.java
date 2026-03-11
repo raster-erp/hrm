@@ -53,8 +53,11 @@ class LeavePolicyAssignmentControllerTest {
         return new LeavePolicyAssignmentResponse(
                 id, 1L, "Annual Leave", assignmentType,
                 assignmentType.equals("DEPARTMENT") ? 10L : null,
+                assignmentType.equals("DEPARTMENT") ? "Engineering" : null,
                 assignmentType.equals("DESIGNATION") ? 20L : null,
+                assignmentType.equals("DESIGNATION") ? "Senior Developer" : null,
                 assignmentType.equals("INDIVIDUAL") ? 30L : null,
+                assignmentType.equals("INDIVIDUAL") ? "John Doe" : null,
                 LocalDate.of(2024, 1, 1), LocalDate.of(2024, 12, 31),
                 true,
                 LocalDateTime.of(2024, 1, 15, 10, 0),
@@ -230,7 +233,7 @@ class LeavePolicyAssignmentControllerTest {
     void updateActive_shouldReturnUpdatedAssignment() throws Exception {
         var response = new LeavePolicyAssignmentResponse(
                 1L, 1L, "Annual Leave", "DEPARTMENT",
-                10L, null, null,
+                10L, "Engineering", null, null, null, null,
                 LocalDate.of(2024, 1, 1), LocalDate.of(2024, 12, 31),
                 false,
                 LocalDateTime.of(2024, 1, 15, 10, 0),

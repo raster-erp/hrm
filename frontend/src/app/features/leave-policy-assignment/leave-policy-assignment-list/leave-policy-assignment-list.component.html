@@ -59,19 +59,19 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="departmentId">
-        <th mat-header-cell *matHeaderCellDef>Department ID</th>
-        <td mat-cell *matCellDef="let assignment">{{ assignment.departmentId ?? '-' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="designationId">
-        <th mat-header-cell *matHeaderCellDef>Designation ID</th>
-        <td mat-cell *matCellDef="let assignment">{{ assignment.designationId ?? '-' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="employeeId">
-        <th mat-header-cell *matHeaderCellDef>Employee ID</th>
-        <td mat-cell *matCellDef="let assignment">{{ assignment.employeeId ?? '-' }}</td>
+      <ng-container matColumnDef="target">
+        <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+        <td mat-cell *matCellDef="let assignment">
+          @if (assignment.assignmentType === 'DEPARTMENT') {
+            {{ assignment.departmentName ?? assignment.departmentId ?? '-' }}
+          } @else if (assignment.assignmentType === 'DESIGNATION') {
+            {{ assignment.designationTitle ?? assignment.designationId ?? '-' }}
+          } @else if (assignment.assignmentType === 'INDIVIDUAL') {
+            {{ assignment.employeeName ?? assignment.employeeId ?? '-' }}
+          } @else {
+            -
+          }
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="effectiveFrom">

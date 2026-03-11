@@ -13,9 +13,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LeavePolicyAssignmentService } from '../../../services/leave-policy-assignment.service';
 import { LeavePolicyService } from '../../../services/leave-policy.service';
+import { DepartmentService } from '../../../services/department.service';
+import { DesignationService } from '../../../services/designation.service';
+import { EmployeeService } from '../../../services/employee.service';
 import { NotificationService } from '../../../services/notification.service';
 import { LeavePolicyAssignmentRequest } from '../../../models/leave-policy-assignment.model';
 import { LeavePolicyResponse } from '../../../models/leave-policy.model';
+import { DepartmentResponse } from '../../../models/department.model';
+import { DesignationResponse } from '../../../models/designation.model';
+import { EmployeeResponse } from '../../../models/employee.model';
 
 @Component({
   selector: 'app-leave-policy-assignment-form',
@@ -45,6 +51,9 @@ export class LeavePolicyAssignmentFormComponent implements OnInit {
   saving = false;
 
   leavePolicies: LeavePolicyResponse[] = [];
+  departments: DepartmentResponse[] = [];
+  designations: DesignationResponse[] = [];
+  employees: EmployeeResponse[] = [];
   assignmentTypes = ['DEPARTMENT', 'DESIGNATION', 'INDIVIDUAL'];
 
   constructor(
@@ -53,12 +62,18 @@ export class LeavePolicyAssignmentFormComponent implements OnInit {
     private router: Router,
     private assignmentService: LeavePolicyAssignmentService,
     private leavePolicyService: LeavePolicyService,
+    private departmentService: DepartmentService,
+    private designationService: DesignationService,
+    private employeeService: EmployeeService,
     private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.loadLeavePolicies();
+    this.loadDepartments();
+    this.loadDesignations();
+    this.loadEmployees();
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -86,6 +101,33 @@ export class LeavePolicyAssignmentFormComponent implements OnInit {
       .subscribe({
         next: policies => this.leavePolicies = policies,
         error: () => this.notificationService.error('Failed to load leave policies')
+      });
+  }
+
+  loadDepartments(): void {
+    this.departmentService.getAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: departments => this.departments = departments,
+        error: () => this.notificationService.error('Failed to load departments')
+      });
+  }
+
+  loadDesignations(): void {
+    this.designationService.getAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: designations => this.designations = designations,
+        error: () => this.notificationService.error('Failed to load designations')
+      });
+  }
+
+  loadEmployees(): void {
+    this.employeeService.getAll(0, 1000)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: page => this.employees = page.content,
+        error: () => this.notificationService.error('Failed to load employees')
       });
   }
 

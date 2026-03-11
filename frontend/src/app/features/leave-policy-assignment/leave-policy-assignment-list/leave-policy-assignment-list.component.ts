@@ -42,7 +42,7 @@ export class LeavePolicyAssignmentListComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   displayedColumns: string[] = [
-    'leavePolicyName', 'assignmentType', 'departmentId', 'designationId', 'employeeId', 'effectiveFrom', 'effectiveTo', 'active', 'actions'
+    'leavePolicyName', 'assignmentType', 'target', 'effectiveFrom', 'effectiveTo', 'active', 'actions'
   ];
   dataSource = new MatTableDataSource<LeavePolicyAssignmentResponse>();
   totalElements = 0;

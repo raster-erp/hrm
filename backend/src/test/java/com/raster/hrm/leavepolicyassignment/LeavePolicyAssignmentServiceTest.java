@@ -1,5 +1,11 @@
 package com.raster.hrm.leavepolicyassignment;
 
+import com.raster.hrm.department.entity.Department;
+import com.raster.hrm.department.repository.DepartmentRepository;
+import com.raster.hrm.designation.entity.Designation;
+import com.raster.hrm.designation.repository.DesignationRepository;
+import com.raster.hrm.employee.entity.Employee;
+import com.raster.hrm.employee.repository.EmployeeRepository;
 import com.raster.hrm.exception.ResourceNotFoundException;
 import com.raster.hrm.leavepolicy.entity.LeavePolicy;
 import com.raster.hrm.leavepolicy.repository.LeavePolicyRepository;
@@ -41,6 +47,15 @@ class LeavePolicyAssignmentServiceTest {
     @Mock
     private LeavePolicyRepository leavePolicyRepository;
 
+    @Mock
+    private DepartmentRepository departmentRepository;
+
+    @Mock
+    private DesignationRepository designationRepository;
+
+    @Mock
+    private EmployeeRepository employeeRepository;
+
     @InjectMocks
     private LeavePolicyAssignmentService leavePolicyAssignmentService;
 
@@ -67,6 +82,28 @@ class LeavePolicyAssignmentServiceTest {
         return assignment;
     }
 
+    private void stubDepartmentLookup() {
+        var dept = new Department();
+        dept.setId(10L);
+        dept.setName("Engineering");
+        when(departmentRepository.findById(10L)).thenReturn(Optional.of(dept));
+    }
+
+    private void stubDesignationLookup() {
+        var desig = new Designation();
+        desig.setId(20L);
+        desig.setTitle("Senior Developer");
+        when(designationRepository.findById(20L)).thenReturn(Optional.of(desig));
+    }
+
+    private void stubEmployeeLookup() {
+        var emp = new Employee();
+        emp.setId(30L);
+        emp.setFirstName("John");
+        emp.setLastName("Doe");
+        when(employeeRepository.findById(30L)).thenReturn(Optional.of(emp));
+    }
+
     private LeavePolicyAssignmentRequest createRequest() {
         return new LeavePolicyAssignmentRequest(
                 1L, "DEPARTMENT", 10L, null, null,
@@ -84,13 +121,17 @@ class LeavePolicyAssignmentServiceTest {
         var pageable = PageRequest.of(0, 20);
         var page = new PageImpl<>(assignments, pageable, 2);
         when(leavePolicyAssignmentRepository.findAll(pageable)).thenReturn(page);
+        stubDepartmentLookup();
+        stubEmployeeLookup();
 
         var result = leavePolicyAssignmentService.getAll(pageable);
 
         assertEquals(2, result.getTotalElements());
         assertEquals("Annual Leave", result.getContent().get(0).leavePolicyName());
         assertEquals("DEPARTMENT", result.getContent().get(0).assignmentType());
+        assertEquals("Engineering", result.getContent().get(0).departmentName());
         assertEquals("INDIVIDUAL", result.getContent().get(1).assignmentType());
+        assertEquals("John Doe", result.getContent().get(1).employeeName());
         verify(leavePolicyAssignmentRepository).findAll(pageable);
     }
 
@@ -110,6 +151,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignment = createAssignment(1L, policy, AssignmentType.DEPARTMENT);
         when(leavePolicyAssignmentRepository.findById(1L)).thenReturn(Optional.of(assignment));
+        stubDepartmentLookup();
 
         var result = leavePolicyAssignmentService.getById(1L);
 
@@ -119,6 +161,7 @@ class LeavePolicyAssignmentServiceTest {
         assertEquals("Annual Leave", result.leavePolicyName());
         assertEquals("DEPARTMENT", result.assignmentType());
         assertEquals(10L, result.departmentId());
+        assertEquals("Engineering", result.departmentName());
         assertTrue(result.active());
     }
 
@@ -135,6 +178,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignments = List.of(createAssignment(1L, policy, AssignmentType.DEPARTMENT));
         when(leavePolicyAssignmentRepository.findByLeavePolicyId(1L)).thenReturn(assignments);
+        stubDepartmentLookup();
 
         var result = leavePolicyAssignmentService.getByPolicyId(1L);
 
@@ -156,6 +200,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignments = List.of(createAssignment(1L, policy, AssignmentType.DEPARTMENT));
         when(leavePolicyAssignmentRepository.findByAssignmentType(AssignmentType.DEPARTMENT)).thenReturn(assignments);
+        stubDepartmentLookup();
 
         var result = leavePolicyAssignmentService.getByAssignmentType(AssignmentType.DEPARTMENT);
 
@@ -177,6 +222,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignments = List.of(createAssignment(1L, policy, AssignmentType.DEPARTMENT));
         when(leavePolicyAssignmentRepository.findByDepartmentId(10L)).thenReturn(assignments);
+        stubDepartmentLookup();
 
         var result = leavePolicyAssignmentService.getByDepartmentId(10L);
 
@@ -198,6 +244,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignment = createAssignment(1L, policy, AssignmentType.DESIGNATION);
         when(leavePolicyAssignmentRepository.findByDesignationId(20L)).thenReturn(List.of(assignment));
+        stubDesignationLookup();
 
         var result = leavePolicyAssignmentService.getByDesignationId(20L);
 
@@ -219,6 +266,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignment = createAssignment(1L, policy, AssignmentType.INDIVIDUAL);
         when(leavePolicyAssignmentRepository.findByEmployeeId(30L)).thenReturn(List.of(assignment));
+        stubEmployeeLookup();
 
         var result = leavePolicyAssignmentService.getByEmployeeId(30L);
 
@@ -240,6 +288,7 @@ class LeavePolicyAssignmentServiceTest {
         var request = createRequest();
         var policy = createLeavePolicy(1L, "Annual Leave");
         when(leavePolicyRepository.findById(1L)).thenReturn(Optional.of(policy));
+        stubDepartmentLookup();
         when(leavePolicyAssignmentRepository.save(any(LeavePolicyAssignment.class))).thenAnswer(invocation -> {
             LeavePolicyAssignment a = invocation.getArgument(0);
             a.setId(1L);
@@ -256,8 +305,11 @@ class LeavePolicyAssignmentServiceTest {
         assertEquals("Annual Leave", result.leavePolicyName());
         assertEquals("DEPARTMENT", result.assignmentType());
         assertEquals(10L, result.departmentId());
+        assertEquals("Engineering", result.departmentName());
         assertNull(result.designationId());
+        assertNull(result.designationTitle());
         assertNull(result.employeeId());
+        assertNull(result.employeeName());
         assertEquals(LocalDate.of(2024, 1, 1), result.effectiveFrom());
         assertEquals(LocalDate.of(2024, 12, 31), result.effectiveTo());
         verify(leavePolicyAssignmentRepository).save(any(LeavePolicyAssignment.class));
@@ -281,6 +333,7 @@ class LeavePolicyAssignmentServiceTest {
         );
         var policy = createLeavePolicy(1L, "Annual Leave");
         when(leavePolicyRepository.findById(1L)).thenReturn(Optional.of(policy));
+        stubEmployeeLookup();
         when(leavePolicyAssignmentRepository.save(any(LeavePolicyAssignment.class))).thenAnswer(invocation -> {
             LeavePolicyAssignment a = invocation.getArgument(0);
             a.setId(2L);
@@ -293,8 +346,11 @@ class LeavePolicyAssignmentServiceTest {
 
         assertEquals("INDIVIDUAL", result.assignmentType());
         assertEquals(30L, result.employeeId());
+        assertEquals("John Doe", result.employeeName());
         assertNull(result.departmentId());
+        assertNull(result.departmentName());
         assertNull(result.designationId());
+        assertNull(result.designationTitle());
         assertNull(result.effectiveTo());
     }
 
@@ -310,6 +366,10 @@ class LeavePolicyAssignmentServiceTest {
         when(leavePolicyAssignmentRepository.findById(1L)).thenReturn(Optional.of(assignment));
         when(leavePolicyRepository.findById(2L)).thenReturn(Optional.of(newPolicy));
         when(leavePolicyAssignmentRepository.save(any(LeavePolicyAssignment.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        var desig = new Designation();
+        desig.setId(25L);
+        desig.setTitle("Lead Engineer");
+        when(designationRepository.findById(25L)).thenReturn(Optional.of(desig));
 
         var result = leavePolicyAssignmentService.update(1L, request);
 
@@ -318,7 +378,9 @@ class LeavePolicyAssignmentServiceTest {
         assertEquals("Sick Leave", result.leavePolicyName());
         assertEquals("DESIGNATION", result.assignmentType());
         assertEquals(25L, result.designationId());
+        assertEquals("Lead Engineer", result.designationTitle());
         assertNull(result.departmentId());
+        assertNull(result.departmentName());
         assertEquals(LocalDate.of(2024, 6, 1), result.effectiveFrom());
         assertEquals(LocalDate.of(2025, 5, 31), result.effectiveTo());
         verify(leavePolicyAssignmentRepository).save(any(LeavePolicyAssignment.class));
@@ -356,6 +418,7 @@ class LeavePolicyAssignmentServiceTest {
         var assignment = createAssignment(1L, policy, AssignmentType.DEPARTMENT);
         when(leavePolicyAssignmentRepository.findById(1L)).thenReturn(Optional.of(assignment));
         when(leavePolicyAssignmentRepository.save(any(LeavePolicyAssignment.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        stubDepartmentLookup();
 
         var result = leavePolicyAssignmentService.updateActive(1L, false);
 
@@ -397,6 +460,7 @@ class LeavePolicyAssignmentServiceTest {
         var policy = createLeavePolicy(1L, "Annual Leave");
         var assignment = createAssignment(1L, policy, AssignmentType.DEPARTMENT);
         when(leavePolicyAssignmentRepository.findById(1L)).thenReturn(Optional.of(assignment));
+        stubDepartmentLookup();
 
         var result = leavePolicyAssignmentService.getById(1L);
 
@@ -405,8 +469,11 @@ class LeavePolicyAssignmentServiceTest {
         assertEquals("Annual Leave", result.leavePolicyName());
         assertEquals("DEPARTMENT", result.assignmentType());
         assertEquals(10L, result.departmentId());
+        assertEquals("Engineering", result.departmentName());
         assertNull(result.designationId());
+        assertNull(result.designationTitle());
         assertNull(result.employeeId());
+        assertNull(result.employeeName());
         assertEquals(LocalDate.of(2024, 1, 1), result.effectiveFrom());
         assertEquals(LocalDate.of(2024, 12, 31), result.effectiveTo());
         assertTrue(result.active());
