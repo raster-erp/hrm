@@ -40,20 +40,38 @@
               }
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Department ID</mat-label>
-              <input matInput type="number" formControlName="departmentId" placeholder="Optional">
-            </mat-form-field>
+            @if (assignmentForm.get('assignmentType')?.value === 'DEPARTMENT') {
+              <mat-form-field appearance="outline">
+                <mat-label>Department</mat-label>
+                <mat-select formControlName="departmentId">
+                  @for (dept of departments; track dept.id) {
+                    <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
 
-            <mat-form-field appearance="outline">
-              <mat-label>Designation ID</mat-label>
-              <input matInput type="number" formControlName="designationId" placeholder="Optional">
-            </mat-form-field>
+            @if (assignmentForm.get('assignmentType')?.value === 'DESIGNATION') {
+              <mat-form-field appearance="outline">
+                <mat-label>Designation</mat-label>
+                <mat-select formControlName="designationId">
+                  @for (desig of designations; track desig.id) {
+                    <mat-option [value]="desig.id">{{ desig.title }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
 
-            <mat-form-field appearance="outline">
-              <mat-label>Employee ID</mat-label>
-              <input matInput type="number" formControlName="employeeId" placeholder="Optional">
-            </mat-form-field>
+            @if (assignmentForm.get('assignmentType')?.value === 'INDIVIDUAL') {
+              <mat-form-field appearance="outline">
+                <mat-label>Employee</mat-label>
+                <mat-select formControlName="employeeId">
+                  @for (emp of employees; track emp.id) {
+                    <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
 
             <mat-form-field appearance="outline">
               <mat-label>Effective From</mat-label>

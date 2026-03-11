@@ -20,8 +20,8 @@ describe('LeavePolicyAssignmentListComponent', () => {
     content: [
       {
         id: 1, leavePolicyId: 1, leavePolicyName: 'Standard CL Policy',
-        assignmentType: 'DEPARTMENT', departmentId: 1,
-        designationId: null, employeeId: null,
+        assignmentType: 'DEPARTMENT', departmentId: 1, departmentName: 'Engineering',
+        designationId: null, designationTitle: null, employeeId: null, employeeName: null,
         effectiveFrom: '2026-01-01', effectiveTo: null,
         active: true,
         createdAt: '2026-01-01T00:00:00', updatedAt: '2026-03-10T10:00:00'
