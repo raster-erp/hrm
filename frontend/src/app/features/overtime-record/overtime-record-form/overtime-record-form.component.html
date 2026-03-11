@@ -1,0 +1,90 @@
+<div class="overtime-record-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit Overtime Record' : 'Add New Overtime Record' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Employee ID</mat-label>
+              <input matInput type="number" formControlName="employeeId" placeholder="Enter employee ID">
+              @if (recordForm.get('employeeId')?.hasError('required') && recordForm.get('employeeId')?.touched) {
+                <mat-error>Employee ID is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Overtime Date</mat-label>
+              <input matInput type="date" formControlName="overtimeDate">
+              @if (recordForm.get('overtimeDate')?.hasError('required') && recordForm.get('overtimeDate')?.touched) {
+                <mat-error>Overtime date is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Overtime Policy</mat-label>
+              <mat-select formControlName="overtimePolicyId">
+                @for (policy of activePolicies; track policy.id) {
+                  <mat-option [value]="policy.id">{{ policy.name }}</mat-option>
+                }
+              </mat-select>
+              @if (recordForm.get('overtimePolicyId')?.hasError('required') && recordForm.get('overtimePolicyId')?.touched) {
+                <mat-error>Overtime policy is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Overtime Minutes</mat-label>
+              <input matInput type="number" formControlName="overtimeMinutes" placeholder="Enter minutes">
+              @if (recordForm.get('overtimeMinutes')?.hasError('required') && recordForm.get('overtimeMinutes')?.touched) {
+                <mat-error>Overtime minutes is required</mat-error>
+              }
+              @if (recordForm.get('overtimeMinutes')?.hasError('min') && recordForm.get('overtimeMinutes')?.touched) {
+                <mat-error>Overtime minutes must be at least 1</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Shift Start Time</mat-label>
+              <input matInput type="time" formControlName="shiftStartTime">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Shift End Time</mat-label>
+              <input matInput type="time" formControlName="shiftEndTime">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="remarks" placeholder="Enter remarks" rows="3"></textarea>
+              @if (recordForm.get('remarks')?.hasError('maxlength') && recordForm.get('remarks')?.touched) {
+                <mat-error>Remarks cannot exceed 500 characters</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Create' }} Record
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

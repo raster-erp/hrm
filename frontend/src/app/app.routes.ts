@@ -61,5 +61,13 @@ export const routes: Routes = [
   {
     path: 'shift-rosters',
     loadChildren: () => import('./features/shift-roster/shift-roster.routes').then(m => m.SHIFT_ROSTER_ROUTES)
+  },
+  {
+    path: 'overtime-policies',
+    loadChildren: () => import('./features/overtime-policy/overtime-policy.routes').then(m => m.OVERTIME_POLICY_ROUTES)
+  },
+  {
+    path: 'overtime-records',
+    loadChildren: () => import('./features/overtime-record/overtime-record.routes').then(m => m.OVERTIME_RECORD_ROUTES)
   }
 ];

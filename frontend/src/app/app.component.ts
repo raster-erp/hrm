@@ -57,6 +57,9 @@ export class AppComponent implements OnInit {
         { path: '/shifts', label: 'Shifts', icon: 'access_time' },
         { path: '/rotation-patterns', label: 'Rotation Patterns', icon: 'autorenew' },
         { path: '/shift-rosters', label: 'Rosters', icon: 'calendar_month' },
+        { path: '/overtime-policies', label: 'OT Policies', icon: 'policy' },
+        { path: '/overtime-records', label: 'OT Records', icon: 'more_time' },
+        { path: '/overtime-records/summary', label: 'OT Summary', icon: 'bar_chart' },
       ]
     },
     {
