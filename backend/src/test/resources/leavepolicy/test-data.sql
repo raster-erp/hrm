@@ -1,3 +1,8 @@
+-- Clean any existing data (e.g. from V18 seed migration) to avoid UNIQUE constraint violations
+DELETE FROM leave_policy_assignments;
+DELETE FROM leave_policies;
+DELETE FROM leave_types;
+
 -- Use IDs >= 9000 to avoid conflicts with seed data
 INSERT INTO leave_types (id, code, name, category, active, created_at, updated_at) VALUES
 (9001, 'CL', 'Casual Leave', 'PAID', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
