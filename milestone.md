@@ -298,7 +298,7 @@
 | Database Design | Design `leave_policy_assignments` table for linking policies to employee groups | Done |
 | Backend Development | Build CRUD APIs for leave type master | Done |
 | Backend Development | Build CRUD APIs for leave policy configuration | Done |
-| Backend Development | Build policy assignment API (by grade, department, or individual) | Not Started |
+| Backend Development | Build policy assignment API (by grade, department, or individual) | Done |
 | Backend Development | Implement accrual engine (scheduled job for periodic credit) | Not Started |
 | Frontend Development | Build leave type master list and form | Not Started |
 | Frontend Development | Build leave policy configuration wizard with accrual rule builder | Not Started |
