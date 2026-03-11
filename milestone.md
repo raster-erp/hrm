@@ -216,12 +216,12 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define late-coming and early-going thresholds and grace periods | Not Started |
-| Requirements | Define penalty rules (warning, leave deduction, pay cut) | Not Started |
-| Database Design | Design `attendance_deviations` table with type, minutes, and penalty applied | Not Started |
-| Backend Development | Build deviation detection engine (compares punch times against shift) | Not Started |
-| Backend Development | Build penalty computation and auto-application APIs | Not Started |
-| Backend Development | Implement monthly deviation summary API per employee | Not Started |
+| Requirements | Define late-coming and early-going thresholds and grace periods | Done |
+| Requirements | Define penalty rules (warning, leave deduction, pay cut) | Done |
+| Database Design | Design `attendance_deviations` table with type, minutes, and penalty applied | Done |
+| Backend Development | Build deviation detection engine (compares punch times against shift) | Done |
+| Backend Development | Build penalty computation and auto-application APIs | Done |
+| Backend Development | Implement monthly deviation summary API per employee | Done |
 | Frontend Development | Build deviation report view with filters (date range, department, employee) | Not Started |
 | Frontend Development | Build penalty configuration form with threshold and rule settings | Not Started |
 | Integration Testing | Validate deviation detection accuracy across shift types | Not Started |
