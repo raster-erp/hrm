@@ -267,18 +267,18 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define report types (daily muster, monthly summary, absentee list) | Not Started |
-| Requirements | Define export formats (PDF, Excel, CSV) and scheduling requirements | Not Started |
-| Database Design | Design `report_schedules` table for automated report generation | Not Started |
-| Backend Development | Build daily attendance muster report API | Not Started |
-| Backend Development | Build monthly attendance summary API with present/absent/leave counts | Not Started |
-| Backend Development | Build absentee and defaulter list report API | Not Started |
-| Backend Development | Implement report export service (PDF, Excel, CSV generators) | Not Started |
+| Requirements | Define report types (daily muster, monthly summary, absentee list) | Done |
+| Requirements | Define export formats (PDF, Excel, CSV) and scheduling requirements | Done |
+| Database Design | Design `report_schedules` table for automated report generation | Done |
+| Backend Development | Build daily attendance muster report API | Done |
+| Backend Development | Build monthly attendance summary API with present/absent/leave counts | Done |
+| Backend Development | Build absentee and defaulter list report API | Done |
+| Backend Development | Implement report export service (PDF, Excel, CSV generators) | Done |
 | Backend Development | Add scheduled report generation and email delivery service | Not Started |
-| Frontend Development | Build report selection interface with date range and department filters | Not Started |
-| Frontend Development | Build interactive report viewer with drill-down capability | Not Started |
-| Frontend Development | Add report download and email-share options | Not Started |
-| Integration Testing | Validate report accuracy against raw attendance data | Not Started |
+| Frontend Development | Build report selection interface with date range and department filters | Done |
+| Frontend Development | Build interactive report viewer with drill-down capability | Done |
+| Frontend Development | Add report download and email-share options | Done |
+| Integration Testing | Validate report accuracy against raw attendance data | Done |
 | UAT & QA | Conduct user acceptance testing for all attendance reports | Not Started |
 | Deployment | Deploy attendance reports module to staging and production | Not Started |
 

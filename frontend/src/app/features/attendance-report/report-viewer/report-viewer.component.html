@@ -1,0 +1,252 @@
+<div class="report-viewer-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>summarize</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Attendance Reports</h2>
+          <p>Generate daily muster, monthly summary, and absentee list reports</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button color="accent" routerLink="/attendance-reports/schedules">
+          <mat-icon>schedule</mat-icon>
+          Report Schedules
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Selection -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Report Type</mat-label>
+      <mat-select [(ngModel)]="selectedReportType">
+        @for (type of reportTypes; track type) {
+          <mat-option [value]="type">{{ getReportLabel(type) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (selectedReportType === 'DAILY_MUSTER') {
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" [(ngModel)]="date">
+      </mat-form-field>
+    }
+
+    @if (selectedReportType === 'MONTHLY_SUMMARY') {
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Year</mat-label>
+        <input matInput type="number" [(ngModel)]="year" min="2020" max="2030">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Month</mat-label>
+        <mat-select [(ngModel)]="month">
+          <mat-option [value]="1">January</mat-option>
+          <mat-option [value]="2">February</mat-option>
+          <mat-option [value]="3">March</mat-option>
+          <mat-option [value]="4">April</mat-option>
+          <mat-option [value]="5">May</mat-option>
+          <mat-option [value]="6">June</mat-option>
+          <mat-option [value]="7">July</mat-option>
+          <mat-option [value]="8">August</mat-option>
+          <mat-option [value]="9">September</mat-option>
+          <mat-option [value]="10">October</mat-option>
+          <mat-option [value]="11">November</mat-option>
+          <mat-option [value]="12">December</mat-option>
+        </mat-select>
+      </mat-form-field>
+    }
+
+    @if (selectedReportType === 'ABSENTEE_LIST') {
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Start Date</mat-label>
+        <input matInput type="date" [(ngModel)]="startDate">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>End Date</mat-label>
+        <input matInput type="date" [(ngModel)]="endDate">
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Department ID</mat-label>
+      <input matInput type="number" [(ngModel)]="departmentId" placeholder="All departments">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="loadReport()">
+      <mat-icon>search</mat-icon>
+      Generate Report
+    </button>
+
+    <button mat-stroked-button (click)="downloadCsv()" [disabled]="loading">
+      <mat-icon>download</mat-icon>
+      Download CSV
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Daily Muster Report -->
+  @if (dailyMusterReport) {
+    <div class="report-header">
+      <h3>Daily Muster Report - {{ dailyMusterReport.date }}</h3>
+      <div class="report-stats">
+        <mat-chip-set>
+          <mat-chip class="status-present">Present: {{ dailyMusterReport.totalPresent }}</mat-chip>
+          <mat-chip class="status-absent">Absent: {{ dailyMusterReport.totalAbsent }}</mat-chip>
+          <mat-chip class="status-incomplete">Incomplete: {{ dailyMusterReport.totalIncomplete }}</mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="dailyMusterDataSource" class="report-table">
+        <ng-container matColumnDef="employeeName">
+          <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="employeeCode">
+          <th mat-header-cell *matHeaderCellDef>Employee Code</th>
+          <td mat-cell *matCellDef="let row"><span class="code-badge">{{ row.employeeCode }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let row">{{ row.departmentName || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstPunchIn">
+          <th mat-header-cell *matHeaderCellDef>First Punch In</th>
+          <td mat-cell *matCellDef="let row">{{ row.firstPunchIn || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastPunchOut">
+          <th mat-header-cell *matHeaderCellDef>Last Punch Out</th>
+          <td mat-cell *matCellDef="let row">{{ row.lastPunchOut || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPunches">
+          <th mat-header-cell *matHeaderCellDef>Total Punches</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalPunches }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="status-chip" [ngClass]="getStatusClass(row.status)">{{ row.status }}</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="dailyMusterColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: dailyMusterColumns;"></tr>
+      </table>
+    </div>
+  }
+
+  <!-- Monthly Summary Report -->
+  @if (monthlySummaryReport) {
+    <div class="report-header">
+      <h3>Monthly Summary - {{ monthlySummaryReport.year }}/{{ monthlySummaryReport.month }}</h3>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="monthlySummaryDataSource" class="report-table">
+        <ng-container matColumnDef="employeeName">
+          <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="employeeCode">
+          <th mat-header-cell *matHeaderCellDef>Employee Code</th>
+          <td mat-cell *matCellDef="let row"><span class="code-badge">{{ row.employeeCode }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let row">{{ row.departmentName || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPresent">
+          <th mat-header-cell *matHeaderCellDef>Present</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalPresent }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalAbsent">
+          <th mat-header-cell *matHeaderCellDef>Absent</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalAbsent }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalIncomplete">
+          <th mat-header-cell *matHeaderCellDef>Incomplete</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalIncomplete }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalWorkingDays">
+          <th mat-header-cell *matHeaderCellDef>Working Days</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalWorkingDays }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="monthlySummaryColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: monthlySummaryColumns;"></tr>
+      </table>
+    </div>
+  }
+
+  <!-- Absentee List Report -->
+  @if (absenteeListReport) {
+    <div class="report-header">
+      <h3>Absentee List - {{ absenteeListReport.startDate }} to {{ absenteeListReport.endDate }}</h3>
+      <div class="report-stats">
+        <mat-chip-set>
+          <mat-chip class="status-absent">Total Absent Instances: {{ absenteeListReport.totalAbsentInstances }}</mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="absenteeDataSource" class="report-table">
+        <ng-container matColumnDef="employeeName">
+          <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="employeeCode">
+          <th mat-header-cell *matHeaderCellDef>Employee Code</th>
+          <td mat-cell *matCellDef="let row"><span class="code-badge">{{ row.employeeCode }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let row">{{ row.departmentName || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="absentDate">
+          <th mat-header-cell *matHeaderCellDef>Absent Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.absentDate }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="absenteeColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: absenteeColumns;"></tr>
+      </table>
+    </div>
+  }
+
+  <!-- No data -->
+  @if (!loading && !dailyMusterReport && !monthlySummaryReport && !absenteeListReport) {
+    <div class="no-data">
+      <mat-icon>summarize</mat-icon>
+      <p>Select a report type, configure filters, and click "Generate Report" to view data.</p>
+    </div>
+  }
+</div>

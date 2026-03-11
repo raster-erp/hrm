@@ -67,6 +67,8 @@ export class AppComponent implements OnInit {
         { path: '/wfh-requests', label: 'WFH Requests', icon: 'home_work' },
         { path: '/wfh-requests/checkin', label: 'WFH Check-in', icon: 'login' },
         { path: '/wfh-requests/dashboard', label: 'WFH Dashboard', icon: 'dashboard' },
+        { path: '/attendance-reports', label: 'Reports', icon: 'summarize' },
+        { path: '/attendance-reports/schedules', label: 'Report Schedules', icon: 'schedule_send' },
       ]
     },
     {
