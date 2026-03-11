@@ -305,7 +305,7 @@
 | Frontend Development | Build policy assignment interface with employee group selector | Done |
 | Integration Testing | Validate accrual computations across different policy configurations | Done |
 | UAT & QA | Conduct user acceptance testing for leave type and policy setup | Done |
-| Deployment | Deploy leave policy module to staging and production | Done |
+| Deployment | Deploy leave policy module to staging and production | Not Started |
 
 ### 3.2 Leave Application & Approval
 

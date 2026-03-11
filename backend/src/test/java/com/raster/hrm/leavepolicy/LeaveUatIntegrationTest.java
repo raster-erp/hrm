@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Comprehensive UAT-style integration tests for 3.1 Leave Type &amp; Policy Setup.
+ * Comprehensive UAT-style integration tests for 3.1 Leave Type & Policy Setup.
  * Validates full end-to-end workflows covering leave type CRUD, leave policy CRUD,
  * policy assignment CRUD, accrual computations across configurations, validation
  * rules, and edge cases.
