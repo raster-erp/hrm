@@ -274,7 +274,7 @@
 | Backend Development | Build monthly attendance summary API with present/absent/leave counts | Done |
 | Backend Development | Build absentee and defaulter list report API | Done |
 | Backend Development | Implement report export service (PDF, Excel, CSV generators) | Done |
-| Backend Development | Add scheduled report generation and email delivery service | Not Started |
+| Backend Development | Add scheduled report generation and email delivery service | Done |
 | Frontend Development | Build report selection interface with date range and department filters | Done |
 | Frontend Development | Build interactive report viewer with drill-down capability | Done |
 | Frontend Development | Add report download and email-share options | Done |
