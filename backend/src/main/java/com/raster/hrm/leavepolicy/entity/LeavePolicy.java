@@ -34,7 +34,7 @@ public class LeavePolicy {
     private LeaveType leaveType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "accrual_frequency", nullable = false, length = 30)
+    @Column(name = "accrual_frequency", nullable = false, length = 20)
     private AccrualFrequency accrualFrequency;
 
     @Column(name = "accrual_days", nullable = false)
