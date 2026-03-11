@@ -249,12 +249,12 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define WFH eligibility criteria and policy rules | Not Started |
-| Requirements | Define WFH request and check-in/check-out workflow | Not Started |
-| Database Design | Design `wfh_requests` table with date, reason, and approval status | Not Started |
-| Database Design | Design `wfh_activity_logs` table for check-in/check-out tracking | Not Started |
-| Backend Development | Build WFH request and approval APIs | Not Started |
-| Backend Development | Build WFH check-in/check-out API with IP/location validation | Not Started |
+| Requirements | Define WFH eligibility criteria and policy rules | Done |
+| Requirements | Define WFH request and check-in/check-out workflow | Done |
+| Database Design | Design `wfh_requests` table with date, reason, and approval status | Done |
+| Database Design | Design `wfh_activity_logs` table for check-in/check-out tracking | Done |
+| Backend Development | Build WFH request and approval APIs | Done |
+| Backend Development | Build WFH check-in/check-out API with IP/location validation | Done |
 | Backend Development | Implement WFH attendance integration (mark as present-WFH) | Not Started |
 | Frontend Development | Build WFH request form with date picker and reason field | Not Started |
 | Frontend Development | Build WFH check-in/check-out interface with status indicator | Not Started |
