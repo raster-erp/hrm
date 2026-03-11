@@ -69,5 +69,9 @@ export const routes: Routes = [
   {
     path: 'overtime-records',
     loadChildren: () => import('./features/overtime-record/overtime-record.routes').then(m => m.OVERTIME_RECORD_ROUTES)
+  },
+  {
+    path: 'attendance-deviations',
+    loadChildren: () => import('./features/attendance-deviation/attendance-deviation.routes').then(m => m.ATTENDANCE_DEVIATION_ROUTES)
   }
 ];

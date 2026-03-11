@@ -222,7 +222,7 @@
 | Backend Development | Build deviation detection engine (compares punch times against shift) | Done |
 | Backend Development | Build penalty computation and auto-application APIs | Done |
 | Backend Development | Implement monthly deviation summary API per employee | Done |
-| Frontend Development | Build deviation report view with filters (date range, department, employee) | Not Started |
+| Frontend Development | Build deviation report view with filters (date range, department, employee) | Done |
 | Frontend Development | Build penalty configuration form with threshold and rule settings | Not Started |
 | Integration Testing | Validate deviation detection accuracy across shift types | Not Started |
 | UAT & QA | Conduct user acceptance testing for deviation tracking | Not Started |
