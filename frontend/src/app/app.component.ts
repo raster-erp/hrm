@@ -60,6 +60,8 @@ export class AppComponent implements OnInit {
         { path: '/overtime-policies', label: 'OT Policies', icon: 'policy' },
         { path: '/overtime-records', label: 'OT Records', icon: 'more_time' },
         { path: '/overtime-records/summary', label: 'OT Summary', icon: 'bar_chart' },
+        { path: '/attendance-deviations', label: 'Deviations', icon: 'running_with_errors' },
+        { path: '/attendance-deviations/summary', label: 'Deviation Summary', icon: 'assessment' },
       ]
     },
     {
