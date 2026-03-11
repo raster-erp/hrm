@@ -29,8 +29,7 @@ public interface WfhRequestRepository extends JpaRepository<WfhRequest, Long> {
                                                    @Param("startDate") LocalDate startDate,
                                                    @Param("endDate") LocalDate endDate);
 
-    @Query("SELECT w FROM WfhRequest w WHERE w.requestDate = :date AND w.status = 'APPROVED'")
-    List<WfhRequest> findApprovedByDate(@Param("date") LocalDate date);
+    List<WfhRequest> findByRequestDateAndStatus(LocalDate requestDate, WfhStatus status);
 
     Page<WfhRequest> findAll(Pageable pageable);
 }
