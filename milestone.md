@@ -223,8 +223,8 @@
 | Backend Development | Build penalty computation and auto-application APIs | Done |
 | Backend Development | Implement monthly deviation summary API per employee | Done |
 | Frontend Development | Build deviation report view with filters (date range, department, employee) | Done |
-| Frontend Development | Build penalty configuration form with threshold and rule settings | Not Started |
-| Integration Testing | Validate deviation detection accuracy across shift types | Not Started |
+| Frontend Development | Build penalty configuration form with threshold and rule settings | Done |
+| Integration Testing | Validate deviation detection accuracy across shift types | Done |
 | UAT & QA | Conduct user acceptance testing for deviation tracking | Not Started |
 | Deployment | Deploy late/early tracking module to staging and production | Not Started |
 
