@@ -77,5 +77,9 @@ export const routes: Routes = [
   {
     path: 'attendance-regularization',
     loadChildren: () => import('./features/attendance-regularization/attendance-regularization.routes').then(m => m.ATTENDANCE_REGULARIZATION_ROUTES)
-  }
+  },
+  {
+    path: 'wfh-requests',
+    loadChildren: () => import('./features/wfh-request/wfh-request.routes').then(m => m.WFH_REQUEST_ROUTES)
+  },
 ];

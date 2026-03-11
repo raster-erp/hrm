@@ -1,0 +1,59 @@
+@use 'styles/variables' as *;
+
+.wfh-checkin-container {
+  max-width: $form-max-width-md;
+  margin: 0 auto;
+}
+
+.status-card {
+  margin: 16px 0;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.status-checked-in {
+  background: var(--success-bg, #e8f5e9);
+  color: var(--success, #2e7d32);
+}
+
+.status-checked-out {
+  background: var(--warn-bg, #fff3e0);
+  color: var(--warn, #e65100);
+}
+
+.checkin-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+  padding: 16px 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.activity-table {
+  width: 100%;
+  margin-top: 16px;
+}
+
+@media (max-width: $bp-mobile) {
+  .checkin-form {
+    grid-template-columns: 1fr;
+  }
+}

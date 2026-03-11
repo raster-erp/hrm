@@ -249,17 +249,17 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define WFH eligibility criteria and policy rules | Not Started |
-| Requirements | Define WFH request and check-in/check-out workflow | Not Started |
-| Database Design | Design `wfh_requests` table with date, reason, and approval status | Not Started |
-| Database Design | Design `wfh_activity_logs` table for check-in/check-out tracking | Not Started |
-| Backend Development | Build WFH request and approval APIs | Not Started |
-| Backend Development | Build WFH check-in/check-out API with IP/location validation | Not Started |
-| Backend Development | Implement WFH attendance integration (mark as present-WFH) | Not Started |
-| Frontend Development | Build WFH request form with date picker and reason field | Not Started |
-| Frontend Development | Build WFH check-in/check-out interface with status indicator | Not Started |
-| Frontend Development | Build WFH dashboard showing team WFH distribution | Not Started |
-| Integration Testing | Validate WFH request, approval, and attendance marking | Not Started |
+| Requirements | Define WFH eligibility criteria and policy rules | Done |
+| Requirements | Define WFH request and check-in/check-out workflow | Done |
+| Database Design | Design `wfh_requests` table with date, reason, and approval status | Done |
+| Database Design | Design `wfh_activity_logs` table for check-in/check-out tracking | Done |
+| Backend Development | Build WFH request and approval APIs | Done |
+| Backend Development | Build WFH check-in/check-out API with IP/location validation | Done |
+| Backend Development | Implement WFH attendance integration (mark as present-WFH) | Done |
+| Frontend Development | Build WFH request form with date picker and reason field | Done |
+| Frontend Development | Build WFH check-in/check-out interface with status indicator | Done |
+| Frontend Development | Build WFH dashboard showing team WFH distribution | Done |
+| Integration Testing | Validate WFH request, approval, and attendance marking | Done |
 | UAT & QA | Conduct user acceptance testing for WFH tracking | Not Started |
 | Deployment | Deploy WFH tracking module to staging and production | Not Started |
 
