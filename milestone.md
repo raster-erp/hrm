@@ -299,7 +299,7 @@
 | Backend Development | Build CRUD APIs for leave type master | Done |
 | Backend Development | Build CRUD APIs for leave policy configuration | Done |
 | Backend Development | Build policy assignment API (by grade, department, or individual) | Done |
-| Backend Development | Implement accrual engine (scheduled job for periodic credit) | Not Started |
+| Backend Development | Implement accrual engine (scheduled job for periodic credit) | Done |
 | Frontend Development | Build leave type master list and form | Not Started |
 | Frontend Development | Build leave policy configuration wizard with accrual rule builder | Not Started |
 | Frontend Development | Build policy assignment interface with employee group selector | Not Started |
