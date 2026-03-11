@@ -1,0 +1,120 @@
+<div class="leave-approval-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>inbox</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Leave Approval Inbox</h2>
+          <p>Review and approve pending leave applications</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        @if (selection.selected.length > 0) {
+          <button mat-raised-button color="primary" (click)="bulkApprove()">
+            <mat-icon>check_circle</mat-icon> Approve Selected ({{ selection.selected.length }})
+          </button>
+          <button mat-raised-button color="warn" (click)="bulkReject()">
+            <mat-icon>cancel</mat-icon> Reject Selected ({{ selection.selected.length }})
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="approval-table">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="toggleAllRows()"
+            [checked]="isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let record">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="selection.toggle(record)"
+            [checked]="selection.isSelected(record)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <td mat-cell *matCellDef="let record">{{ record.employeeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="leaveTypeName">
+        <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+        <td mat-cell *matCellDef="let record">{{ record.leaveTypeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fromDate">
+        <th mat-header-cell *matHeaderCellDef>From</th>
+        <td mat-cell *matCellDef="let record">{{ record.fromDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="toDate">
+        <th mat-header-cell *matHeaderCellDef>To</th>
+        <td mat-cell *matCellDef="let record">{{ record.toDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="numberOfDays">
+        <th mat-header-cell *matHeaderCellDef>Days</th>
+        <td mat-cell *matCellDef="let record">{{ record.numberOfDays }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef>Reason</th>
+        <td mat-cell *matCellDef="let record">{{ record.reason }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let record">
+          <div class="row-actions">
+            <button mat-icon-button matTooltip="Approve" color="primary"
+                    (click)="approveRequest(record); $event.stopPropagation()">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Reject" color="warn"
+                    (click)="rejectRequest(record); $event.stopPropagation()">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>inbox</mat-icon>
+        <p>No pending leave applications found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

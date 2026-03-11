@@ -319,9 +319,9 @@
 | Backend Development | Build multi-level approval workflow API | Not Started |
 | Backend Development | Implement leave cancellation and revocation APIs | Not Started |
 | Backend Development | Add email/push notification triggers for application lifecycle events | Not Started |
-| Frontend Development | Build leave application form with type selector, date range picker, and reason | Not Started |
-| Frontend Development | Build approval inbox with leave details, balance context, and team calendar | Not Started |
-| Frontend Development | Build leave status tracker showing application progress | Not Started |
+| Frontend Development | Build leave application form with type selector, date range picker, and reason | Done |
+| Frontend Development | Build approval inbox with leave details, balance context, and team calendar | Done |
+| Frontend Development | Build leave status tracker showing application progress | Done |
 | Integration Testing | Validate full application-to-approval lifecycle | Not Started |
 | Integration Testing | Verify balance deduction and restoration on cancellation | Not Started |
 | UAT & QA | Conduct user acceptance testing for leave application and approval | Not Started |
