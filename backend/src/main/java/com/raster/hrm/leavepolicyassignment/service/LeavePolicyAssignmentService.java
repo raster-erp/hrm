@@ -1,5 +1,8 @@
 package com.raster.hrm.leavepolicyassignment.service;
 
+import com.raster.hrm.department.repository.DepartmentRepository;
+import com.raster.hrm.designation.repository.DesignationRepository;
+import com.raster.hrm.employee.repository.EmployeeRepository;
 import com.raster.hrm.exception.ResourceNotFoundException;
 import com.raster.hrm.leavepolicy.repository.LeavePolicyRepository;
 import com.raster.hrm.leavepolicyassignment.dto.LeavePolicyAssignmentRequest;
@@ -24,11 +27,20 @@ public class LeavePolicyAssignmentService {
 
     private final LeavePolicyAssignmentRepository leavePolicyAssignmentRepository;
     private final LeavePolicyRepository leavePolicyRepository;
+    private final DepartmentRepository departmentRepository;
+    private final DesignationRepository designationRepository;
+    private final EmployeeRepository employeeRepository;
 
     public LeavePolicyAssignmentService(LeavePolicyAssignmentRepository leavePolicyAssignmentRepository,
-                                        LeavePolicyRepository leavePolicyRepository) {
+                                        LeavePolicyRepository leavePolicyRepository,
+                                        DepartmentRepository departmentRepository,
+                                        DesignationRepository designationRepository,
+                                        EmployeeRepository employeeRepository) {
         this.leavePolicyAssignmentRepository = leavePolicyAssignmentRepository;
         this.leavePolicyRepository = leavePolicyRepository;
+        this.departmentRepository = departmentRepository;
+        this.designationRepository = designationRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Transactional(readOnly = true)
@@ -135,14 +147,38 @@ public class LeavePolicyAssignmentService {
     }
 
     private LeavePolicyAssignmentResponse mapToResponse(LeavePolicyAssignment assignment) {
+        String departmentName = null;
+        if (assignment.getDepartmentId() != null) {
+            departmentName = departmentRepository.findById(assignment.getDepartmentId())
+                    .map(dept -> dept.getName())
+                    .orElse(null);
+        }
+
+        String designationTitle = null;
+        if (assignment.getDesignationId() != null) {
+            designationTitle = designationRepository.findById(assignment.getDesignationId())
+                    .map(desig -> desig.getTitle())
+                    .orElse(null);
+        }
+
+        String employeeName = null;
+        if (assignment.getEmployeeId() != null) {
+            employeeName = employeeRepository.findById(assignment.getEmployeeId())
+                    .map(emp -> emp.getFirstName() + " " + emp.getLastName())
+                    .orElse(null);
+        }
+
         return new LeavePolicyAssignmentResponse(
                 assignment.getId(),
                 assignment.getLeavePolicy().getId(),
                 assignment.getLeavePolicy().getName(),
                 assignment.getAssignmentType().name(),
                 assignment.getDepartmentId(),
+                departmentName,
                 assignment.getDesignationId(),
+                designationTitle,
                 assignment.getEmployeeId(),
+                employeeName,
                 assignment.getEffectiveFrom(),
                 assignment.getEffectiveTo(),
                 assignment.isActive(),
