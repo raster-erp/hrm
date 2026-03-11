@@ -1,0 +1,119 @@
+<div class="wfh-checkin-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>login</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>WFH Check-in/Check-out</h2>
+          <p>Track your work-from-home sessions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request ID Input -->
+  <mat-card>
+    <mat-card-content>
+      <div class="checkin-form">
+        <mat-form-field appearance="outline">
+          <mat-label>WFH Request ID</mat-label>
+          <input matInput type="number" [(ngModel)]="wfhRequestId" placeholder="Enter WFH Request ID">
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" (click)="loadStatus()" [disabled]="loading">
+            @if (loading) {
+              <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+            }
+            Load Status
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Status Indicator -->
+  @if (wfhRequestId) {
+    <mat-card class="status-card">
+      <mat-card-content>
+        @if (activeSession) {
+          <div class="status-indicator status-checked-in">
+            <mat-icon>check_circle</mat-icon>
+            <span><strong>Checked In</strong> since {{ activeSession.checkInTime }}</span>
+          </div>
+
+          <div class="form-actions">
+            <button mat-raised-button color="warn" (click)="checkOut()" [disabled]="checking">
+              @if (checking) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              <mat-icon>logout</mat-icon>
+              Check Out
+            </button>
+          </div>
+        } @else {
+          <div class="status-indicator status-checked-out">
+            <mat-icon>info</mat-icon>
+            <span>Not checked in</span>
+          </div>
+
+          <div class="checkin-form">
+            <mat-form-field appearance="outline">
+              <mat-label>IP Address</mat-label>
+              <input matInput [(ngModel)]="ipAddress" placeholder="Enter IP address (optional)">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Location</mat-label>
+              <input matInput [(ngModel)]="location" placeholder="Enter location (optional)">
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-raised-button color="primary" (click)="checkIn()" [disabled]="checking">
+              @if (checking) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              <mat-icon>login</mat-icon>
+              Check In
+            </button>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Activity Logs -->
+  @if (activityLogs.data.length > 0) {
+    <h3>Activity Logs</h3>
+    <div class="table-container">
+      <table mat-table [dataSource]="activityLogs" class="activity-table">
+        <ng-container matColumnDef="checkInTime">
+          <th mat-header-cell *matHeaderCellDef>Check In</th>
+          <td mat-cell *matCellDef="let log">{{ log.checkInTime }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="checkOutTime">
+          <th mat-header-cell *matHeaderCellDef>Check Out</th>
+          <td mat-cell *matCellDef="let log">{{ log.checkOutTime || '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ipAddress">
+          <th mat-header-cell *matHeaderCellDef>IP Address</th>
+          <td mat-cell *matCellDef="let log">{{ log.ipAddress || '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>Location</th>
+          <td mat-cell *matCellDef="let log">{{ log.location || '—' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,68 @@
+<div class="wfh-request-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit WFH Request' : 'Add New WFH Request' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Employee ID</mat-label>
+              <input matInput type="number" formControlName="employeeId" placeholder="Enter employee ID">
+              @if (recordForm.get('employeeId')?.hasError('required') && recordForm.get('employeeId')?.touched) {
+                <mat-error>Employee ID is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Request Date</mat-label>
+              <input matInput type="date" formControlName="requestDate">
+              @if (recordForm.get('requestDate')?.hasError('required') && recordForm.get('requestDate')?.touched) {
+                <mat-error>Request date is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Reason</mat-label>
+              <textarea matInput formControlName="reason" placeholder="Enter reason" rows="3"></textarea>
+              @if (recordForm.get('reason')?.hasError('required') && recordForm.get('reason')?.touched) {
+                <mat-error>Reason is required</mat-error>
+              }
+              @if (recordForm.get('reason')?.hasError('maxlength') && recordForm.get('reason')?.touched) {
+                <mat-error>Reason cannot exceed 500 characters</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="remarks" placeholder="Enter remarks" rows="3"></textarea>
+              @if (recordForm.get('remarks')?.hasError('maxlength') && recordForm.get('remarks')?.touched) {
+                <mat-error>Remarks cannot exceed 500 characters</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Create' }} Request
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
