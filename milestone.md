@@ -238,8 +238,8 @@
 | Backend Development | Build regularization request submission API | Done |
 | Backend Development | Build multi-level approval workflow API | Done |
 | Backend Development | Implement auto-update of attendance records upon approval | Done |
-| Frontend Development | Build regularization request form with reason dropdown and time correction | Not Started |
-| Frontend Development | Build approval inbox with bulk approve/reject capability | Not Started |
+| Frontend Development | Build regularization request form with reason dropdown and time correction | Done |
+| Frontend Development | Build approval inbox with bulk approve/reject capability | Done |
 | Frontend Development | Show regularization history on employee attendance detail page | Not Started |
 | Integration Testing | Validate regularization workflow from request to attendance update | Not Started |
 | UAT & QA | Conduct user acceptance testing for attendance regularization | Not Started |
