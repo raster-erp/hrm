@@ -103,4 +103,39 @@ describe('AttendanceReportService', () => {
     service.deleteSchedule(1).subscribe();
     expect(apiSpy.delete).toHaveBeenCalled();
   });
+
+  it('should update schedule', () => {
+    const request = { reportName: 'Test', reportType: 'DAILY_MUSTER', frequency: 'DAILY', departmentId: null, recipients: null, exportFormat: 'CSV' };
+    apiSpy.put.and.returnValue(of({} as ReportScheduleResponse));
+    service.updateSchedule(1, request).subscribe();
+    expect(apiSpy.put).toHaveBeenCalled();
+  });
+
+  it('should get schedule by id', () => {
+    apiSpy.get.and.returnValue(of({} as ReportScheduleResponse));
+    service.getScheduleById(1).subscribe();
+    expect(apiSpy.get).toHaveBeenCalled();
+  });
+
+  it('should export report', () => {
+    apiSpy.get.and.returnValue(of(new Blob()));
+    service.exportReport('DAILY_MUSTER', 'CSV', { date: '2025-01-15' }).subscribe();
+    expect(apiSpy.get).toHaveBeenCalled();
+  });
+
+  it('should get monthly summary with department', () => {
+    apiSpy.get.and.returnValue(of(mockMonthlySummary));
+    service.getMonthlySummary(2025, 1, 1).subscribe(result => {
+      expect(result).toEqual(mockMonthlySummary);
+    });
+    expect(apiSpy.get).toHaveBeenCalled();
+  });
+
+  it('should get absentee list with department', () => {
+    apiSpy.get.and.returnValue(of(mockAbsenteeList));
+    service.getAbsenteeList('2025-01-01', '2025-01-31', 1).subscribe(result => {
+      expect(result).toEqual(mockAbsenteeList);
+    });
+    expect(apiSpy.get).toHaveBeenCalled();
+  });
 });

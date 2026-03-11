@@ -187,4 +187,80 @@ describe('ReportViewerComponent', () => {
     expect(component.year).toBe(expectedYear);
     expect(component.month).toBe(expectedMonth);
   });
+
+  it('should download CSV for daily muster', () => {
+    const blob = new Blob(['test'], { type: 'text/csv' });
+    reportServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.selectedReportType = 'DAILY_MUSTER';
+    component.downloadCsv();
+
+    expect(reportServiceSpy.exportReport).toHaveBeenCalledWith('DAILY_MUSTER', 'CSV', jasmine.objectContaining({ date: component.date }));
+    expect(notificationServiceSpy.success).toHaveBeenCalledWith('Report downloaded successfully');
+  });
+
+  it('should download CSV for monthly summary', () => {
+    const blob = new Blob(['test'], { type: 'text/csv' });
+    reportServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.selectedReportType = 'MONTHLY_SUMMARY';
+    component.downloadCsv();
+
+    expect(reportServiceSpy.exportReport).toHaveBeenCalledWith('MONTHLY_SUMMARY', 'CSV', jasmine.objectContaining({
+      year: String(component.year),
+      month: String(component.month)
+    }));
+  });
+
+  it('should download CSV for absentee list', () => {
+    const blob = new Blob(['test'], { type: 'text/csv' });
+    reportServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.selectedReportType = 'ABSENTEE_LIST';
+    component.downloadCsv();
+
+    expect(reportServiceSpy.exportReport).toHaveBeenCalledWith('ABSENTEE_LIST', 'CSV', jasmine.objectContaining({
+      startDate: component.startDate,
+      endDate: component.endDate
+    }));
+  });
+
+  it('should handle CSV download error', () => {
+    reportServiceSpy.exportReport.and.returnValue(throwError(() => new Error('fail')));
+    component.downloadCsv();
+    expect(notificationServiceSpy.error).toHaveBeenCalledWith('Failed to download report');
+  });
+
+  it('should include departmentId in CSV download when set', () => {
+    const blob = new Blob(['test'], { type: 'text/csv' });
+    reportServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.departmentId = 5;
+    component.selectedReportType = 'DAILY_MUSTER';
+    component.downloadCsv();
+
+    expect(reportServiceSpy.exportReport).toHaveBeenCalledWith('DAILY_MUSTER', 'CSV', jasmine.objectContaining({ departmentId: '5' }));
+  });
+
+  it('should load daily muster with departmentId when set', () => {
+    component.selectedReportType = 'DAILY_MUSTER';
+    component.departmentId = 3;
+    component.loadReport();
+    expect(reportServiceSpy.getDailyMuster).toHaveBeenCalledWith(component.date, 3);
+  });
+
+  it('should format date with zero-padded month and day', () => {
+    // Verify date format through the initialized values
+    expect(component.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(component.startDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(component.endDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
 });
