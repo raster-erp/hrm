@@ -1,17 +1,13 @@
 package com.raster.hrm.attendancereport;
 
 import com.raster.hrm.attendancereport.service.ReportEmailService;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
-
-import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,18 +22,15 @@ class ReportEmailServiceTest {
     @Mock
     private JavaMailSender mailSender;
 
-    @InjectMocks
     private ReportEmailService reportEmailService;
 
-    private void setFromAddress(String fromAddress) throws Exception {
-        Field field = ReportEmailService.class.getDeclaredField("fromAddress");
-        field.setAccessible(true);
-        field.set(reportEmailService, fromAddress);
+    @BeforeEach
+    void setUp() {
+        reportEmailService = new ReportEmailService(mailSender, "noreply@hrm.raster.com");
     }
 
     @Test
     void sendReportEmail_shouldSendEmailWithAttachment() throws Exception {
-        setFromAddress("noreply@hrm.raster.com");
         var mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
 
@@ -52,7 +45,7 @@ class ReportEmailServiceTest {
     }
 
     @Test
-    void sendReportEmail_withNullRecipients_shouldNotSend() throws Exception {
+    void sendReportEmail_withNullRecipients_shouldNotSend() {
         assertDoesNotThrow(() ->
                 reportEmailService.sendReportEmail(null, "Test", "Body", "file.csv", new byte[0]));
 
@@ -60,7 +53,7 @@ class ReportEmailServiceTest {
     }
 
     @Test
-    void sendReportEmail_withEmptyRecipients_shouldNotSend() throws Exception {
+    void sendReportEmail_withEmptyRecipients_shouldNotSend() {
         assertDoesNotThrow(() ->
                 reportEmailService.sendReportEmail(new String[0], "Test", "Body", "file.csv", new byte[0]));
 
@@ -69,7 +62,6 @@ class ReportEmailServiceTest {
 
     @Test
     void sendReportEmail_withSingleRecipient_shouldSend() throws Exception {
-        setFromAddress("noreply@hrm.raster.com");
         var mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
 

@@ -60,7 +60,7 @@ public class ScheduledReportExecutor {
             var reportType = schedule.getReportType().name();
             byte[] reportData = attendanceReportService.exportReportAsCsv(reportType, params);
 
-            String fileName = reportType.toLowerCase() + "_report_" + LocalDate.now() + ".csv";
+            String fileName = reportType.toLowerCase() + "_report_" + now.toLocalDate() + ".csv";
 
             if (schedule.getRecipients() != null && !schedule.getRecipients().isBlank()) {
                 String[] recipients = parseRecipients(schedule.getRecipients());
