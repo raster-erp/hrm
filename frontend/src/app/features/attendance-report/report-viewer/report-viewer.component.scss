@@ -1,0 +1,47 @@
+.report-viewer-container {
+  width: 100%;
+}
+
+.report-table {
+  width: 100%;
+}
+
+.report-header {
+  margin: 16px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.report-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.status-chip {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-present {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-absent {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status-incomplete {
+  background-color: #fff3e0;
+  color: #e65100;
+}

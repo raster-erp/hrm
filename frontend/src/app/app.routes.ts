@@ -82,4 +82,8 @@ export const routes: Routes = [
     path: 'wfh-requests',
     loadChildren: () => import('./features/wfh-request/wfh-request.routes').then(m => m.WFH_REQUEST_ROUTES)
   },
+  {
+    path: 'attendance-reports',
+    loadChildren: () => import('./features/attendance-report/attendance-report.routes').then(m => m.ATTENDANCE_REPORT_ROUTES)
+  },
 ];

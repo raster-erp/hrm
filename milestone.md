@@ -275,9 +275,9 @@
 | Backend Development | Build absentee and defaulter list report API | Done |
 | Backend Development | Implement report export service (PDF, Excel, CSV generators) | Done |
 | Backend Development | Add scheduled report generation and email delivery service | Not Started |
-| Frontend Development | Build report selection interface with date range and department filters | Not Started |
-| Frontend Development | Build interactive report viewer with drill-down capability | Not Started |
-| Frontend Development | Add report download and email-share options | Not Started |
+| Frontend Development | Build report selection interface with date range and department filters | Done |
+| Frontend Development | Build interactive report viewer with drill-down capability | Done |
+| Frontend Development | Add report download and email-share options | Done |
 | Integration Testing | Validate report accuracy against raw attendance data | Not Started |
 | UAT & QA | Conduct user acceptance testing for all attendance reports | Not Started |
 | Deployment | Deploy attendance reports module to staging and production | Not Started |
