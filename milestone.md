@@ -290,9 +290,9 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define leave types (casual, sick, earned, maternity, paternity, unpaid, etc.) | Not Started |
-| Requirements | Define accrual rules (monthly, quarterly, annual, pro-rata for new joiners) | Not Started |
-| Requirements | Define carry-forward, lapsing, and maximum accumulation rules | Not Started |
+| Requirements | Define leave types (casual, sick, earned, maternity, paternity, unpaid, etc.) | Done |
+| Requirements | Define accrual rules (monthly, quarterly, annual, pro-rata for new joiners) | Done |
+| Requirements | Define carry-forward, lapsing, and maximum accumulation rules | Done |
 | Database Design | Design `leave_types` table with code, name, and category | Done |
 | Database Design | Design `leave_policies` table with accrual, carry-forward, and eligibility rules | Done |
 | Database Design | Design `leave_policy_assignments` table for linking policies to employee groups | Done |
