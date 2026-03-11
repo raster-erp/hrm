@@ -1,0 +1,100 @@
+<div class="leave-policy-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit Leave Policy' : 'Add New Leave Policy' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="policyForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name" placeholder="Enter policy name">
+              @if (policyForm.get('name')?.hasError('required') && policyForm.get('name')?.touched) {
+                <mat-error>Name is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Leave Type</mat-label>
+              <mat-select formControlName="leaveTypeId">
+                @for (leaveType of leaveTypes; track leaveType.id) {
+                  <mat-option [value]="leaveType.id">{{ leaveType.name }}</mat-option>
+                }
+              </mat-select>
+              @if (policyForm.get('leaveTypeId')?.hasError('required') && policyForm.get('leaveTypeId')?.touched) {
+                <mat-error>Leave type is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Accrual Frequency</mat-label>
+              <mat-select formControlName="accrualFrequency">
+                @for (freq of accrualFrequencies; track freq) {
+                  <mat-option [value]="freq">{{ freq }}</mat-option>
+                }
+              </mat-select>
+              @if (policyForm.get('accrualFrequency')?.hasError('required') && policyForm.get('accrualFrequency')?.touched) {
+                <mat-error>Accrual frequency is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Accrual Days</mat-label>
+              <input matInput type="number" formControlName="accrualDays" placeholder="1.5" step="0.01">
+              @if (policyForm.get('accrualDays')?.hasError('required') && policyForm.get('accrualDays')?.touched) {
+                <mat-error>Accrual days is required</mat-error>
+              }
+              @if (policyForm.get('accrualDays')?.hasError('min') && policyForm.get('accrualDays')?.touched) {
+                <mat-error>Must be at least 0.01</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Max Accumulation</mat-label>
+              <input matInput type="number" formControlName="maxAccumulation" placeholder="Optional">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Carry Forward Limit</mat-label>
+              <input matInput type="number" formControlName="carryForwardLimit" placeholder="Optional">
+            </mat-form-field>
+
+            <div class="checkbox-field">
+              <mat-checkbox formControlName="proRataForNewJoiners">Pro-rata for New Joiners</mat-checkbox>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Min Service Days Required</mat-label>
+              <input matInput type="number" formControlName="minServiceDaysRequired" placeholder="Optional">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" placeholder="Enter description" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Create' }} Policy
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

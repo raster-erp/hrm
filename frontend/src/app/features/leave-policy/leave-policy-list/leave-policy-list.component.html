@@ -1,0 +1,114 @@
+<div class="leave-policy-list-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>policy</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Leave Policies</h2>
+          <p>Manage leave policy configurations</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" routerLink="/leave-policies/new">
+          <mat-icon>add</mat-icon>
+          Add Policy
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="leave-policy-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="leaveTypeName">
+        <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.leaveTypeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="accrualFrequency">
+        <th mat-header-cell *matHeaderCellDef>Accrual Frequency</th>
+        <td mat-cell *matCellDef="let policy">
+          <span class="code-badge">{{ policy.accrualFrequency }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accrualDays">
+        <th mat-header-cell *matHeaderCellDef>Accrual Days</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.accrualDays }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="maxAccumulation">
+        <th mat-header-cell *matHeaderCellDef>Max Accumulation</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.maxAccumulation ?? '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="carryForwardLimit">
+        <th mat-header-cell *matHeaderCellDef>Carry Forward Limit</th>
+        <td mat-cell *matCellDef="let policy">{{ policy.carryForwardLimit ?? '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let policy">
+          <span class="status-chip" [class]="policy.active ? 'status-active' : 'status-inactive'">
+            {{ policy.active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let policy">
+          <div class="row-actions">
+            <button mat-icon-button [matTooltip]="policy.active ? 'Deactivate' : 'Activate'"
+                    (click)="toggleActive(policy); $event.stopPropagation()">
+              <mat-icon>{{ policy.active ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Edit"
+                    (click)="editPolicy(policy); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deletePolicy(policy); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>policy</mat-icon>
+        <p>No leave policies found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

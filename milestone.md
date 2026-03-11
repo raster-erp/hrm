@@ -293,13 +293,13 @@
 | Requirements | Define leave types (casual, sick, earned, maternity, paternity, unpaid, etc.) | Not Started |
 | Requirements | Define accrual rules (monthly, quarterly, annual, pro-rata for new joiners) | Not Started |
 | Requirements | Define carry-forward, lapsing, and maximum accumulation rules | Not Started |
-| Database Design | Design `leave_types` table with code, name, and category | Not Started |
-| Database Design | Design `leave_policies` table with accrual, carry-forward, and eligibility rules | Not Started |
-| Database Design | Design `leave_policy_assignments` table for linking policies to employee groups | Not Started |
-| Backend Development | Build CRUD APIs for leave type master | Not Started |
-| Backend Development | Build CRUD APIs for leave policy configuration | Not Started |
-| Backend Development | Build policy assignment API (by grade, department, or individual) | Not Started |
-| Backend Development | Implement accrual engine (scheduled job for periodic credit) | Not Started |
+| Database Design | Design `leave_types` table with code, name, and category | Done |
+| Database Design | Design `leave_policies` table with accrual, carry-forward, and eligibility rules | Done |
+| Database Design | Design `leave_policy_assignments` table for linking policies to employee groups | Done |
+| Backend Development | Build CRUD APIs for leave type master | Done |
+| Backend Development | Build CRUD APIs for leave policy configuration | Done |
+| Backend Development | Build policy assignment API (by grade, department, or individual) | Done |
+| Backend Development | Implement accrual engine (scheduled job for periodic credit) | Done |
 | Frontend Development | Build leave type master list and form | Not Started |
 | Frontend Development | Build leave policy configuration wizard with accrual rule builder | Not Started |
 | Frontend Development | Build policy assignment interface with employee group selector | Not Started |

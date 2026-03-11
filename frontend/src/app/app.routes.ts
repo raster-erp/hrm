@@ -86,4 +86,16 @@ export const routes: Routes = [
     path: 'attendance-reports',
     loadChildren: () => import('./features/attendance-report/attendance-report.routes').then(m => m.ATTENDANCE_REPORT_ROUTES)
   },
+  {
+    path: 'leave-types',
+    loadChildren: () => import('./features/leave-type/leave-type.routes').then(m => m.LEAVE_TYPE_ROUTES)
+  },
+  {
+    path: 'leave-policies',
+    loadChildren: () => import('./features/leave-policy/leave-policy.routes').then(m => m.LEAVE_POLICY_ROUTES)
+  },
+  {
+    path: 'leave-policy-assignments',
+    loadChildren: () => import('./features/leave-policy-assignment/leave-policy-assignment.routes').then(m => m.LEAVE_POLICY_ASSIGNMENT_ROUTES)
+  },
 ];
