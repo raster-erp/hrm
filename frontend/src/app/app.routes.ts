@@ -73,5 +73,9 @@ export const routes: Routes = [
   {
     path: 'attendance-deviations',
     loadChildren: () => import('./features/attendance-deviation/attendance-deviation.routes').then(m => m.ATTENDANCE_DEVIATION_ROUTES)
+  },
+  {
+    path: 'attendance-regularization',
+    loadChildren: () => import('./features/attendance-regularization/attendance-regularization.routes').then(m => m.ATTENDANCE_REGULARIZATION_ROUTES)
   }
 ];
