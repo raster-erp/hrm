@@ -14,6 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 
@@ -28,7 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Sql(scripts = "/leavepolicy/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(statements = "DELETE FROM leave_policy_assignments WHERE id >= 9000; DELETE FROM leave_policies WHERE id >= 9000; DELETE FROM leave_types WHERE id >= 9000;", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(statements = {
+    "DELETE FROM leave_policy_assignments;",
+    "DELETE FROM leave_policies;",
+    "DELETE FROM leave_types;"
+}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class LeaveIntegrationTest {
 
     @Autowired
@@ -175,6 +181,7 @@ class LeaveIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldVerifyAccrualDueForMonthlyPolicy() throws Exception {
         var assignment = assignmentRepository.findById(9001L).orElseThrow();
 
@@ -188,6 +195,7 @@ class LeaveIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldVerifyAccrualDueForQuarterlyPolicy() throws Exception {
         var assignment = assignmentRepository.findById(9002L).orElseThrow();
 
@@ -201,6 +209,7 @@ class LeaveIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldReturnFalseForAccrualBeforeEffectiveDate() throws Exception {
         var assignment = assignmentRepository.findById(9001L).orElseThrow();
 
@@ -210,6 +219,7 @@ class LeaveIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldReturnFalseForAccrualAfterEffectiveTo() throws Exception {
         var assignment = assignmentRepository.findById(9002L).orElseThrow();
 

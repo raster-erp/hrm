@@ -72,6 +72,14 @@ export class AppComponent implements OnInit {
       ]
     },
     {
+      label: 'Leave',
+      items: [
+        { path: '/leave-types', label: 'Leave Types', icon: 'event_note' },
+        { path: '/leave-policies', label: 'Leave Policies', icon: 'policy' },
+        { path: '/leave-policy-assignments', label: 'Policy Assignments', icon: 'assignment_ind' },
+      ]
+    },
+    {
       label: 'Actions',
       items: [
         { path: '/transfers', label: 'Transfers', icon: 'swap_horiz' },
