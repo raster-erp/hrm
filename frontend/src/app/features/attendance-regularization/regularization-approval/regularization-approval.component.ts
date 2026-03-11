@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { forkJoin } from 'rxjs';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -128,50 +129,33 @@ export class RegularizationApprovalComponent implements OnInit {
   }
 
   bulkApprove(): void {
-    const selected = this.selection.selected;
-    if (selected.length === 0) {
-      this.notificationService.error('No requests selected');
-      return;
-    }
-
-    let completed = 0;
-    selected.forEach(record => {
-      this.regularizationService.approve(record.id, { status: 'APPROVED', approvedBy: 'admin', remarks: '' })
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => {
-            completed++;
-            if (completed === selected.length) {
-              this.notificationService.success(`${completed} request(s) approved successfully`);
-              this.loadRecords();
-            }
-          },
-          error: () => this.notificationService.error('Failed to approve one or more requests')
-        });
-    });
+    this.bulkAction('APPROVED');
   }
 
   bulkReject(): void {
+    this.bulkAction('REJECTED');
+  }
+
+  private bulkAction(status: string): void {
     const selected = this.selection.selected;
     if (selected.length === 0) {
       this.notificationService.error('No requests selected');
       return;
     }
 
-    let completed = 0;
-    selected.forEach(record => {
-      this.regularizationService.approve(record.id, { status: 'REJECTED', approvedBy: 'admin', remarks: '' })
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => {
-            completed++;
-            if (completed === selected.length) {
-              this.notificationService.success(`${completed} request(s) rejected successfully`);
-              this.loadRecords();
-            }
-          },
-          error: () => this.notificationService.error('Failed to reject one or more requests')
-        });
-    });
+    const label = status === 'APPROVED' ? 'approved' : 'rejected';
+    const requests = selected.map(record =>
+      this.regularizationService.approve(record.id, { status, approvedBy: 'admin', remarks: '' })
+    );
+
+    forkJoin(requests)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: results => {
+          this.notificationService.success(`${results.length} request(s) ${label} successfully`);
+          this.loadRecords();
+        },
+        error: () => this.notificationService.error(`Failed to ${label.slice(0, -1)} one or more requests`)
+      });
   }
 }
