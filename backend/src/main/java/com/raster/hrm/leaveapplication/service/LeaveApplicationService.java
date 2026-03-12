@@ -34,15 +34,18 @@ public class LeaveApplicationService {
     private final LeaveApprovalLogRepository leaveApprovalLogRepository;
     private final EmployeeRepository employeeRepository;
     private final LeaveTypeRepository leaveTypeRepository;
+    private final LeaveApplicationNotificationService notificationService;
 
     public LeaveApplicationService(LeaveApplicationRepository leaveApplicationRepository,
                                    LeaveApprovalLogRepository leaveApprovalLogRepository,
                                    EmployeeRepository employeeRepository,
-                                   LeaveTypeRepository leaveTypeRepository) {
+                                   LeaveTypeRepository leaveTypeRepository,
+                                   LeaveApplicationNotificationService notificationService) {
         this.leaveApplicationRepository = leaveApplicationRepository;
         this.leaveApprovalLogRepository = leaveApprovalLogRepository;
         this.employeeRepository = employeeRepository;
         this.leaveTypeRepository = leaveTypeRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional(readOnly = true)
@@ -119,6 +122,7 @@ public class LeaveApplicationService {
 
         LeaveApplication saved = leaveApplicationRepository.save(application);
         log.info("Leave application created with id: {}", saved.getId());
+        notificationService.notifyApplicationSubmitted(saved);
         return toResponse(saved);
     }
 
@@ -189,6 +193,13 @@ public class LeaveApplicationService {
         leaveApprovalLogRepository.save(logEntry);
 
         log.info("Leave application {} has been {}", id, request.status());
+
+        if (request.status() == LeaveApplicationStatus.APPROVED) {
+            notificationService.notifyApplicationApproved(saved);
+        } else {
+            notificationService.notifyApplicationRejected(saved);
+        }
+
         return toResponse(saved);
     }
 
@@ -207,6 +218,7 @@ public class LeaveApplicationService {
 
         LeaveApplication saved = leaveApplicationRepository.save(application);
         log.info("Leave application cancelled with id: {}", id);
+        notificationService.notifyApplicationCancelled(saved);
         return toResponse(saved);
     }
 
