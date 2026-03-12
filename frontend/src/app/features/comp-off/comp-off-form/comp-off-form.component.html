@@ -1,0 +1,89 @@
+<div class="comp-off-form-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>event_available</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>New Comp-Off Request</h2>
+          <p>Submit a compensatory off request for extra work</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee</mat-label>
+            <mat-select formControlName="employeeId">
+              @for (emp of employees; track emp.id) {
+                <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('employeeId')?.hasError('required') && form.get('employeeId')?.touched) {
+              <mat-error>Employee is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Worked Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="workedDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (form.get('workedDate')?.hasError('required') && form.get('workedDate')?.touched) {
+              <mat-error>Worked date is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Reason</mat-label>
+            <input matInput formControlName="reason" placeholder="e.g., Worked on public holiday, Weekend work">
+            @if (form.get('reason')?.hasError('required') && form.get('reason')?.touched) {
+              <mat-error>Reason is required</mat-error>
+            }
+            @if (form.get('reason')?.hasError('maxlength')) {
+              <mat-error>Reason cannot exceed 255 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Hours Worked</mat-label>
+            <input matInput type="number" formControlName="hoursWorked" placeholder="Optional" min="0" max="24">
+            @if (form.get('hoursWorked')?.hasError('min')) {
+              <mat-error>Hours cannot be negative</mat-error>
+            }
+            @if (form.get('hoursWorked')?.hasError('max')) {
+              <mat-error>Hours cannot exceed 24</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput formControlName="remarks" rows="3" placeholder="Optional remarks"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <a mat-button routerLink="/comp-off">Cancel</a>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="submitting">
+            @if (submitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Submit Request
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

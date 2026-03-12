@@ -373,8 +373,8 @@
 | Backend Development | Build comp-off credit request and approval APIs | Done |
 | Backend Development | Implement auto-detection of comp-off eligibility from attendance data | Not Started |
 | Backend Development | Build comp-off balance and expiry tracking API | Done |
-| Frontend Development | Build comp-off request form linked to attendance records | Not Started |
-| Frontend Development | Build comp-off balance view with expiry indicators | Not Started |
+| Frontend Development | Build comp-off request form linked to attendance records | Done |
+| Frontend Development | Build comp-off balance view with expiry indicators | Done |
 | Integration Testing | Validate comp-off credit, usage, and expiry workflows | Not Started |
 | UAT & QA | Conduct user acceptance testing for comp-off management | Not Started |
 | Deployment | Deploy comp-off module to staging and production | Not Started |
