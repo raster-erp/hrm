@@ -7,5 +7,6 @@ public enum TransactionType {
     LAPSE,
     ADJUSTMENT,
     PENDING_DEBIT,
-    PENDING_REVERSAL
+    PENDING_REVERSAL,
+    ENCASHMENT
 }

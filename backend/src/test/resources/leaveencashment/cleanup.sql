@@ -1,0 +1,10 @@
+DELETE FROM leave_encashments;
+DELETE FROM leave_transactions;
+DELETE FROM leave_balances;
+DELETE FROM leave_approval_logs;
+DELETE FROM leave_applications;
+DELETE FROM leave_policy_assignments WHERE id >= 9800;
+DELETE FROM leave_policies WHERE id >= 9800;
+DELETE FROM leave_types WHERE id IN (9801, 9802);
+DELETE FROM employees WHERE id = 9801;
+DELETE FROM departments WHERE id = 9800;

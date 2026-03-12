@@ -27,11 +27,11 @@ VALUES (9001, 'Test CL Policy', 9001, 'ANNUAL', 12, 20, 5, false, 0, true, CURRE
 INSERT INTO leave_policy_assignments (id, leave_policy_id, assignment_type, department_id, effective_from, active, created_at, updated_at)
 VALUES (9001, 9001, 'DEPARTMENT', 9001, '2024-01-01', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO leave_balances (id, employee_id, leave_type_id, "year", credited, used, pending, available, carry_forwarded, created_at, updated_at)
-VALUES (9001, 9001, 9001, 2025, 12.00, 3.00, 2.00, 7.00, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO leave_balances (id, employee_id, leave_type_id, "year", credited, used, pending, available, carry_forwarded, encashed, created_at, updated_at)
+VALUES (9001, 9001, 9001, 2025, 12.00, 3.00, 2.00, 7.00, 0.00, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO leave_balances (id, employee_id, leave_type_id, "year", credited, used, pending, available, carry_forwarded, created_at, updated_at)
-VALUES (9002, 9001, 9002, 2025, 6.00, 1.00, 0.00, 5.00, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO leave_balances (id, employee_id, leave_type_id, "year", credited, used, pending, available, carry_forwarded, encashed, created_at, updated_at)
+VALUES (9002, 9001, 9002, 2025, 6.00, 1.00, 0.00, 5.00, 0.00, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO leave_balances (id, employee_id, leave_type_id, "year", credited, used, pending, available, carry_forwarded, created_at, updated_at)
-VALUES (9003, 9002, 9001, 2025, 12.00, 4.00, 0.00, 8.00, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO leave_balances (id, employee_id, leave_type_id, "year", credited, used, pending, available, carry_forwarded, encashed, created_at, updated_at)
+VALUES (9003, 9002, 9001, 2025, 12.00, 4.00, 0.00, 8.00, 0.00, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

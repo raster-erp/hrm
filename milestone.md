@@ -350,16 +350,16 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define encashment eligibility rules (minimum balance, leave types eligible) | Not Started |
-| Requirements | Define encashment calculation formula (basic pay × days) | Not Started |
-| Database Design | Design `leave_encashments` table with days, amount, and approval status | Not Started |
-| Backend Development | Build encashment eligibility check API | Not Started |
-| Backend Development | Build encashment request and approval APIs | Not Started |
-| Backend Development | Implement encashment calculation engine linked to salary data | Not Started |
-| Backend Development | Build encashment payout integration with payroll | Not Started |
+| Requirements | Define encashment eligibility rules (minimum balance, leave types eligible) | Done |
+| Requirements | Define encashment calculation formula (basic pay × days) | Done |
+| Database Design | Design `leave_encashments` table with days, amount, and approval status | Done |
+| Backend Development | Build encashment eligibility check API | Done |
+| Backend Development | Build encashment request and approval APIs | Done |
+| Backend Development | Implement encashment calculation engine linked to salary data | Done |
+| Backend Development | Build encashment payout integration with payroll | Done |
 | Frontend Development | Build encashment request form with eligible days and computed amount preview | Not Started |
 | Frontend Development | Build encashment approval interface for HR/finance | Not Started |
-| Integration Testing | Validate encashment calculation and payroll integration | Not Started |
+| Integration Testing | Validate encashment calculation and payroll integration | Done |
 | UAT & QA | Conduct user acceptance testing for leave encashment | Not Started |
 | Deployment | Deploy leave encashment module to staging and production | Not Started |
 

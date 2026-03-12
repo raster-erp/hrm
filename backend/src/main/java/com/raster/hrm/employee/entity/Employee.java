@@ -16,6 +16,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -101,6 +102,9 @@ public class Employee {
 
     @Column(name = "photo_url", length = 500)
     private String photoUrl;
+
+    @Column(name = "basic_salary", precision = 12, scale = 2)
+    private BigDecimal basicSalary = BigDecimal.ZERO;
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
@@ -328,6 +332,14 @@ public class Employee {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public BigDecimal getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(BigDecimal basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public LocalDateTime getCreatedAt() {
