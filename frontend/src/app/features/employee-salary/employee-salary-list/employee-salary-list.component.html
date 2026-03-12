@@ -1,0 +1,106 @@
+<div class="employee-salary-list-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Employee Salary Assignments</h2>
+          <p>Manage employee salary structures and CTC</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" routerLink="/employee-salary/new">
+          <mat-icon>add</mat-icon>
+          Assign Salary
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="employee-salary-table">
+      <ng-container matColumnDef="employeeCode">
+        <th mat-header-cell *matHeaderCellDef>Emp Code</th>
+        <td mat-cell *matCellDef="let detail">
+          <span class="code-badge">{{ detail.employeeCode }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.employeeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="salaryStructure">
+        <th mat-header-cell *matHeaderCellDef>Structure</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.salaryStructureName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ctc">
+        <th mat-header-cell *matHeaderCellDef>CTC</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.ctc | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="basicSalary">
+        <th mat-header-cell *matHeaderCellDef>Basic Salary</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.basicSalary | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="effectiveDate">
+        <th mat-header-cell *matHeaderCellDef>Effective Date</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.effectiveDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let detail">
+          <span class="status-chip" [class]="detail.active ? 'status-active' : 'status-inactive'">
+            {{ detail.active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let detail">
+          <div class="row-actions">
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deleteDetail(detail); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>payments</mat-icon>
+        <p>No salary assignments found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

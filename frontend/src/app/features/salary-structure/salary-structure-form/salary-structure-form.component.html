@@ -1,0 +1,109 @@
+<div class="salary-structure-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>{{ isEditMode ? 'Edit Salary Structure' : 'Add New Salary Structure' }}</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="structureForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Code</mat-label>
+              <input matInput formControlName="code" placeholder="Enter structure code">
+              @if (structureForm.get('code')?.hasError('required') && structureForm.get('code')?.touched) {
+                <mat-error>Code is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name" placeholder="Enter structure name">
+              @if (structureForm.get('name')?.hasError('required') && structureForm.get('name')?.touched) {
+                <mat-error>Name is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" placeholder="Enter description" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+
+          <!-- Component Designer -->
+          <div class="component-designer">
+            <div class="designer-header">
+              <h3>Component Configuration</h3>
+              <button mat-raised-button type="button" (click)="addComponent()">
+                <mat-icon>add</mat-icon>
+                Add Component
+              </button>
+            </div>
+
+            <div formArrayName="components">
+              @for (comp of componentsArray.controls; track comp; let i = $index) {
+                <div class="component-row" [formGroupName]="i">
+                  <mat-form-field appearance="outline" class="component-select">
+                    <mat-label>Component</mat-label>
+                    <mat-select formControlName="salaryComponentId">
+                      @for (ac of availableComponents; track ac.id) {
+                        <mat-option [value]="ac.id">{{ ac.code }} - {{ ac.name }}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Computation</mat-label>
+                    <mat-select formControlName="computationType">
+                      @for (ct of computationTypes; track ct) {
+                        <mat-option [value]="ct">{{ ct }}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Percentage</mat-label>
+                    <input matInput type="number" formControlName="percentageValue" placeholder="%">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fixed Amount</mat-label>
+                    <input matInput type="number" formControlName="fixedAmount" placeholder="Amount">
+                  </mat-form-field>
+
+                  <button mat-icon-button color="warn" type="button" (click)="removeComponent(i)" matTooltip="Remove">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                </div>
+              }
+            </div>
+
+            @if (componentsArray.length === 0) {
+              <div class="no-components">
+                <p>No components added yet. Click "Add Component" to start building the structure.</p>
+              </div>
+            }
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              {{ isEditMode ? 'Update' : 'Create' }} Structure
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

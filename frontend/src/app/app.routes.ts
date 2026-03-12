@@ -126,4 +126,16 @@ export const routes: Routes = [
     path: 'leave-analytics',
     loadChildren: () => import('./features/leave-analytics/leave-analytics.routes').then(m => m.LEAVE_ANALYTICS_ROUTES)
   },
+  {
+    path: 'salary-components',
+    loadChildren: () => import('./features/salary-component/salary-component.routes').then(m => m.SALARY_COMPONENT_ROUTES)
+  },
+  {
+    path: 'salary-structures',
+    loadChildren: () => import('./features/salary-structure/salary-structure.routes').then(m => m.SALARY_STRUCTURE_ROUTES)
+  },
+  {
+    path: 'employee-salary',
+    loadChildren: () => import('./features/employee-salary/employee-salary.routes').then(m => m.EMPLOYEE_SALARY_ROUTES)
+  },
 ];

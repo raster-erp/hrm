@@ -1,0 +1,119 @@
+<div class="employee-salary-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-row">
+          <h2>Assign Salary Structure</h2>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner diameter="48"></mat-spinner>
+        </div>
+      } @else {
+        <form [formGroup]="salaryForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Employee ID</mat-label>
+              <input matInput type="number" formControlName="employeeId" placeholder="Enter employee ID">
+              @if (salaryForm.get('employeeId')?.hasError('required') && salaryForm.get('employeeId')?.touched) {
+                <mat-error>Employee ID is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Salary Structure</mat-label>
+              <mat-select formControlName="salaryStructureId" (selectionChange)="onStructureChange()">
+                @for (structure of availableStructures; track structure.id) {
+                  <mat-option [value]="structure.id">{{ structure.code }} - {{ structure.name }}</mat-option>
+                }
+              </mat-select>
+              @if (salaryForm.get('salaryStructureId')?.hasError('required') && salaryForm.get('salaryStructureId')?.touched) {
+                <mat-error>Salary structure is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>CTC (Annual)</mat-label>
+              <input matInput type="number" formControlName="ctc" placeholder="Enter annual CTC">
+              @if (salaryForm.get('ctc')?.hasError('required') && salaryForm.get('ctc')?.touched) {
+                <mat-error>CTC is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Basic Salary (Monthly)</mat-label>
+              <input matInput type="number" formControlName="basicSalary" placeholder="Enter monthly basic"
+                     (input)="onBasicSalaryChange()">
+              @if (salaryForm.get('basicSalary')?.hasError('required') && salaryForm.get('basicSalary')?.touched) {
+                <mat-error>Basic salary is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Effective Date</mat-label>
+              <input matInput type="date" formControlName="effectiveDate">
+              @if (salaryForm.get('effectiveDate')?.hasError('required') && salaryForm.get('effectiveDate')?.touched) {
+                <mat-error>Effective date is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Notes</mat-label>
+              <textarea matInput formControlName="notes" placeholder="Enter notes" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+
+          <!-- CTC Breakdown Preview -->
+          @if (ctcBreakdown.length > 0) {
+            <div class="ctc-breakdown">
+              <h3>CTC Breakdown Preview</h3>
+              <table class="breakdown-table">
+                <thead>
+                  <tr>
+                    <th>Component</th>
+                    <th>Type</th>
+                    <th>Computation</th>
+                    <th>Monthly</th>
+                    <th>Annual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of ctcBreakdown; track item.componentName) {
+                    <tr>
+                      <td>{{ item.componentName }}</td>
+                      <td><span class="code-badge">{{ item.componentType }}</span></td>
+                      <td>{{ item.computationType }}</td>
+                      <td>{{ item.monthlyAmount | number:'1.2-2' }}</td>
+                      <td>{{ item.annualAmount | number:'1.2-2' }}</td>
+                    </tr>
+                  }
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td><strong>{{ getTotalMonthly() | number:'1.2-2' }}</strong></td>
+                    <td><strong>{{ getTotalAnnual() | number:'1.2-2' }}</strong></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          }
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+              @if (saving) {
+                <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+              }
+              Assign Salary
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
