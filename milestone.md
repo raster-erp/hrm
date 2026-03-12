@@ -311,17 +311,17 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define application rules (advance notice, max duration, document requirements) | Not Started |
-| Requirements | Define approval hierarchy (reporting manager, HR, skip-level) | Not Started |
-| Database Design | Design `leave_applications` table with type, dates, reason, and approval chain | Not Started |
-| Database Design | Design `leave_approval_logs` table for tracking approver actions | Not Started |
-| Backend Development | Build leave application submission API with balance validation | Not Started |
-| Backend Development | Build multi-level approval workflow API | Not Started |
-| Backend Development | Implement leave cancellation and revocation APIs | Not Started |
+| Requirements | Define application rules (advance notice, max duration, document requirements) | Done |
+| Requirements | Define approval hierarchy (reporting manager, HR, skip-level) | Done |
+| Database Design | Design `leave_applications` table with type, dates, reason, and approval chain | Done |
+| Database Design | Design `leave_approval_logs` table for tracking approver actions | Done |
+| Backend Development | Build leave application submission API with balance validation | Done |
+| Backend Development | Build multi-level approval workflow API | Done |
+| Backend Development | Implement leave cancellation and revocation APIs | Done |
 | Backend Development | Add email/push notification triggers for application lifecycle events | Not Started |
-| Frontend Development | Build leave application form with type selector, date range picker, and reason | Not Started |
-| Frontend Development | Build approval inbox with leave details, balance context, and team calendar | Not Started |
-| Frontend Development | Build leave status tracker showing application progress | Not Started |
+| Frontend Development | Build leave application form with type selector, date range picker, and reason | Done |
+| Frontend Development | Build approval inbox with leave details, balance context, and team calendar | Done |
+| Frontend Development | Build leave status tracker showing application progress | Done |
 | Integration Testing | Validate full application-to-approval lifecycle | Not Started |
 | Integration Testing | Verify balance deduction and restoration on cancellation | Not Started |
 | UAT & QA | Conduct user acceptance testing for leave application and approval | Not Started |

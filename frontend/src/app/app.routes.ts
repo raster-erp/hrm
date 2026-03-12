@@ -98,4 +98,8 @@ export const routes: Routes = [
     path: 'leave-policy-assignments',
     loadChildren: () => import('./features/leave-policy-assignment/leave-policy-assignment.routes').then(m => m.LEAVE_POLICY_ASSIGNMENT_ROUTES)
   },
+  {
+    path: 'leave-applications',
+    loadChildren: () => import('./features/leave-application/leave-application.routes').then(m => m.LEAVE_APPLICATION_ROUTES)
+  },
 ];

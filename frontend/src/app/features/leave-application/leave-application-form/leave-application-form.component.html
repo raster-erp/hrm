@@ -1,0 +1,105 @@
+<div class="leave-application-form-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>event_busy</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>{{ isEdit ? 'Edit Leave Application' : 'Apply for Leave' }}</h2>
+          <p>{{ isEdit ? 'Update an existing leave application' : 'Submit a new leave application' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee ID</mat-label>
+            <input matInput type="number" formControlName="employeeId" placeholder="Enter employee ID">
+            @if (form.get('employeeId')?.hasError('required') && form.get('employeeId')?.touched) {
+              <mat-error>Employee ID is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Leave Type ID</mat-label>
+            <input matInput type="number" formControlName="leaveTypeId" placeholder="Enter leave type ID">
+            @if (form.get('leaveTypeId')?.hasError('required') && form.get('leaveTypeId')?.touched) {
+              <mat-error>Leave type is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>From Date</mat-label>
+            <input matInput type="date" formControlName="fromDate">
+            @if (form.get('fromDate')?.hasError('required') && form.get('fromDate')?.touched) {
+              <mat-error>From date is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>To Date</mat-label>
+            <input matInput type="date" formControlName="toDate">
+            @if (form.get('toDate')?.hasError('required') && form.get('toDate')?.touched) {
+              <mat-error>To date is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Number of Days</mat-label>
+            <input matInput type="number" formControlName="numberOfDays" placeholder="Enter number of days" step="0.5">
+            @if (form.get('numberOfDays')?.hasError('required') && form.get('numberOfDays')?.touched) {
+              <mat-error>Number of days is required</mat-error>
+            }
+            @if (form.get('numberOfDays')?.hasError('min')) {
+              <mat-error>Number of days must be at least 0.5</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Reason</mat-label>
+            <textarea matInput formControlName="reason" rows="3" placeholder="Enter reason for leave" maxlength="500"></textarea>
+            @if (form.get('reason')?.hasError('maxlength')) {
+              <mat-error>Reason cannot exceed 500 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput formControlName="remarks" rows="2" placeholder="Optional remarks"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <a mat-button routerLink="/leave-applications">Cancel</a>
+          <button mat-raised-button color="primary" type="submit" [disabled]="submitting || form.disabled">
+            @if (submitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              {{ isEdit ? 'Update' : 'Submit' }}
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
