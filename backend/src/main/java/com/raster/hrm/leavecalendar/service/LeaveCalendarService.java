@@ -123,15 +123,15 @@ public class LeaveCalendarService {
         List<LeavePlan> leavePlans;
         if (employeeId != null) {
             leavePlans = leavePlanRepository
-                    .findByEmployeeIdAndPlannedFromDateGreaterThanEqualAndPlannedToDateLessThanEqual(
-                            employeeId, start, end);
+                    .findByEmployeeIdAndPlannedFromDateLessThanEqualAndPlannedToDateGreaterThanEqual(
+                            employeeId, end, start);
         } else if (departmentId != null) {
             leavePlans = leavePlanRepository
                     .findByEmployee_Department_IdAndPlannedFromDateLessThanEqualAndPlannedToDateGreaterThanEqual(
                             departmentId, end, start);
         } else {
             leavePlans = leavePlanRepository
-                    .findByPlannedFromDateGreaterThanEqualAndPlannedToDateLessThanEqual(start, end);
+                    .findByPlannedFromDateLessThanEqualAndPlannedToDateGreaterThanEqual(end, start);
         }
         for (LeavePlan plan : leavePlans) {
             if (plan.getStatus() == LeavePlanStatus.CANCELLED) {

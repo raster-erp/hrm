@@ -27,4 +27,10 @@ public interface LeavePlanRepository extends JpaRepository<LeavePlan, Long> {
 
     List<LeavePlan> findByEmployee_Department_IdAndPlannedFromDateLessThanEqualAndPlannedToDateGreaterThanEqual(
             Long departmentId, LocalDate end, LocalDate start);
+
+    List<LeavePlan> findByPlannedFromDateLessThanEqualAndPlannedToDateGreaterThanEqual(
+            LocalDate end, LocalDate start);
+
+    List<LeavePlan> findByEmployeeIdAndPlannedFromDateLessThanEqualAndPlannedToDateGreaterThanEqual(
+            Long employeeId, LocalDate end, LocalDate start);
 }
