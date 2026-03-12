@@ -1,3 +1,5 @@
+DELETE FROM leave_transactions;
+DELETE FROM leave_balances;
 DELETE FROM leave_approval_logs;
 DELETE FROM leave_applications;
 DELETE FROM leave_policy_assignments;

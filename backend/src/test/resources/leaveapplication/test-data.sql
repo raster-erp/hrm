@@ -2,6 +2,8 @@
 -- Uses IDs >= 9000 to avoid conflicts with seed data
 
 -- Clean any existing leave_applications and approval_logs first
+DELETE FROM leave_transactions;
+DELETE FROM leave_balances;
 DELETE FROM leave_approval_logs;
 DELETE FROM leave_applications;
 

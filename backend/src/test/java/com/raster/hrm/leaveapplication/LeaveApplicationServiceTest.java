@@ -13,6 +13,7 @@ import com.raster.hrm.leaveapplication.repository.LeaveApplicationRepository;
 import com.raster.hrm.leaveapplication.repository.LeaveApprovalLogRepository;
 import com.raster.hrm.leaveapplication.service.LeaveApplicationNotificationService;
 import com.raster.hrm.leaveapplication.service.LeaveApplicationService;
+import com.raster.hrm.leavebalance.service.LeaveBalanceService;
 import com.raster.hrm.leavetype.entity.LeaveType;
 import com.raster.hrm.leavetype.repository.LeaveTypeRepository;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,9 @@ class LeaveApplicationServiceTest {
 
     @Mock
     private LeaveApplicationNotificationService notificationService;
+
+    @Mock
+    private LeaveBalanceService leaveBalanceService;
 
     @InjectMocks
     private LeaveApplicationService leaveApplicationService;
