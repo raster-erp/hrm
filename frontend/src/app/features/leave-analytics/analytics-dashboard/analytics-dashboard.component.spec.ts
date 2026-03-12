@@ -84,6 +84,16 @@ describe('AnalyticsDashboardComponent', () => {
     expect(component.loading).toBe(false);
   });
 
+  it('should have export formats defined', () => {
+    expect(component.exportFormats).toEqual(['CSV', 'EXCEL', 'PDF']);
+  });
+
+  it('should have dimension filter defaults', () => {
+    expect(component.designationId).toBeNull();
+    expect(component.gender).toBe('');
+    expect(component.ageGroup).toBe('');
+  });
+
   it('should load leave trend report', () => {
     component.selectedReportType = 'LEAVE_TREND';
     component.loadReport();
@@ -236,12 +246,101 @@ describe('AnalyticsDashboardComponent', () => {
     component.departmentId = 3;
     component.loadReport();
     expect(analyticsServiceSpy.getLeaveTrend).toHaveBeenCalledWith(
-      component.startYear, component.startMonth, component.endYear, component.endMonth, 3
+      component.startYear, component.startMonth, component.endYear, component.endMonth,
+      3, undefined, undefined, undefined
     );
   });
 
   it('should format date with zero-padded month and day', () => {
     expect(component.startDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(component.endDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it('should build trend chart data on load', () => {
+    component.selectedReportType = 'LEAVE_TREND';
+    component.loadReport();
+    expect(component.trendChartData.labels!.length).toBeGreaterThan(0);
+    expect(component.trendChartData.datasets.length).toBeGreaterThan(0);
+  });
+
+  it('should build absenteeism chart data on load', () => {
+    component.selectedReportType = 'ABSENTEEISM_RATE';
+    component.loadReport();
+    expect(component.absenteeismChartData.labels!.length).toBe(1);
+    expect(component.absenteeismChartData.datasets.length).toBe(1);
+  });
+
+  it('should build utilization chart data on load', () => {
+    component.selectedReportType = 'LEAVE_UTILIZATION';
+    component.loadReport();
+    expect(component.utilizationChartData.labels!.length).toBe(1);
+    expect(component.utilizationChartData.datasets.length).toBe(1);
+  });
+
+  it('should download Excel report', () => {
+    const blob = new Blob(['test'], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    analyticsServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.selectedReportType = 'LEAVE_TREND';
+    component.downloadReport('EXCEL');
+
+    expect(analyticsServiceSpy.exportReport).toHaveBeenCalledWith('LEAVE_TREND', 'EXCEL', jasmine.any(Object));
+    expect(notificationServiceSpy.success).toHaveBeenCalledWith('Report downloaded successfully');
+  });
+
+  it('should download PDF report', () => {
+    const blob = new Blob(['test'], { type: 'application/pdf' });
+    analyticsServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.selectedReportType = 'LEAVE_UTILIZATION';
+    component.downloadReport('PDF');
+
+    expect(analyticsServiceSpy.exportReport).toHaveBeenCalledWith('LEAVE_UTILIZATION', 'PDF', jasmine.any(Object));
+  });
+
+  it('should include dimension params in download when set', () => {
+    const blob = new Blob(['test'], { type: 'text/csv' });
+    analyticsServiceSpy.exportReport.and.returnValue(of(blob));
+    spyOn(window.URL, 'createObjectURL').and.returnValue('blob:test');
+    spyOn(window.URL, 'revokeObjectURL');
+
+    component.designationId = 2;
+    component.gender = 'Female';
+    component.ageGroup = '25_34';
+    component.selectedReportType = 'LEAVE_TREND';
+    component.downloadReport('CSV');
+
+    expect(analyticsServiceSpy.exportReport).toHaveBeenCalledWith('LEAVE_TREND', 'CSV', jasmine.objectContaining({
+      designationId: '2',
+      gender: 'Female',
+      ageGroup: '25_34'
+    }));
+  });
+
+  it('should pass dimension params when loading report', () => {
+    component.selectedReportType = 'LEAVE_TREND';
+    component.designationId = 1;
+    component.gender = 'Male';
+    component.ageGroup = 'UNDER_25';
+    component.loadReport();
+    expect(analyticsServiceSpy.getLeaveTrend).toHaveBeenCalledWith(
+      component.startYear, component.startMonth, component.endYear, component.endMonth,
+      undefined, 1, 'Male', 'UNDER_25'
+    );
+  });
+
+  it('should have age group options', () => {
+    expect(component.ageGroupOptions.length).toBe(6);
+    expect(component.ageGroupOptions[0].label).toBe('All');
+  });
+
+  it('should handle download error for non-CSV format', () => {
+    analyticsServiceSpy.exportReport.and.returnValue(throwError(() => new Error('fail')));
+    component.downloadReport('PDF');
+    expect(notificationServiceSpy.error).toHaveBeenCalledWith('Failed to download report');
   });
 });
