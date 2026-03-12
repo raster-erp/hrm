@@ -402,13 +402,13 @@
 | Phase | Task | Status |
 |-------|------|--------|
 | Requirements | Define analytics metrics (absenteeism rate, leave trends, utilization rate) | Done |
-| Requirements | Define report dimensions (department, designation, gender, age group) | In Progress |
+| Requirements | Define report dimensions (department, designation, gender, age group) | Done |
 | Database Design | Design materialized views or summary tables for analytics performance | Done |
 | Backend Development | Build leave trend analysis API (monthly/quarterly comparisons) | Done |
 | Backend Development | Build absenteeism rate computation API by department and role | Done |
 | Backend Development | Build leave utilization report API (consumed vs. entitled) | Done |
-| Backend Development | Implement report export service (PDF, Excel) | In Progress |
-| Frontend Development | Build analytics dashboard with charts (bar, line, pie) and KPI cards | In Progress |
+| Backend Development | Implement report export service (PDF, Excel) | Done |
+| Frontend Development | Build analytics dashboard with charts (bar, line, pie) and KPI cards | Done |
 | Frontend Development | Build drill-down views from summary to individual employee level | Done |
 | Frontend Development | Add date range selector and department filter controls | Done |
 | Integration Testing | Validate analytics accuracy against transactional leave data | Done |

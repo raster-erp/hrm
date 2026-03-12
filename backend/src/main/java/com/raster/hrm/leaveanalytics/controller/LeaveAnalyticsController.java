@@ -34,25 +34,36 @@ public class LeaveAnalyticsController {
             @RequestParam int startMonth,
             @RequestParam int endYear,
             @RequestParam int endMonth,
-            @RequestParam(required = false) Long departmentId) {
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long designationId,
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String ageGroup) {
         return ResponseEntity.ok(leaveAnalyticsService.generateLeaveTrend(
-                startYear, startMonth, endYear, endMonth, departmentId));
+                startYear, startMonth, endYear, endMonth, departmentId,
+                designationId, gender, ageGroup));
     }
 
     @GetMapping("/absenteeism-rate")
     public ResponseEntity<AbsenteeismRateReport> getAbsenteeismRate(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) Long departmentId) {
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long designationId,
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String ageGroup) {
         return ResponseEntity.ok(leaveAnalyticsService.generateAbsenteeismRate(
-                startDate, endDate, departmentId));
+                startDate, endDate, departmentId, designationId, gender, ageGroup));
     }
 
     @GetMapping("/utilization")
     public ResponseEntity<LeaveUtilizationReport> getLeaveUtilization(
             @RequestParam int year,
-            @RequestParam(required = false) Long departmentId) {
-        return ResponseEntity.ok(leaveAnalyticsService.generateLeaveUtilization(year, departmentId));
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long designationId,
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String ageGroup) {
+        return ResponseEntity.ok(leaveAnalyticsService.generateLeaveUtilization(
+                year, departmentId, designationId, gender, ageGroup));
     }
 
     @GetMapping("/export")
@@ -66,11 +77,10 @@ public class LeaveAnalyticsController {
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) Long departmentId) {
-
-        if (!"CSV".equalsIgnoreCase(format)) {
-            throw new BadRequestException(format + " export is not yet supported. Only CSV is currently available.");
-        }
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long designationId,
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String ageGroup) {
 
         var params = new HashMap<String, String>();
         if (startYear != null) {
@@ -97,14 +107,43 @@ public class LeaveAnalyticsController {
         if (departmentId != null) {
             params.put("departmentId", String.valueOf(departmentId));
         }
-
-        var csvBytes = leaveAnalyticsService.exportReportAsCsv(reportType, params);
+        if (designationId != null) {
+            params.put("designationId", String.valueOf(designationId));
+        }
+        if (gender != null) {
+            params.put("gender", gender);
+        }
+        if (ageGroup != null) {
+            params.put("ageGroup", ageGroup);
+        }
 
         var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + reportType.toLowerCase() + "_report.csv\"");
+        byte[] data;
+        String fileExtension;
 
-        return new ResponseEntity<>(csvBytes, headers, HttpStatus.OK);
+        switch (format.toUpperCase()) {
+            case "CSV" -> {
+                data = leaveAnalyticsService.exportReportAsCsv(reportType, params);
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                fileExtension = "csv";
+            }
+            case "EXCEL" -> {
+                data = leaveAnalyticsService.exportReportAsExcel(reportType, params);
+                headers.setContentType(MediaType.parseMediaType(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+                fileExtension = "xlsx";
+            }
+            case "PDF" -> {
+                data = leaveAnalyticsService.exportReportAsPdf(reportType, params);
+                headers.setContentType(MediaType.APPLICATION_PDF);
+                fileExtension = "pdf";
+            }
+            default -> throw new BadRequestException(format + " export is not supported. Supported formats: CSV, EXCEL, PDF");
+        }
+
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + reportType.toLowerCase() + "_report." + fileExtension + "\"");
+
+        return new ResponseEntity<>(data, headers, HttpStatus.OK);
     }
 }

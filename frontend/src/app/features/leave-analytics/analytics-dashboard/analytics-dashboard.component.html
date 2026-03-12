@@ -92,6 +92,33 @@
       <mat-label>Department ID</mat-label>
       <input matInput type="number" [(ngModel)]="departmentId" placeholder="All departments">
     </mat-form-field>
+  </div>
+
+  <!-- Dimension Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Designation ID</mat-label>
+      <input matInput type="number" [(ngModel)]="designationId" placeholder="All designations">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Gender</mat-label>
+      <mat-select [(ngModel)]="gender">
+        <mat-option value="">All</mat-option>
+        <mat-option value="Male">Male</mat-option>
+        <mat-option value="Female">Female</mat-option>
+        <mat-option value="Other">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Age Group</mat-label>
+      <mat-select [(ngModel)]="ageGroup">
+        @for (opt of ageGroupOptions; track opt.value) {
+          <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="loadReport()">
       <mat-icon>search</mat-icon>
@@ -100,7 +127,17 @@
 
     <button mat-stroked-button (click)="downloadCsv()" [disabled]="loading">
       <mat-icon>download</mat-icon>
-      Download CSV
+      CSV
+    </button>
+
+    <button mat-stroked-button (click)="downloadReport('EXCEL')" [disabled]="loading">
+      <mat-icon>table_chart</mat-icon>
+      Excel
+    </button>
+
+    <button mat-stroked-button (click)="downloadReport('PDF')" [disabled]="loading">
+      <mat-icon>picture_as_pdf</mat-icon>
+      PDF
     </button>
   </div>
 
@@ -122,6 +159,16 @@
         </mat-chip-set>
       </div>
     </div>
+
+    @if (trendChartData.datasets.length > 0) {
+      <div class="chart-container">
+        <canvas baseChart
+          [data]="trendChartData"
+          [options]="trendChartOptions"
+          type="line">
+        </canvas>
+      </div>
+    }
 
     <div class="table-container">
       <table mat-table [dataSource]="trendDataSource" class="report-table">
@@ -166,6 +213,16 @@
         </mat-chip-set>
       </div>
     </div>
+
+    @if (absenteeismChartData.datasets.length > 0) {
+      <div class="chart-container">
+        <canvas baseChart
+          [data]="absenteeismChartData"
+          [options]="absenteeismChartOptions"
+          type="bar">
+        </canvas>
+      </div>
+    }
 
     <div class="table-container">
       <table mat-table [dataSource]="absenteeismDataSource" class="report-table">
@@ -214,6 +271,16 @@
         </mat-chip-set>
       </div>
     </div>
+
+    @if (utilizationChartData.datasets.length > 0) {
+      <div class="chart-container chart-container-pie">
+        <canvas baseChart
+          [data]="utilizationChartData"
+          [options]="utilizationChartOptions"
+          type="pie">
+        </canvas>
+      </div>
+    }
 
     <div class="table-container">
       <table mat-table [dataSource]="utilizationDataSource" class="report-table">

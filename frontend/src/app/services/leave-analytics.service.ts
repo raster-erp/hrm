@@ -15,7 +15,8 @@ export class LeaveAnalyticsService {
   constructor(private api: ApiService) {}
 
   getLeaveTrend(startYear: number, startMonth: number, endYear: number, endMonth: number,
-                departmentId?: number): Observable<LeaveTrendReport> {
+                departmentId?: number, designationId?: number, gender?: string,
+                ageGroup?: string): Observable<LeaveTrendReport> {
     let params = new HttpParams()
       .set('startYear', startYear)
       .set('startMonth', startMonth)
@@ -24,22 +25,51 @@ export class LeaveAnalyticsService {
     if (departmentId) {
       params = params.set('departmentId', departmentId);
     }
+    if (designationId) {
+      params = params.set('designationId', designationId);
+    }
+    if (gender) {
+      params = params.set('gender', gender);
+    }
+    if (ageGroup) {
+      params = params.set('ageGroup', ageGroup);
+    }
     return this.api.get<LeaveTrendReport>(`${this.path}/trend`, params);
   }
 
   getAbsenteeismRate(startDate: string, endDate: string,
-                     departmentId?: number): Observable<AbsenteeismRateReport> {
+                     departmentId?: number, designationId?: number, gender?: string,
+                     ageGroup?: string): Observable<AbsenteeismRateReport> {
     let params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
     if (departmentId) {
       params = params.set('departmentId', departmentId);
     }
+    if (designationId) {
+      params = params.set('designationId', designationId);
+    }
+    if (gender) {
+      params = params.set('gender', gender);
+    }
+    if (ageGroup) {
+      params = params.set('ageGroup', ageGroup);
+    }
     return this.api.get<AbsenteeismRateReport>(`${this.path}/absenteeism-rate`, params);
   }
 
-  getLeaveUtilization(year: number, departmentId?: number): Observable<LeaveUtilizationReport> {
+  getLeaveUtilization(year: number, departmentId?: number, designationId?: number,
+                      gender?: string, ageGroup?: string): Observable<LeaveUtilizationReport> {
     let params = new HttpParams().set('year', year);
     if (departmentId) {
       params = params.set('departmentId', departmentId);
+    }
+    if (designationId) {
+      params = params.set('designationId', designationId);
+    }
+    if (gender) {
+      params = params.set('gender', gender);
+    }
+    if (ageGroup) {
+      params = params.set('ageGroup', ageGroup);
     }
     return this.api.get<LeaveUtilizationReport>(`${this.path}/utilization`, params);
   }

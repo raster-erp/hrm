@@ -2,6 +2,8 @@ package com.raster.hrm.leaveanalytics;
 
 import com.raster.hrm.department.entity.Department;
 import com.raster.hrm.department.repository.DepartmentRepository;
+import com.raster.hrm.designation.entity.Designation;
+import com.raster.hrm.designation.repository.DesignationRepository;
 import com.raster.hrm.employee.entity.Employee;
 import com.raster.hrm.employee.repository.EmployeeRepository;
 import com.raster.hrm.exception.BadRequestException;
@@ -50,6 +52,9 @@ class LeaveAnalyticsServiceTest {
     @Mock
     private DepartmentRepository departmentRepository;
 
+    @Mock
+    private DesignationRepository designationRepository;
+
     @InjectMocks
     private LeaveAnalyticsService leaveAnalyticsService;
 
@@ -76,6 +81,14 @@ class LeaveAnalyticsServiceTest {
         lt.setId(id);
         lt.setName(name);
         return lt;
+    }
+
+    private Designation createDesignation(Long id, String title) {
+        var d = new Designation();
+        d.setId(id);
+        d.setTitle(title);
+        d.setCode("DESIG-" + id);
+        return d;
     }
 
     private LeaveApplication createApplication(Long id, Employee emp, LeaveType lt,
@@ -118,7 +131,7 @@ class LeaveAnalyticsServiceTest {
                 eq(LeaveApplicationStatus.APPROVED), any(), any()))
                 .thenReturn(List.of(app));
 
-        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, null);
+        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, null, null, null, null);
 
         assertNotNull(report);
         assertEquals(2025, report.startYear());
@@ -143,7 +156,7 @@ class LeaveAnalyticsServiceTest {
                         eq(1L), eq(LeaveApplicationStatus.APPROVED), any(), any()))
                 .thenReturn(List.of(app));
 
-        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, 1L);
+        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, 1L, null, null, null);
 
         assertNotNull(report);
         assertEquals(1L, report.departmentId());
@@ -153,13 +166,13 @@ class LeaveAnalyticsServiceTest {
     @Test
     void generateLeaveTrend_invalidMonthRange_shouldThrow() {
         assertThrows(BadRequestException.class, () ->
-                leaveAnalyticsService.generateLeaveTrend(2025, 6, 2025, 1, null));
+                leaveAnalyticsService.generateLeaveTrend(2025, 6, 2025, 1, null, null, null, null));
     }
 
     @Test
     void generateLeaveTrend_invalidMonth_shouldThrow() {
         assertThrows(BadRequestException.class, () ->
-                leaveAnalyticsService.generateLeaveTrend(2025, 0, 2025, 13, null));
+                leaveAnalyticsService.generateLeaveTrend(2025, 0, 2025, 13, null, null, null, null));
     }
 
     @Test
@@ -168,11 +181,90 @@ class LeaveAnalyticsServiceTest {
                 any(), any(), any()))
                 .thenReturn(List.of());
 
-        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 1, null);
+        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 1, null, null, null, null);
 
         assertNotNull(report);
         assertEquals(1, report.entries().size());
         assertEquals(0, report.entries().get(0).applicationCount());
+    }
+
+    @Test
+    void generateLeaveTrend_withDesignationFilter_shouldFilterByDesignation() {
+        var dept = createDepartment(1L, "Engineering");
+        var designation = createDesignation(1L, "Senior Engineer");
+        var emp1 = createEmployee(1L, "EMP001", "John", "Doe", dept);
+        emp1.setDesignation(designation);
+        var emp2 = createEmployee(2L, "EMP002", "Jane", "Smith", dept);
+        var lt = createLeaveType(1L, "Annual Leave");
+        var app1 = createApplication(1L, emp1, lt,
+                LocalDate.of(2025, 1, 6), LocalDate.of(2025, 1, 8), new BigDecimal("3"));
+        var app2 = createApplication(2L, emp2, lt,
+                LocalDate.of(2025, 1, 10), LocalDate.of(2025, 1, 12), new BigDecimal("3"));
+
+        when(leaveApplicationRepository.findByStatusAndFromDateLessThanEqualAndToDateGreaterThanEqual(
+                eq(LeaveApplicationStatus.APPROVED), any(), any()))
+                .thenReturn(List.of(app1, app2));
+        when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of(emp1, emp2)));
+        when(designationRepository.findById(1L)).thenReturn(Optional.of(designation));
+
+        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 1, null, 1L, null, null);
+
+        assertNotNull(report);
+        var totalApps = report.entries().stream().mapToLong(e -> e.applicationCount()).sum();
+        assertEquals(1, totalApps);
+    }
+
+    @Test
+    void generateLeaveTrend_withGenderFilter_shouldFilterByGender() {
+        var dept = createDepartment(1L, "Engineering");
+        var emp1 = createEmployee(1L, "EMP001", "John", "Doe", dept);
+        emp1.setGender("Male");
+        var emp2 = createEmployee(2L, "EMP002", "Jane", "Smith", dept);
+        emp2.setGender("Female");
+        var lt = createLeaveType(1L, "Annual Leave");
+        var app1 = createApplication(1L, emp1, lt,
+                LocalDate.of(2025, 1, 6), LocalDate.of(2025, 1, 8), new BigDecimal("3"));
+        var app2 = createApplication(2L, emp2, lt,
+                LocalDate.of(2025, 1, 10), LocalDate.of(2025, 1, 12), new BigDecimal("3"));
+
+        when(leaveApplicationRepository.findByStatusAndFromDateLessThanEqualAndToDateGreaterThanEqual(
+                eq(LeaveApplicationStatus.APPROVED), any(), any()))
+                .thenReturn(List.of(app1, app2));
+        when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of(emp1, emp2)));
+
+        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 1, null, null, "Female", null);
+
+        assertNotNull(report);
+        var totalApps = report.entries().stream().mapToLong(e -> e.applicationCount()).sum();
+        assertEquals(1, totalApps);
+    }
+
+    @Test
+    void generateLeaveTrend_withAgeGroupFilter_shouldFilterByAge() {
+        var dept = createDepartment(1L, "Engineering");
+        var emp1 = createEmployee(1L, "EMP001", "John", "Doe", dept);
+        emp1.setDateOfBirth(LocalDate.now().minusYears(30));
+        var emp2 = createEmployee(2L, "EMP002", "Jane", "Smith", dept);
+        emp2.setDateOfBirth(LocalDate.now().minusYears(50));
+        var lt = createLeaveType(1L, "Annual Leave");
+        var app1 = createApplication(1L, emp1, lt,
+                LocalDate.of(2025, 1, 6), LocalDate.of(2025, 1, 8), new BigDecimal("3"));
+        var app2 = createApplication(2L, emp2, lt,
+                LocalDate.of(2025, 1, 10), LocalDate.of(2025, 1, 12), new BigDecimal("3"));
+
+        when(leaveApplicationRepository.findByStatusAndFromDateLessThanEqualAndToDateGreaterThanEqual(
+                eq(LeaveApplicationStatus.APPROVED), any(), any()))
+                .thenReturn(List.of(app1, app2));
+        when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of(emp1, emp2)));
+
+        var report = leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 1, null, null, null, "25_34");
+
+        assertNotNull(report);
+        var totalApps = report.entries().stream().mapToLong(e -> e.applicationCount()).sum();
+        assertEquals(1, totalApps);
     }
 
     // ===== Absenteeism Rate Tests =====
@@ -193,7 +285,7 @@ class LeaveAnalyticsServiceTest {
                 .thenReturn(List.of(app));
 
         var report = leaveAnalyticsService.generateAbsenteeismRate(
-                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), null);
+                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), null, null, null, null);
 
         assertNotNull(report);
         assertEquals(1, report.entries().size());
@@ -215,7 +307,7 @@ class LeaveAnalyticsServiceTest {
                 .thenReturn(List.of());
 
         var report = leaveAnalyticsService.generateAbsenteeismRate(
-                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), 2L);
+                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), 2L, null, null, null);
 
         assertNotNull(report);
         assertEquals(1, report.entries().size());
@@ -226,7 +318,7 @@ class LeaveAnalyticsServiceTest {
     void generateAbsenteeismRate_startAfterEnd_shouldThrow() {
         assertThrows(BadRequestException.class, () ->
                 leaveAnalyticsService.generateAbsenteeismRate(
-                        LocalDate.of(2025, 2, 1), LocalDate.of(2025, 1, 1), null));
+                        LocalDate.of(2025, 2, 1), LocalDate.of(2025, 1, 1), null, null, null, null));
     }
 
     @Test
@@ -235,7 +327,7 @@ class LeaveAnalyticsServiceTest {
 
         assertThrows(ResourceNotFoundException.class, () ->
                 leaveAnalyticsService.generateAbsenteeismRate(
-                        LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), 999L));
+                        LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), 999L, null, null, null));
     }
 
     @Test
@@ -245,7 +337,7 @@ class LeaveAnalyticsServiceTest {
         when(employeeRepository.findByDepartmentIdAndDeletedFalse(1L)).thenReturn(List.of());
 
         var report = leaveAnalyticsService.generateAbsenteeismRate(
-                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), null);
+                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), null, null, null, null);
 
         assertNotNull(report);
         assertTrue(report.entries().isEmpty());
@@ -266,7 +358,7 @@ class LeaveAnalyticsServiceTest {
         when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
                 .thenReturn(new PageImpl<>(List.of(emp)));
 
-        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null);
+        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null, null, null, null);
 
         assertNotNull(report);
         assertEquals(2025, report.year());
@@ -291,7 +383,7 @@ class LeaveAnalyticsServiceTest {
         when(leaveBalanceRepository.findByYear(2025)).thenReturn(List.of(balance1, balance2));
         when(employeeRepository.findByDepartmentIdAndDeletedFalse(1L)).thenReturn(List.of(emp1, emp2));
 
-        var report = leaveAnalyticsService.generateLeaveUtilization(2025, 1L);
+        var report = leaveAnalyticsService.generateLeaveUtilization(2025, 1L, null, null, null);
 
         assertNotNull(report);
         assertEquals(1L, report.departmentId());
@@ -305,7 +397,7 @@ class LeaveAnalyticsServiceTest {
         when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
                 .thenReturn(new PageImpl<>(List.of()));
 
-        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null);
+        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null, null, null, null);
 
         assertNotNull(report);
         assertTrue(report.entries().isEmpty());
@@ -324,7 +416,7 @@ class LeaveAnalyticsServiceTest {
         when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
                 .thenReturn(new PageImpl<>(List.of(emp)));
 
-        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null);
+        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null, null, null, null);
 
         assertNotNull(report);
         assertEquals(1, report.entries().size());
@@ -337,7 +429,31 @@ class LeaveAnalyticsServiceTest {
         when(departmentRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () ->
-                leaveAnalyticsService.generateLeaveUtilization(2025, 999L));
+                leaveAnalyticsService.generateLeaveUtilization(2025, 999L, null, null, null));
+    }
+
+    @Test
+    void generateLeaveUtilization_withGenderFilter_shouldFilter() {
+        var dept = createDepartment(1L, "Engineering");
+        var emp1 = createEmployee(1L, "EMP001", "John", "Doe", dept);
+        emp1.setGender("Male");
+        var emp2 = createEmployee(2L, "EMP002", "Jane", "Smith", dept);
+        emp2.setGender("Female");
+        var lt = createLeaveType(1L, "Annual Leave");
+        var bal1 = createBalance(1L, emp1, lt, 2025,
+                new BigDecimal("20"), new BigDecimal("10"), new BigDecimal("10"));
+        var bal2 = createBalance(2L, emp2, lt, 2025,
+                new BigDecimal("20"), new BigDecimal("5"), new BigDecimal("15"));
+
+        when(leaveBalanceRepository.findByYear(2025)).thenReturn(List.of(bal1, bal2));
+        when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of(emp1, emp2)));
+
+        var report = leaveAnalyticsService.generateLeaveUtilization(2025, null, null, "Male", null);
+
+        assertNotNull(report);
+        assertEquals(1, report.entries().size());
+        assertEquals("John Doe", report.entries().get(0).employeeName());
     }
 
     // ===== CSV Export Tests =====
@@ -386,5 +502,95 @@ class LeaveAnalyticsServiceTest {
     void exportReportAsCsv_unsupportedType_shouldThrow() {
         assertThrows(BadRequestException.class, () ->
                 leaveAnalyticsService.exportReportAsCsv("UNKNOWN", Map.of()));
+    }
+
+    // ===== Excel Export Tests =====
+
+    @Test
+    void exportReportAsExcel_leaveTrend_shouldReturnExcel() {
+        when(leaveApplicationRepository.findByStatusAndFromDateLessThanEqualAndToDateGreaterThanEqual(
+                any(), any(), any()))
+                .thenReturn(List.of());
+
+        var params = Map.of("startYear", "2025", "startMonth", "1", "endYear", "2025", "endMonth", "1");
+        var result = leaveAnalyticsService.exportReportAsExcel("LEAVE_TREND", params);
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    void exportReportAsExcel_absenteeismRate_shouldReturnExcel() {
+        when(departmentRepository.findAll()).thenReturn(List.of());
+
+        var params = Map.of("startDate", "2025-01-01", "endDate", "2025-01-31");
+        var result = leaveAnalyticsService.exportReportAsExcel("ABSENTEEISM_RATE", params);
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    void exportReportAsExcel_leaveUtilization_shouldReturnExcel() {
+        when(leaveBalanceRepository.findByYear(2025)).thenReturn(List.of());
+        when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of()));
+
+        var params = Map.of("year", "2025");
+        var result = leaveAnalyticsService.exportReportAsExcel("LEAVE_UTILIZATION", params);
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    void exportReportAsExcel_unsupportedType_shouldThrow() {
+        assertThrows(BadRequestException.class, () ->
+                leaveAnalyticsService.exportReportAsExcel("UNKNOWN", Map.of()));
+    }
+
+    // ===== PDF Export Tests =====
+
+    @Test
+    void exportReportAsPdf_leaveTrend_shouldReturnPdf() {
+        when(leaveApplicationRepository.findByStatusAndFromDateLessThanEqualAndToDateGreaterThanEqual(
+                any(), any(), any()))
+                .thenReturn(List.of());
+
+        var params = Map.of("startYear", "2025", "startMonth", "1", "endYear", "2025", "endMonth", "1");
+        var result = leaveAnalyticsService.exportReportAsPdf("LEAVE_TREND", params);
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    void exportReportAsPdf_absenteeismRate_shouldReturnPdf() {
+        when(departmentRepository.findAll()).thenReturn(List.of());
+
+        var params = Map.of("startDate", "2025-01-01", "endDate", "2025-01-31");
+        var result = leaveAnalyticsService.exportReportAsPdf("ABSENTEEISM_RATE", params);
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    void exportReportAsPdf_leaveUtilization_shouldReturnPdf() {
+        when(leaveBalanceRepository.findByYear(2025)).thenReturn(List.of());
+        when(employeeRepository.findByDeletedFalse(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of()));
+
+        var params = Map.of("year", "2025");
+        var result = leaveAnalyticsService.exportReportAsPdf("LEAVE_UTILIZATION", params);
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    void exportReportAsPdf_unsupportedType_shouldThrow() {
+        assertThrows(BadRequestException.class, () ->
+                leaveAnalyticsService.exportReportAsPdf("UNKNOWN", Map.of()));
     }
 }
