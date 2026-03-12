@@ -393,7 +393,7 @@
 | Frontend Development | Build interactive calendar view with color-coded leave types | Not Started |
 | Frontend Development | Build holiday calendar setup interface for HR | Not Started |
 | Frontend Development | Build team availability view showing coverage gaps | Not Started |
-| Integration Testing | Validate calendar data aggregation and coverage calculations | Not Started |
+| Integration Testing | Validate calendar data aggregation and coverage calculations | Done |
 | UAT & QA | Conduct user acceptance testing for leave planner and calendar | Not Started |
 | Deployment | Deploy leave planner module to staging and production | Not Started |
 
