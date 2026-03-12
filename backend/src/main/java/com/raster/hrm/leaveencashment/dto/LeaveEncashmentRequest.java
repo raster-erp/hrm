@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public record LeaveEncashmentRequest(
         @NotNull Long employeeId,
         @NotNull Long leaveTypeId,
+        @NotNull Integer year,
         @NotNull @Positive BigDecimal numberOfDays,
         String remarks
 ) {

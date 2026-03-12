@@ -15,6 +15,7 @@ export interface EncashmentEligibilityResponse {
 export interface LeaveEncashmentRequest {
   employeeId: number;
   leaveTypeId: number;
+  year: number;
   numberOfDays: number;
   remarks?: string;
 }

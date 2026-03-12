@@ -91,7 +91,7 @@ class LeaveEncashmentControllerTest {
 
     @Test
     void createRequest_shouldReturn201() throws Exception {
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), "Test");
+        var request = new LeaveEncashmentRequest(1L, 1L, 2026, new BigDecimal("5.00"), "Test");
         when(leaveEncashmentService.createRequest(any(LeaveEncashmentRequest.class)))
                 .thenReturn(createResponse());
 
@@ -106,7 +106,7 @@ class LeaveEncashmentControllerTest {
 
     @Test
     void createRequest_shouldReturn400_whenInvalid() throws Exception {
-        var request = new LeaveEncashmentRequest(null, null, null, null);
+        var request = new LeaveEncashmentRequest(null, null, null, null, null);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)

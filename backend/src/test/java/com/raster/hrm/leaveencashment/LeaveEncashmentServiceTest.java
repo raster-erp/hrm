@@ -222,7 +222,7 @@ class LeaveEncashmentServiceTest {
         var saved = createEncashment(EncashmentStatus.PENDING);
         when(leaveEncashmentRepository.save(any(LeaveEncashment.class))).thenReturn(saved);
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), "Test");
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), "Test");
         LeaveEncashmentResponse response = leaveEncashmentService.createRequest(request);
 
         assertNotNull(response);
@@ -239,7 +239,7 @@ class LeaveEncashmentServiceTest {
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
         when(leaveTypeRepository.findById(1L)).thenReturn(Optional.of(leaveType));
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(BadRequestException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -252,7 +252,7 @@ class LeaveEncashmentServiceTest {
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
         when(leaveTypeRepository.findById(1L)).thenReturn(Optional.of(leaveType));
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(BadRequestException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -268,7 +268,7 @@ class LeaveEncashmentServiceTest {
                 eq(1L), eq(1L), eq(year), any()))
                 .thenReturn(Optional.of(createEncashment(EncashmentStatus.PENDING)));
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(BadRequestException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -286,7 +286,7 @@ class LeaveEncashmentServiceTest {
         when(leaveBalanceRepository.findByEmployeeIdAndLeaveTypeIdAndYear(1L, 1L, year))
                 .thenReturn(Optional.of(balance));
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("20.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("20.00"), null);
         assertThrows(BadRequestException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -305,7 +305,7 @@ class LeaveEncashmentServiceTest {
         when(leaveBalanceRepository.findByEmployeeIdAndLeaveTypeIdAndYear(1L, 1L, year))
                 .thenReturn(Optional.of(balance));
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(BadRequestException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -506,7 +506,7 @@ class LeaveEncashmentServiceTest {
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
         when(leaveTypeRepository.findById(1L)).thenReturn(Optional.of(leaveType));
 
-        var request = new LeaveEncashmentRequest(1L, 1L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(BadRequestException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -541,7 +541,7 @@ class LeaveEncashmentServiceTest {
     void createRequest_shouldThrow_whenEmployeeNotFound() {
         when(employeeRepository.findById(999L)).thenReturn(Optional.empty());
 
-        var request = new LeaveEncashmentRequest(999L, 1L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(999L, 1L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(ResourceNotFoundException.class, () -> leaveEncashmentService.createRequest(request));
     }
 
@@ -550,7 +550,7 @@ class LeaveEncashmentServiceTest {
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(createEmployee()));
         when(leaveTypeRepository.findById(999L)).thenReturn(Optional.empty());
 
-        var request = new LeaveEncashmentRequest(1L, 999L, new BigDecimal("5.00"), null);
+        var request = new LeaveEncashmentRequest(1L, 999L, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), null);
         assertThrows(ResourceNotFoundException.class, () -> leaveEncashmentService.createRequest(request));
     }
 }

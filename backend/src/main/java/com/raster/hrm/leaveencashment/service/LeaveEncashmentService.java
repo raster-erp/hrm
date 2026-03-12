@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -125,7 +124,7 @@ public class LeaveEncashmentService {
             throw new BadRequestException("Employee does not have basic salary configured");
         }
 
-        int year = LocalDate.now().getYear();
+        int year = request.year();
 
         // Check for existing PENDING or APPROVED encashment
         leaveEncashmentRepository.findByEmployeeIdAndLeaveTypeIdAndYearAndStatusIn(

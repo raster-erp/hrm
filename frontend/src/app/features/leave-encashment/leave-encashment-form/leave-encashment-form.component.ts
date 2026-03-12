@@ -151,6 +151,7 @@ export class LeaveEncashmentFormComponent implements OnInit {
     this.leaveEncashmentService.create({
       employeeId: formValue.employeeId,
       leaveTypeId: formValue.leaveTypeId,
+      year: formValue.year,
       numberOfDays: formValue.numberOfDays,
       remarks: formValue.remarks || undefined
     })

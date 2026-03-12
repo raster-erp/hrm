@@ -50,7 +50,7 @@ class LeaveEncashmentIntegrationTest {
 
         // Step 2: Create request
         var request = new LeaveEncashmentRequest(
-                EMPLOYEE_ID, ENCASHABLE_TYPE_ID, new BigDecimal("5.00"), "Integration test");
+                EMPLOYEE_ID, ENCASHABLE_TYPE_ID, java.time.LocalDate.now().getYear(), new BigDecimal("5.00"), "Integration test");
         LeaveEncashmentResponse created = leaveEncashmentService.createRequest(request);
         assertNotNull(created.id());
         assertEquals("PENDING", created.status());
@@ -89,7 +89,7 @@ class LeaveEncashmentIntegrationTest {
 
         // Create an encashment
         var request = new LeaveEncashmentRequest(
-                EMPLOYEE_ID, ENCASHABLE_TYPE_ID, new BigDecimal("3.00"), null);
+                EMPLOYEE_ID, ENCASHABLE_TYPE_ID, java.time.LocalDate.now().getYear(), new BigDecimal("3.00"), null);
         LeaveEncashmentResponse created = leaveEncashmentService.createRequest(request);
 
         // Query by employee
