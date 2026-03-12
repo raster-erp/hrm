@@ -367,12 +367,12 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define comp-off eligibility (worked on holiday/weekend/extra shift) | Not Started |
-| Requirements | Define comp-off expiry rules and usage restrictions | Not Started |
-| Database Design | Design `comp_off_credits` table with worked date, credit date, and expiry | Not Started |
-| Backend Development | Build comp-off credit request and approval APIs | Not Started |
+| Requirements | Define comp-off eligibility (worked on holiday/weekend/extra shift) | Done |
+| Requirements | Define comp-off expiry rules and usage restrictions | Done |
+| Database Design | Design `comp_off_credits` table with worked date, credit date, and expiry | Done |
+| Backend Development | Build comp-off credit request and approval APIs | Done |
 | Backend Development | Implement auto-detection of comp-off eligibility from attendance data | Not Started |
-| Backend Development | Build comp-off balance and expiry tracking API | Not Started |
+| Backend Development | Build comp-off balance and expiry tracking API | Done |
 | Frontend Development | Build comp-off request form linked to attendance records | Not Started |
 | Frontend Development | Build comp-off balance view with expiry indicators | Not Started |
 | Integration Testing | Validate comp-off credit, usage, and expiry workflows | Not Started |
