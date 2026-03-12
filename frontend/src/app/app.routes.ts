@@ -102,4 +102,8 @@ export const routes: Routes = [
     path: 'leave-applications',
     loadChildren: () => import('./features/leave-application/leave-application.routes').then(m => m.LEAVE_APPLICATION_ROUTES)
   },
+  {
+    path: 'leave-balances',
+    loadChildren: () => import('./features/leave-balance/leave-balance.routes').then(m => m.LEAVE_BALANCE_ROUTES)
+  },
 ];

@@ -1,0 +1,75 @@
+@use 'styles/variables' as *;
+
+.leave-balance-dashboard-container {
+  width: 100%;
+}
+
+.balance-info {
+  margin-bottom: 16px;
+}
+
+.employee-info {
+  font-size: 16px;
+  color: #555;
+}
+
+.balance-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.balance-card {
+  .balance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .balance-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .balance-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+  }
+
+  .balance-value {
+    font-size: 24px;
+    font-weight: 600;
+
+    &.credited { color: #1976d2; }
+    &.used { color: #d32f2f; }
+    &.pending { color: #f57c00; }
+    &.available { color: #388e3c; }
+    &.carry-forward { color: #7b1fa2; }
+  }
+
+  .usage-bar {
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .usage-fill {
+    height: 100%;
+    background: #1976d2;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+
+  .usage-text {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    text-align: right;
+    margin-top: 4px;
+  }
+}

@@ -1,0 +1,119 @@
+<div class="leave-transaction-history-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>receipt_long</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Leave Transaction History</h2>
+          <p>View detailed audit trail of leave balance changes</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <a mat-raised-button routerLink="../">
+          <mat-icon>account_balance_wallet</mat-icon> Balance Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Employee ID</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedEmployeeId" placeholder="Enter Employee ID">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Transaction Type</mat-label>
+      <mat-select [(ngModel)]="selectedTransactionType" (selectionChange)="onSearch()">
+        <mat-option value="">All Types</mat-option>
+        @for (type of transactionTypes; track type) {
+          <mat-option [value]="type">{{ type }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="onSearch()" [disabled]="!selectedEmployeeId">
+      <mat-icon>search</mat-icon> Search
+    </button>
+
+    <button mat-icon-button matTooltip="Clear Filters" (click)="clearFilters()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="transaction-table">
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let record">{{ record.createdAt | date:'medium' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="leaveTypeName">
+        <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+        <td mat-cell *matCellDef="let record">{{ record.leaveTypeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="transactionType">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let record">
+          <mat-chip>{{ record.transactionType }}</mat-chip>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let record">
+          <span [class]="getAmountClass(record.amount)">
+            {{ record.amount > 0 ? '+' : '' }}{{ record.amount }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="balanceAfter">
+        <th mat-header-cell *matHeaderCellDef>Balance After</th>
+        <td mat-cell *matCellDef="let record">{{ record.balanceAfter }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let record">{{ record.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef>By</th>
+        <td mat-cell *matCellDef="let record">{{ record.createdBy || '-' }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0 && selectedEmployeeId) {
+      <div class="no-data">
+        <mat-icon>receipt_long</mat-icon>
+        <p>No transactions found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

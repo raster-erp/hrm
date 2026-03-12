@@ -1,0 +1,105 @@
+<div class="leave-balance-dashboard-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>account_balance_wallet</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Leave Balance Dashboard</h2>
+          <p>View type-wise leave balance summary for employees</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <a mat-raised-button routerLink="../transactions">
+          <mat-icon>receipt_long</mat-icon> Transaction History
+        </a>
+        <a mat-raised-button routerLink="../year-end">
+          <mat-icon>event_repeat</mat-icon> Year-End Processing
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Employee ID</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedEmployeeId" placeholder="Enter Employee ID">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Year</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedYear" placeholder="Year">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="onSearch()" [disabled]="!selectedEmployeeId">
+      <mat-icon>search</mat-icon> Search
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Balance Cards -->
+  @if (!loading && balances.length > 0) {
+    <div class="balance-info">
+      <p class="employee-info">
+        <strong>{{ balances[0].employeeName }}</strong> ({{ balances[0].employeeCode }}) — {{ selectedYear }}
+      </p>
+    </div>
+
+    <div class="balance-cards">
+      @for (balance of balances; track balance.id) {
+        <mat-card class="balance-card">
+          <mat-card-header>
+            <mat-card-title>{{ balance.leaveTypeName }}</mat-card-title>
+            <mat-card-subtitle>{{ balance.leaveTypeCode }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="balance-grid">
+              <div class="balance-item">
+                <span class="balance-label">Credited</span>
+                <span class="balance-value credited">{{ balance.credited }}</span>
+              </div>
+              <div class="balance-item">
+                <span class="balance-label">Used</span>
+                <span class="balance-value used">{{ balance.used }}</span>
+              </div>
+              <div class="balance-item">
+                <span class="balance-label">Pending</span>
+                <span class="balance-value pending">{{ balance.pending }}</span>
+              </div>
+              <div class="balance-item">
+                <span class="balance-label">Available</span>
+                <span class="balance-value available">{{ balance.available }}</span>
+              </div>
+              @if (balance.carryForwarded > 0) {
+                <div class="balance-item">
+                  <span class="balance-label">Carry Forward</span>
+                  <span class="balance-value carry-forward">{{ balance.carryForwarded }}</span>
+                </div>
+              }
+            </div>
+            <div class="usage-bar">
+              <div class="usage-fill" [style.width.%]="getUsagePercentage(balance)"></div>
+            </div>
+            <span class="usage-text">{{ getUsagePercentage(balance) }}% used</span>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+
+  @if (!loading && selectedEmployeeId && balances.length === 0) {
+    <div class="no-data">
+      <mat-icon>account_balance_wallet</mat-icon>
+      <p>No leave balances found for this employee and year</p>
+    </div>
+  }
+</div>

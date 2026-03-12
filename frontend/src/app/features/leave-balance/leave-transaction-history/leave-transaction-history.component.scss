@@ -1,0 +1,19 @@
+@use 'styles/variables' as *;
+
+.leave-transaction-history-container {
+  width: 100%;
+}
+
+.transaction-table {
+  width: 100%;
+}
+
+.positive {
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.negative {
+  color: #d32f2f;
+  font-weight: 600;
+}
