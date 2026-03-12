@@ -331,18 +331,18 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define balance computation rules (credited, used, pending, available) | Not Started |
-| Requirements | Define year-end processing rules (carry-forward, lapsing) | Not Started |
+| Requirements | Define balance computation rules (credited, used, pending, available) | Done |
+| Requirements | Define year-end processing rules (carry-forward, lapsing) | Done |
 | Database Design | Design `leave_balances` table with type-wise credit, used, and available columns | Done |
 | Database Design | Design `leave_transactions` table for detailed audit of every balance change | Done |
-| Backend Development | Build leave balance inquiry API (current balance by type) | Not Started |
-| Backend Development | Build leave transaction history API with filters | Not Started |
-| Backend Development | Implement year-end processing job (carry-forward and lapsing) | Not Started |
-| Backend Development | Build balance adjustment API for manual corrections by HR | Not Started |
-| Frontend Development | Build leave balance dashboard showing type-wise summary | Not Started |
-| Frontend Development | Build leave transaction history view with filters | Not Started |
-| Frontend Development | Build year-end processing trigger and review interface for HR | Not Started |
-| Integration Testing | Validate balance updates across application, cancellation, and accrual | Not Started |
+| Backend Development | Build leave balance inquiry API (current balance by type) | Done |
+| Backend Development | Build leave transaction history API with filters | Done |
+| Backend Development | Implement year-end processing job (carry-forward and lapsing) | Done |
+| Backend Development | Build balance adjustment API for manual corrections by HR | Done |
+| Frontend Development | Build leave balance dashboard showing type-wise summary | Done |
+| Frontend Development | Build leave transaction history view with filters | Done |
+| Frontend Development | Build year-end processing trigger and review interface for HR | Done |
+| Integration Testing | Validate balance updates across application, cancellation, and accrual | Done |
 | UAT & QA | Conduct user acceptance testing for leave balance tracking | Not Started |
 | Deployment | Deploy leave balance module to staging and production | Not Started |
 
