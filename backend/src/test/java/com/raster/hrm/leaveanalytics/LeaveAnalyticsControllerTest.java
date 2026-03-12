@@ -47,7 +47,7 @@ class LeaveAnalyticsControllerTest {
     void getLeaveTrend_shouldReturnReport() throws Exception {
         var entry = new LeaveTrendEntry(2025, 1, "Annual Leave", 5, new BigDecimal("10"));
         var report = new LeaveTrendReport(2025, 1, 2025, 3, null, "All Departments", List.of(entry));
-        when(leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, null)).thenReturn(report);
+        when(leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, null, null, null, null)).thenReturn(report);
 
         mockMvc.perform(get(BASE_URL + "/trend")
                         .param("startYear", "2025")
@@ -68,7 +68,7 @@ class LeaveAnalyticsControllerTest {
     @Test
     void getLeaveTrend_withDepartment_shouldReturnReport() throws Exception {
         var report = new LeaveTrendReport(2025, 1, 2025, 3, 1L, "Engineering", List.of());
-        when(leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, 1L)).thenReturn(report);
+        when(leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, 1L, null, null, null)).thenReturn(report);
 
         mockMvc.perform(get(BASE_URL + "/trend")
                         .param("startYear", "2025")
@@ -82,6 +82,23 @@ class LeaveAnalyticsControllerTest {
     }
 
     @Test
+    void getLeaveTrend_withDimensionFilters_shouldReturnReport() throws Exception {
+        var report = new LeaveTrendReport(2025, 1, 2025, 3, null, "All Departments", List.of());
+        when(leaveAnalyticsService.generateLeaveTrend(2025, 1, 2025, 3, null, 1L, "Male", "25_34"))
+                .thenReturn(report);
+
+        mockMvc.perform(get(BASE_URL + "/trend")
+                        .param("startYear", "2025")
+                        .param("startMonth", "1")
+                        .param("endYear", "2025")
+                        .param("endMonth", "3")
+                        .param("designationId", "1")
+                        .param("gender", "Male")
+                        .param("ageGroup", "25_34"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void getLeaveTrend_missingStartYear_shouldReturnError() throws Exception {
         mockMvc.perform(get(BASE_URL + "/trend")
                         .param("startMonth", "1")
@@ -92,7 +109,7 @@ class LeaveAnalyticsControllerTest {
 
     @Test
     void getLeaveTrend_invalidRange_shouldReturn400() throws Exception {
-        when(leaveAnalyticsService.generateLeaveTrend(anyInt(), anyInt(), anyInt(), anyInt(), any()))
+        when(leaveAnalyticsService.generateLeaveTrend(anyInt(), anyInt(), anyInt(), anyInt(), any(), any(), any(), any()))
                 .thenThrow(new BadRequestException("Start period must not be after end period"));
 
         mockMvc.perform(get(BASE_URL + "/trend")
@@ -113,7 +130,7 @@ class LeaveAnalyticsControllerTest {
                 LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31),
                 new BigDecimal("6.82"), List.of(entry));
         when(leaveAnalyticsService.generateAbsenteeismRate(
-                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), null))
+                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), null, null, null, null))
                 .thenReturn(report);
 
         mockMvc.perform(get(BASE_URL + "/absenteeism-rate")
@@ -136,7 +153,7 @@ class LeaveAnalyticsControllerTest {
                 LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31),
                 new BigDecimal("2.73"), List.of(entry));
         when(leaveAnalyticsService.generateAbsenteeismRate(
-                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), 2L))
+                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 31), 2L, null, null, null))
                 .thenReturn(report);
 
         mockMvc.perform(get(BASE_URL + "/absenteeism-rate")
@@ -156,7 +173,7 @@ class LeaveAnalyticsControllerTest {
 
     @Test
     void getAbsenteeismRate_startAfterEnd_shouldReturn400() throws Exception {
-        when(leaveAnalyticsService.generateAbsenteeismRate(any(), any(), any()))
+        when(leaveAnalyticsService.generateAbsenteeismRate(any(), any(), any(), any(), any(), any()))
                 .thenThrow(new BadRequestException("Start date must not be after end date"));
 
         mockMvc.perform(get(BASE_URL + "/absenteeism-rate")
@@ -174,7 +191,7 @@ class LeaveAnalyticsControllerTest {
                 new BigDecimal("10"), new BigDecimal("50.00"));
         var report = new LeaveUtilizationReport(2025, null, "All Departments",
                 new BigDecimal("50.00"), List.of(entry));
-        when(leaveAnalyticsService.generateLeaveUtilization(2025, null)).thenReturn(report);
+        when(leaveAnalyticsService.generateLeaveUtilization(2025, null, null, null, null)).thenReturn(report);
 
         mockMvc.perform(get(BASE_URL + "/utilization")
                         .param("year", "2025"))
@@ -191,7 +208,7 @@ class LeaveAnalyticsControllerTest {
     void getLeaveUtilization_withDepartment_shouldReturnReport() throws Exception {
         var report = new LeaveUtilizationReport(2025, 1L, "Engineering",
                 BigDecimal.ZERO, List.of());
-        when(leaveAnalyticsService.generateLeaveUtilization(2025, 1L)).thenReturn(report);
+        when(leaveAnalyticsService.generateLeaveUtilization(2025, 1L, null, null, null)).thenReturn(report);
 
         mockMvc.perform(get(BASE_URL + "/utilization")
                         .param("year", "2025")
@@ -239,10 +256,42 @@ class LeaveAnalyticsControllerTest {
     }
 
     @Test
-    void exportReport_pdfFormat_shouldReturn400() throws Exception {
+    void exportReport_pdfFormat_shouldReturnPdf() throws Exception {
+        var pdfBytes = new byte[]{0x25, 0x50, 0x44, 0x46};
+        when(leaveAnalyticsService.exportReportAsPdf(eq("LEAVE_TREND"), any())).thenReturn(pdfBytes);
+
         mockMvc.perform(get(BASE_URL + "/export")
                         .param("reportType", "LEAVE_TREND")
                         .param("format", "PDF")
+                        .param("startYear", "2025")
+                        .param("startMonth", "1")
+                        .param("endYear", "2025")
+                        .param("endMonth", "3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Disposition", "attachment; filename=\"leave_trend_report.pdf\""));
+    }
+
+    @Test
+    void exportReport_excelFormat_shouldReturnExcel() throws Exception {
+        var excelBytes = new byte[]{0x50, 0x4B};
+        when(leaveAnalyticsService.exportReportAsExcel(eq("LEAVE_TREND"), any())).thenReturn(excelBytes);
+
+        mockMvc.perform(get(BASE_URL + "/export")
+                        .param("reportType", "LEAVE_TREND")
+                        .param("format", "EXCEL")
+                        .param("startYear", "2025")
+                        .param("startMonth", "1")
+                        .param("endYear", "2025")
+                        .param("endMonth", "3"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Disposition", "attachment; filename=\"leave_trend_report.xlsx\""));
+    }
+
+    @Test
+    void exportReport_unsupportedFormat_shouldReturn400() throws Exception {
+        mockMvc.perform(get(BASE_URL + "/export")
+                        .param("reportType", "LEAVE_TREND")
+                        .param("format", "XML")
                         .param("startYear", "2025")
                         .param("startMonth", "1")
                         .param("endYear", "2025")
@@ -251,15 +300,21 @@ class LeaveAnalyticsControllerTest {
     }
 
     @Test
-    void exportReport_excelFormat_shouldReturn400() throws Exception {
+    void exportReport_withDimensionFilters_shouldPassParams() throws Exception {
+        var csvBytes = "header\ndata\n".getBytes();
+        when(leaveAnalyticsService.exportReportAsCsv(eq("LEAVE_TREND"), any())).thenReturn(csvBytes);
+
         mockMvc.perform(get(BASE_URL + "/export")
                         .param("reportType", "LEAVE_TREND")
-                        .param("format", "EXCEL")
+                        .param("format", "CSV")
                         .param("startYear", "2025")
                         .param("startMonth", "1")
                         .param("endYear", "2025")
-                        .param("endMonth", "3"))
-                .andExpect(status().isBadRequest());
+                        .param("endMonth", "3")
+                        .param("designationId", "1")
+                        .param("gender", "Female")
+                        .param("ageGroup", "25_34"))
+                .andExpect(status().isOk());
     }
 
     @Test
