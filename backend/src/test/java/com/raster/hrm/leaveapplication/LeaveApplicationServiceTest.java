@@ -11,6 +11,7 @@ import com.raster.hrm.leaveapplication.entity.LeaveApplicationStatus;
 import com.raster.hrm.leaveapplication.entity.LeaveApprovalLog;
 import com.raster.hrm.leaveapplication.repository.LeaveApplicationRepository;
 import com.raster.hrm.leaveapplication.repository.LeaveApprovalLogRepository;
+import com.raster.hrm.leaveapplication.service.LeaveApplicationNotificationService;
 import com.raster.hrm.leaveapplication.service.LeaveApplicationService;
 import com.raster.hrm.leavetype.entity.LeaveType;
 import com.raster.hrm.leavetype.repository.LeaveTypeRepository;
@@ -52,6 +53,9 @@ class LeaveApplicationServiceTest {
 
     @Mock
     private LeaveTypeRepository leaveTypeRepository;
+
+    @Mock
+    private LeaveApplicationNotificationService notificationService;
 
     @InjectMocks
     private LeaveApplicationService leaveApplicationService;
