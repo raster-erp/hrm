@@ -122,4 +122,8 @@ export const routes: Routes = [
     path: 'leave-calendar',
     loadChildren: () => import('./features/leave-calendar/leave-calendar.routes').then(m => m.LEAVE_CALENDAR_ROUTES)
   },
+  {
+    path: 'leave-analytics',
+    loadChildren: () => import('./features/leave-analytics/leave-analytics.routes').then(m => m.LEAVE_ANALYTICS_ROUTES)
+  },
 ];
