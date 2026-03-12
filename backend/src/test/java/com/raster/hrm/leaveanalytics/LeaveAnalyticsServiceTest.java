@@ -4,8 +4,6 @@ import com.raster.hrm.department.entity.Department;
 import com.raster.hrm.department.repository.DepartmentRepository;
 import com.raster.hrm.designation.entity.Designation;
 import com.raster.hrm.designation.repository.DesignationRepository;
-import com.raster.hrm.designation.entity.Designation;
-import com.raster.hrm.designation.repository.DesignationRepository;
 import com.raster.hrm.employee.entity.Employee;
 import com.raster.hrm.employee.repository.EmployeeRepository;
 import com.raster.hrm.exception.BadRequestException;
