@@ -426,9 +426,9 @@
 | Requirements | Define salary components (basic, HRA, DA, conveyance, special allowances) | Not Started |
 | Requirements | Define computation rules (fixed, percentage of basic, slab-based) | Not Started |
 | Requirements | Define salary structure templates by grade and designation | Not Started |
-| Database Design | Design `salary_components` table with type (earning/deduction), taxability flag | Not Started |
-| Database Design | Design `salary_structures` table linking components with computation formulas | Not Started |
-| Database Design | Design `employee_salary_details` table for individual salary assignments | Not Started |
+| Database Design | Design `salary_components` table with type (earning/deduction), taxability flag | Done |
+| Database Design | Design `salary_structures` table linking components with computation formulas | Done |
+| Database Design | Design `employee_salary_details` table for individual salary assignments | Done |
 | Backend Development | Build CRUD APIs for salary component master | Not Started |
 | Backend Development | Build salary structure template creation and cloning APIs | Not Started |
 | Backend Development | Build employee salary assignment API with effective date support | Not Started |
