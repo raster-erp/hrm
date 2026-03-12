@@ -333,8 +333,8 @@
 |-------|------|--------|
 | Requirements | Define balance computation rules (credited, used, pending, available) | Not Started |
 | Requirements | Define year-end processing rules (carry-forward, lapsing) | Not Started |
-| Database Design | Design `leave_balances` table with type-wise credit, used, and available columns | Not Started |
-| Database Design | Design `leave_transactions` table for detailed audit of every balance change | Not Started |
+| Database Design | Design `leave_balances` table with type-wise credit, used, and available columns | Done |
+| Database Design | Design `leave_transactions` table for detailed audit of every balance change | Done |
 | Backend Development | Build leave balance inquiry API (current balance by type) | Not Started |
 | Backend Development | Build leave transaction history API with filters | Not Started |
 | Backend Development | Implement year-end processing job (carry-forward and lapsing) | Not Started |
