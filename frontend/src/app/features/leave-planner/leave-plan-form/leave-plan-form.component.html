@@ -1,0 +1,103 @@
+<div class="leave-plan-form-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>event_note</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>New Leave Plan</h2>
+          <p>Create a tentative leave plan for future scheduling</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee</mat-label>
+            <mat-select formControlName="employeeId">
+              @for (emp of employees; track emp.id) {
+                <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('employeeId')?.hasError('required') && form.get('employeeId')?.touched) {
+              <mat-error>Employee is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Leave Type</mat-label>
+            <mat-select formControlName="leaveTypeId">
+              @for (lt of leaveTypes; track lt.id) {
+                <mat-option [value]="lt.id">{{ lt.name }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('leaveTypeId')?.hasError('required') && form.get('leaveTypeId')?.touched) {
+              <mat-error>Leave type is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>From Date</mat-label>
+            <input matInput [matDatepicker]="fromPicker" formControlName="plannedFromDate">
+            <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker></mat-datepicker>
+            @if (form.get('plannedFromDate')?.hasError('required') && form.get('plannedFromDate')?.touched) {
+              <mat-error>From date is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>To Date</mat-label>
+            <input matInput [matDatepicker]="toPicker" formControlName="plannedToDate">
+            <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker></mat-datepicker>
+            @if (form.get('plannedToDate')?.hasError('required') && form.get('plannedToDate')?.touched) {
+              <mat-error>To date is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Number of Days</mat-label>
+            <input matInput type="number" formControlName="numberOfDays" step="0.5" min="0.5">
+            @if (form.get('numberOfDays')?.hasError('required') && form.get('numberOfDays')?.touched) {
+              <mat-error>Number of days is required</mat-error>
+            }
+            @if (form.get('numberOfDays')?.hasError('min')) {
+              <mat-error>Minimum is 0.5 days</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes" rows="3" placeholder="Optional notes"></textarea>
+            @if (form.get('notes')?.hasError('maxlength')) {
+              <mat-error>Notes cannot exceed 500 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <a mat-button routerLink="/leave-planner">Cancel</a>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="submitting">
+            @if (submitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Create Plan
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
