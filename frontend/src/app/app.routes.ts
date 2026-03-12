@@ -110,4 +110,8 @@ export const routes: Routes = [
     path: 'leave-encashments',
     loadChildren: () => import('./features/leave-encashment/leave-encashment.routes').then(m => m.LEAVE_ENCASHMENT_ROUTES)
   },
+  {
+    path: 'comp-off',
+    loadChildren: () => import('./features/comp-off/comp-off.routes').then(m => m.COMP_OFF_ROUTES)
+  },
 ];

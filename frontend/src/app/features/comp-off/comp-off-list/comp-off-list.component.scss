@@ -1,0 +1,23 @@
+@use 'styles/variables' as *;
+
+.comp-off-list-container {
+  width: 100%;
+}
+
+.comp-off-table {
+  width: 100%;
+}
+
+.expiring-soon {
+  color: #e65100;
+  font-weight: 500;
+}
+
+.expiry-warning {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  color: #e65100;
+  vertical-align: middle;
+  margin-left: 4px;
+}

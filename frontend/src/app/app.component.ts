@@ -84,6 +84,9 @@ export class AppComponent implements OnInit {
         { path: '/leave-balances/year-end', label: 'Year-End Processing', icon: 'event_repeat' },
         { path: '/leave-encashments', label: 'Leave Encashments', icon: 'payments' },
         { path: '/leave-encashments/approval', label: 'Encashment Approvals', icon: 'approval' },
+        { path: '/comp-off', label: 'Comp-Off Requests', icon: 'event_available' },
+        { path: '/comp-off/approval', label: 'Comp-Off Approvals', icon: 'approval' },
+        { path: '/comp-off/balance', label: 'Comp-Off Balance', icon: 'account_balance_wallet' },
       ]
     },
     {
