@@ -357,8 +357,8 @@
 | Backend Development | Build encashment request and approval APIs | Done |
 | Backend Development | Implement encashment calculation engine linked to salary data | Done |
 | Backend Development | Build encashment payout integration with payroll | Done |
-| Frontend Development | Build encashment request form with eligible days and computed amount preview | Not Started |
-| Frontend Development | Build encashment approval interface for HR/finance | Not Started |
+| Frontend Development | Build encashment request form with eligible days and computed amount preview | Done |
+| Frontend Development | Build encashment approval interface for HR/finance | Done |
 | Integration Testing | Validate encashment calculation and payroll integration | Done |
 | UAT & QA | Conduct user acceptance testing for leave encashment | Not Started |
 | Deployment | Deploy leave encashment module to staging and production | Not Started |
