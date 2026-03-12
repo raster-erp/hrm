@@ -1,0 +1,128 @@
+<div class="leave-calendar-view-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>calendar_month</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Leave Calendar</h2>
+          <p>View holidays, approved leaves, and planned leaves on an interactive calendar</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <a mat-raised-button color="primary" routerLink="/leave-planner/new">
+          <mat-icon>add</mat-icon> New Leave Plan
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Department</mat-label>
+      <mat-select [(ngModel)]="selectedDepartmentId" (selectionChange)="onFilterChange()">
+        <mat-option [value]="null">All Departments</mat-option>
+        @for (dept of departments; track dept.id) {
+          <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Employee ID</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedEmployeeId" placeholder="Filter by employee ID">
+    </mat-form-field>
+
+    <button mat-stroked-button (click)="onFilterChange()">
+      <mat-icon>search</mat-icon> Search
+    </button>
+
+    <button mat-icon-button matTooltip="Clear Filters" (click)="clearFilters()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <!-- Calendar Navigation -->
+  <div class="calendar-nav">
+    <button mat-icon-button (click)="previousMonth()" matTooltip="Previous Month">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h3 class="month-label">{{ currentMonthLabel }}</h3>
+    <button mat-icon-button (click)="nextMonth()" matTooltip="Next Month">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button mat-stroked-button (click)="goToToday()" class="today-btn">Today</button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Calendar Grid -->
+  <div class="calendar-grid">
+    <!-- Week day headers -->
+    @for (day of weekDays; track day) {
+      <div class="calendar-header">{{ day }}</div>
+    }
+
+    <!-- Calendar days -->
+    @for (day of calendarDays; track day.date.toISOString()) {
+      <div class="calendar-day"
+           [class.other-month]="!day.isCurrentMonth"
+           [class.today]="day.isToday">
+        <span class="day-number">{{ day.dayOfMonth }}</span>
+        <div class="day-entries">
+          @for (entry of day.entries; track entry.id) {
+            <div class="calendar-entry"
+                 [style.background-color]="entry.color"
+                 [matTooltip]="getEntryTooltip(entry)">
+              @if (entry.type === 'HOLIDAY') {
+                {{ entry.leaveTypeName }}
+              } @else {
+                {{ entry.employeeName }}
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Legend -->
+  <mat-card class="legend-card">
+    <mat-card-content>
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #4caf50"></span>
+          <span>Holiday</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #2196f3"></span>
+          <span>Paid Leave</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #ff9800"></span>
+          <span>Unpaid Leave</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #9c27b0"></span>
+          <span>Optional Leave</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #e91e63"></span>
+          <span>Special Leave</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background-color: #78909c"></span>
+          <span>Planned Leave</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

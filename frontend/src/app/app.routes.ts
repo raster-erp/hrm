@@ -114,4 +114,12 @@ export const routes: Routes = [
     path: 'comp-off',
     loadChildren: () => import('./features/comp-off/comp-off.routes').then(m => m.COMP_OFF_ROUTES)
   },
+  {
+    path: 'leave-planner',
+    loadChildren: () => import('./features/leave-planner/leave-planner.routes').then(m => m.LEAVE_PLANNER_ROUTES)
+  },
+  {
+    path: 'leave-calendar',
+    loadChildren: () => import('./features/leave-calendar/leave-calendar.routes').then(m => m.LEAVE_CALENDAR_ROUTES)
+  },
 ];

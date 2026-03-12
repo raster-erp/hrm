@@ -383,16 +383,16 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define calendar views (personal, team, department, organization) | Not Started |
+| Requirements | Define calendar views (personal, team, department, organization) | Done |
 | Requirements | Define holiday calendar setup and regional holiday support | Done |
 | Database Design | Design `holidays` table with date, name, type, and applicable regions | Done |
 | Database Design | Design `leave_plans` table for tentative future leave entries | Done |
 | Backend Development | Build holiday calendar CRUD APIs with region support | Done |
 | Backend Development | Build team leave calendar API aggregating approved and planned leaves | Done |
 | Backend Development | Build leave planning API for tentative bookings | Done |
-| Frontend Development | Build interactive calendar view with color-coded leave types | Not Started |
-| Frontend Development | Build holiday calendar setup interface for HR | Not Started |
-| Frontend Development | Build team availability view showing coverage gaps | Not Started |
+| Frontend Development | Build interactive calendar view with color-coded leave types | Done |
+| Frontend Development | Build holiday calendar setup interface for HR | Done |
+| Frontend Development | Build team availability view showing coverage gaps | Done |
 | Integration Testing | Validate calendar data aggregation and coverage calculations | Done |
 | UAT & QA | Conduct user acceptance testing for leave planner and calendar | Not Started |
 | Deployment | Deploy leave planner module to staging and production | Not Started |

@@ -87,6 +87,10 @@ export class AppComponent implements OnInit {
         { path: '/comp-off', label: 'Comp-Off Requests', icon: 'event_available' },
         { path: '/comp-off/approval', label: 'Comp-Off Approvals', icon: 'approval' },
         { path: '/comp-off/balance', label: 'Comp-Off Balance', icon: 'account_balance_wallet' },
+        { path: '/leave-planner', label: 'Leave Planner', icon: 'edit_calendar' },
+        { path: '/leave-calendar', label: 'Leave Calendar', icon: 'calendar_month' },
+        { path: '/leave-calendar/holidays', label: 'Holiday Setup', icon: 'celebration' },
+        { path: '/leave-calendar/team-availability', label: 'Team Availability', icon: 'groups' },
       ]
     },
     {

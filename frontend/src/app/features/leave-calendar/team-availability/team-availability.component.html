@@ -1,0 +1,118 @@
+<div class="team-availability-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>groups</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Team Availability</h2>
+          <p>View team coverage and identify coverage gaps across departments</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Department</mat-label>
+      <mat-select [(ngModel)]="selectedDepartmentId">
+        @for (dept of departments; track dept.id) {
+          <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Start Date</mat-label>
+      <input matInput type="date" [(ngModel)]="startDate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>End Date</mat-label>
+      <input matInput type="date" [(ngModel)]="endDate">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="loadAvailability()">
+      <mat-icon>search</mat-icon> Search
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="availability-table">
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let row">{{ row.date | date:'mediumDate' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalMembers">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td mat-cell *matCellDef="let row">{{ row.totalMembers }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="availableMembers">
+        <th mat-header-cell *matHeaderCellDef>Available</th>
+        <td mat-cell *matCellDef="let row">{{ row.availableMembers }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="onLeave">
+        <th mat-header-cell *matHeaderCellDef>On Leave</th>
+        <td mat-cell *matCellDef="let row">{{ row.onLeave }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="onPlannedLeave">
+        <th mat-header-cell *matHeaderCellDef>Planned Leave</th>
+        <td mat-cell *matCellDef="let row">{{ row.onPlannedLeave }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="coveragePercentage">
+        <th mat-header-cell *matHeaderCellDef>Coverage</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="coverage-cell">
+            <div class="coverage-bar-bg">
+              <div class="coverage-bar" [class]="getCoverageClass(row.coveragePercentage)"
+                   [style.width.%]="row.coveragePercentage">
+              </div>
+            </div>
+            <span class="coverage-text" [class]="getCoverageClass(row.coveragePercentage)">
+              {{ row.coveragePercentage | number:'1.0-0' }}%
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="absentEmployees">
+        <th mat-header-cell *matHeaderCellDef>Absent Employees</th>
+        <td mat-cell *matCellDef="let row">
+          @if (row.absentEmployees.length > 0) {
+            <span [matTooltip]="row.absentEmployees.join(', ')">
+              {{ row.absentEmployees.length }} employee(s)
+            </span>
+          } @else {
+            -
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>groups</mat-icon>
+        <p>Select a department and date range to view team availability</p>
+      </div>
+    }
+  </div>
+</div>
