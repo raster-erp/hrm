@@ -5,6 +5,7 @@ import com.raster.hrm.leaveapplication.entity.LeaveApplication;
 import com.raster.hrm.leaveapplication.entity.LeaveApplicationStatus;
 import com.raster.hrm.leaveapplication.service.LeaveApplicationNotificationService;
 import com.raster.hrm.leavetype.entity.LeaveType;
+import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -90,6 +92,20 @@ class LeaveApplicationNotificationServiceTest {
         assertDoesNotThrow(() -> notificationService.notifyApplicationApproved(application));
 
         verify(mailSender).send(any(MimeMessage.class));
+    }
+
+    @Test
+    void notifyApplicationApproved_shouldIncludeApproverName() throws Exception {
+        var realMessage = new MimeMessage((Session) null);
+        when(mailSender.createMimeMessage()).thenReturn(realMessage);
+
+        var application = createApplication(LeaveApplicationStatus.APPROVED);
+        application.setApprovedBy("SeniorManager");
+
+        notificationService.notifyApplicationApproved(application);
+
+        var content = realMessage.getContent().toString();
+        assertTrue(content.contains("SeniorManager"), "Email body should contain the approver's name");
     }
 
     @Test
