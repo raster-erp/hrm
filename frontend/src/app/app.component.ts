@@ -91,6 +91,7 @@ export class AppComponent implements OnInit {
         { path: '/leave-calendar', label: 'Leave Calendar', icon: 'calendar_month' },
         { path: '/leave-calendar/holidays', label: 'Holiday Setup', icon: 'celebration' },
         { path: '/leave-calendar/team-availability', label: 'Team Availability', icon: 'groups' },
+        { path: '/leave-analytics', label: 'Analytics Reports', icon: 'analytics' },
       ]
     },
     {

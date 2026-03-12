@@ -1,0 +1,275 @@
+<div class="analytics-dashboard-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>analytics</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Leave Analytics</h2>
+          <p>Analyze leave trends, absenteeism rates, and utilization across departments</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Selection -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Report Type</mat-label>
+      <mat-select [(ngModel)]="selectedReportType">
+        @for (type of reportTypes; track type) {
+          <mat-option [value]="type">{{ getReportLabel(type) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (selectedReportType === 'LEAVE_TREND') {
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Start Year</mat-label>
+        <input matInput type="number" [(ngModel)]="startYear" min="2020" max="2030">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Start Month</mat-label>
+        <mat-select [(ngModel)]="startMonth">
+          <mat-option [value]="1">January</mat-option>
+          <mat-option [value]="2">February</mat-option>
+          <mat-option [value]="3">March</mat-option>
+          <mat-option [value]="4">April</mat-option>
+          <mat-option [value]="5">May</mat-option>
+          <mat-option [value]="6">June</mat-option>
+          <mat-option [value]="7">July</mat-option>
+          <mat-option [value]="8">August</mat-option>
+          <mat-option [value]="9">September</mat-option>
+          <mat-option [value]="10">October</mat-option>
+          <mat-option [value]="11">November</mat-option>
+          <mat-option [value]="12">December</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>End Year</mat-label>
+        <input matInput type="number" [(ngModel)]="endYear" min="2020" max="2030">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>End Month</mat-label>
+        <mat-select [(ngModel)]="endMonth">
+          <mat-option [value]="1">January</mat-option>
+          <mat-option [value]="2">February</mat-option>
+          <mat-option [value]="3">March</mat-option>
+          <mat-option [value]="4">April</mat-option>
+          <mat-option [value]="5">May</mat-option>
+          <mat-option [value]="6">June</mat-option>
+          <mat-option [value]="7">July</mat-option>
+          <mat-option [value]="8">August</mat-option>
+          <mat-option [value]="9">September</mat-option>
+          <mat-option [value]="10">October</mat-option>
+          <mat-option [value]="11">November</mat-option>
+          <mat-option [value]="12">December</mat-option>
+        </mat-select>
+      </mat-form-field>
+    }
+
+    @if (selectedReportType === 'ABSENTEEISM_RATE') {
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Start Date</mat-label>
+        <input matInput type="date" [(ngModel)]="startDate">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>End Date</mat-label>
+        <input matInput type="date" [(ngModel)]="endDate">
+      </mat-form-field>
+    }
+
+    @if (selectedReportType === 'LEAVE_UTILIZATION') {
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Year</mat-label>
+        <input matInput type="number" [(ngModel)]="year" min="2020" max="2030">
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Department ID</mat-label>
+      <input matInput type="number" [(ngModel)]="departmentId" placeholder="All departments">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="loadReport()">
+      <mat-icon>search</mat-icon>
+      Generate Report
+    </button>
+
+    <button mat-stroked-button (click)="downloadCsv()" [disabled]="loading">
+      <mat-icon>download</mat-icon>
+      Download CSV
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Leave Trend Report -->
+  @if (trendReport) {
+    <div class="report-header">
+      <h3>Leave Trend - {{ getMonthName(trendReport.startMonth) }} {{ trendReport.startYear }} to {{ getMonthName(trendReport.endMonth) }} {{ trendReport.endYear }}</h3>
+      <div class="report-stats">
+        <mat-chip-set>
+          <mat-chip class="kpi-chip">Department: {{ trendReport.departmentName }}</mat-chip>
+          <mat-chip class="kpi-chip">Entries: {{ trendReport.entries.length }}</mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="trendDataSource" class="report-table">
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef>Year</th>
+          <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="month">
+          <th mat-header-cell *matHeaderCellDef>Month</th>
+          <td mat-cell *matCellDef="let row">{{ getMonthName(row.month) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="leaveTypeName">
+          <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.leaveTypeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="applicationCount">
+          <th mat-header-cell *matHeaderCellDef>Applications</th>
+          <td mat-cell *matCellDef="let row">{{ row.applicationCount }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalDays">
+          <th mat-header-cell *matHeaderCellDef>Total Days</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalDays }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="trendColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: trendColumns;"></tr>
+      </table>
+    </div>
+  }
+
+  <!-- Absenteeism Rate Report -->
+  @if (absenteeismReport) {
+    <div class="report-header">
+      <h3>Absenteeism Rate - {{ absenteeismReport.startDate }} to {{ absenteeismReport.endDate }}</h3>
+      <div class="report-stats">
+        <mat-chip-set>
+          <mat-chip class="kpi-chip kpi-rate">Overall Rate: {{ absenteeismReport.overallRate }}%</mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="absenteeismDataSource" class="report-table">
+        <ng-container matColumnDef="departmentName">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let row">{{ row.departmentName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="employeeCount">
+          <th mat-header-cell *matHeaderCellDef>Employees</th>
+          <td mat-cell *matCellDef="let row">{{ row.employeeCount }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalLeaveDays">
+          <th mat-header-cell *matHeaderCellDef>Leave Days</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalLeaveDays }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalWorkingDays">
+          <th mat-header-cell *matHeaderCellDef>Working Days</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalWorkingDays }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="absenteeismRate">
+          <th mat-header-cell *matHeaderCellDef>Absenteeism Rate</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="rate-badge" [class.rate-high]="row.absenteeismRate > 10" [class.rate-low]="row.absenteeismRate <= 5">{{ row.absenteeismRate }}%</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="absenteeismColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: absenteeismColumns;"></tr>
+      </table>
+    </div>
+  }
+
+  <!-- Leave Utilization Report -->
+  @if (utilizationReport) {
+    <div class="report-header">
+      <h3>Leave Utilization - {{ utilizationReport.year }}</h3>
+      <div class="report-stats">
+        <mat-chip-set>
+          <mat-chip class="kpi-chip">Department: {{ utilizationReport.departmentName }}</mat-chip>
+          <mat-chip class="kpi-chip kpi-rate">Overall Utilization: {{ utilizationReport.overallUtilization }}%</mat-chip>
+          <mat-chip class="kpi-chip">Employees: {{ utilizationReport.entries.length }}</mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="utilizationDataSource" class="report-table">
+        <ng-container matColumnDef="employeeName">
+          <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="employeeCode">
+          <th mat-header-cell *matHeaderCellDef>Employee Code</th>
+          <td mat-cell *matCellDef="let row"><span class="code-badge">{{ row.employeeCode }}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let row">{{ row.departmentName || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="leaveTypeName">
+          <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+          <td mat-cell *matCellDef="let row">{{ row.leaveTypeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="entitled">
+          <th mat-header-cell *matHeaderCellDef>Entitled</th>
+          <td mat-cell *matCellDef="let row">{{ row.entitled }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="used">
+          <th mat-header-cell *matHeaderCellDef>Used</th>
+          <td mat-cell *matCellDef="let row">{{ row.used }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="available">
+          <th mat-header-cell *matHeaderCellDef>Available</th>
+          <td mat-cell *matCellDef="let row">{{ row.available }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="utilizationPercent">
+          <th mat-header-cell *matHeaderCellDef>Utilization</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="rate-badge" [class.rate-high]="row.utilizationPercent > 80" [class.rate-low]="row.utilizationPercent <= 30">{{ row.utilizationPercent }}%</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="utilizationColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: utilizationColumns;"></tr>
+      </table>
+    </div>
+  }
+
+  <!-- No data -->
+  @if (!loading && !trendReport && !absenteeismReport && !utilizationReport) {
+    <div class="no-data">
+      <mat-icon>analytics</mat-icon>
+      <p>Select a report type, configure filters, and click "Generate Report" to view analytics data.</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,56 @@
+.analytics-dashboard-container {
+  width: 100%;
+}
+
+.report-table {
+  width: 100%;
+}
+
+.report-header {
+  margin: 16px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.report-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.kpi-chip {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.kpi-rate {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.rate-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.rate-high {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.rate-low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}

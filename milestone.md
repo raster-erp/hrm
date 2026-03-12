@@ -401,17 +401,17 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define analytics metrics (absenteeism rate, leave trends, utilization rate) | Not Started |
-| Requirements | Define report dimensions (department, designation, gender, age group) | Not Started |
-| Database Design | Design materialized views or summary tables for analytics performance | Not Started |
-| Backend Development | Build leave trend analysis API (monthly/quarterly comparisons) | Not Started |
-| Backend Development | Build absenteeism rate computation API by department and role | Not Started |
-| Backend Development | Build leave utilization report API (consumed vs. entitled) | Not Started |
-| Backend Development | Implement report export service (PDF, Excel) | Not Started |
-| Frontend Development | Build analytics dashboard with charts (bar, line, pie) and KPI cards | Not Started |
-| Frontend Development | Build drill-down views from summary to individual employee level | Not Started |
-| Frontend Development | Add date range selector and department filter controls | Not Started |
-| Integration Testing | Validate analytics accuracy against transactional leave data | Not Started |
+| Requirements | Define analytics metrics (absenteeism rate, leave trends, utilization rate) | Done |
+| Requirements | Define report dimensions (department, designation, gender, age group) | Done |
+| Database Design | Design materialized views or summary tables for analytics performance | Done |
+| Backend Development | Build leave trend analysis API (monthly/quarterly comparisons) | Done |
+| Backend Development | Build absenteeism rate computation API by department and role | Done |
+| Backend Development | Build leave utilization report API (consumed vs. entitled) | Done |
+| Backend Development | Implement report export service (PDF, Excel) | Done |
+| Frontend Development | Build analytics dashboard with charts (bar, line, pie) and KPI cards | Done |
+| Frontend Development | Build drill-down views from summary to individual employee level | Done |
+| Frontend Development | Add date range selector and department filter controls | Done |
+| Integration Testing | Validate analytics accuracy against transactional leave data | Done |
 | UAT & QA | Conduct user acceptance testing for leave analytics reports | Not Started |
 | Deployment | Deploy leave analytics module to staging and production | Not Started |
 
