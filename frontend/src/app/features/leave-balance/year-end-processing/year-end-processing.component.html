@@ -1,0 +1,89 @@
+<div class="year-end-processing-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>event_repeat</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Year-End Processing</h2>
+          <p>Process carry-forward and lapsing of leave balances</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <a mat-raised-button routerLink="../">
+          <mat-icon>account_balance_wallet</mat-icon> Balance Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Processing Form -->
+  <mat-card class="processing-card">
+    <mat-card-header>
+      <mat-card-title>Year-End Leave Balance Processing</mat-card-title>
+      <mat-card-subtitle>
+        This will process all employee leave balances for the selected year, carrying forward eligible days
+        and lapsing remaining balances based on leave policy rules.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Year to Process</mat-label>
+          <input matInput type="number" [(ngModel)]="selectedYear" placeholder="e.g. 2025">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Processed By</mat-label>
+          <input matInput [(ngModel)]="processedBy" placeholder="HR Admin name">
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="processYearEnd()"
+              [disabled]="processing || !selectedYear">
+        @if (processing) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <mat-icon>play_arrow</mat-icon>
+        }
+        Process Year-End
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Results -->
+  @if (summary) {
+    <mat-card class="summary-card">
+      <mat-card-header>
+        <mat-card-title>Processing Summary</mat-card-title>
+        <mat-card-subtitle>Year {{ summary.processedYear }} → {{ summary.nextYear }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <mat-icon>people</mat-icon>
+            <span class="summary-value">{{ summary.employeesProcessed }}</span>
+            <span class="summary-label">Employees Processed</span>
+          </div>
+          <div class="summary-item">
+            <mat-icon>add_circle</mat-icon>
+            <span class="summary-value">{{ summary.balancesCreated }}</span>
+            <span class="summary-label">Balances Created</span>
+          </div>
+          <div class="summary-item">
+            <mat-icon>forward</mat-icon>
+            <span class="summary-value carry-forward">{{ summary.totalCarryForwarded }}</span>
+            <span class="summary-label">Days Carried Forward</span>
+          </div>
+          <div class="summary-item">
+            <mat-icon>remove_circle</mat-icon>
+            <span class="summary-value lapsed">{{ summary.totalLapsed }}</span>
+            <span class="summary-label">Days Lapsed</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

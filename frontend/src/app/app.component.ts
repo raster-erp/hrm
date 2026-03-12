@@ -79,6 +79,9 @@ export class AppComponent implements OnInit {
         { path: '/leave-policy-assignments', label: 'Policy Assignments', icon: 'assignment_ind' },
         { path: '/leave-applications', label: 'Leave Applications', icon: 'event_busy' },
         { path: '/leave-applications/approval', label: 'Leave Approvals', icon: 'inbox' },
+        { path: '/leave-balances', label: 'Leave Balances', icon: 'account_balance_wallet' },
+        { path: '/leave-balances/transactions', label: 'Leave Transactions', icon: 'receipt_long' },
+        { path: '/leave-balances/year-end', label: 'Year-End Processing', icon: 'event_repeat' },
       ]
     },
     {

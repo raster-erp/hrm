@@ -12,6 +12,7 @@ import com.raster.hrm.leaveapplication.entity.LeaveApplicationStatus;
 import com.raster.hrm.leaveapplication.entity.LeaveApprovalLog;
 import com.raster.hrm.leaveapplication.repository.LeaveApplicationRepository;
 import com.raster.hrm.leaveapplication.repository.LeaveApprovalLogRepository;
+import com.raster.hrm.leavebalance.service.LeaveBalanceService;
 import com.raster.hrm.leavetype.entity.LeaveType;
 import com.raster.hrm.leavetype.repository.LeaveTypeRepository;
 import org.slf4j.Logger;
@@ -35,17 +36,20 @@ public class LeaveApplicationService {
     private final EmployeeRepository employeeRepository;
     private final LeaveTypeRepository leaveTypeRepository;
     private final LeaveApplicationNotificationService notificationService;
+    private final LeaveBalanceService leaveBalanceService;
 
     public LeaveApplicationService(LeaveApplicationRepository leaveApplicationRepository,
                                    LeaveApprovalLogRepository leaveApprovalLogRepository,
                                    EmployeeRepository employeeRepository,
                                    LeaveTypeRepository leaveTypeRepository,
-                                   LeaveApplicationNotificationService notificationService) {
+                                   LeaveApplicationNotificationService notificationService,
+                                   LeaveBalanceService leaveBalanceService) {
         this.leaveApplicationRepository = leaveApplicationRepository;
         this.leaveApprovalLogRepository = leaveApprovalLogRepository;
         this.employeeRepository = employeeRepository;
         this.leaveTypeRepository = leaveTypeRepository;
         this.notificationService = notificationService;
+        this.leaveBalanceService = leaveBalanceService;
     }
 
     @Transactional(readOnly = true)
@@ -122,6 +126,7 @@ public class LeaveApplicationService {
 
         LeaveApplication saved = leaveApplicationRepository.save(application);
         log.info("Leave application created with id: {}", saved.getId());
+        leaveBalanceService.recordLeaveSubmission(employee, leaveType, request.numberOfDays(), saved.getId());
         notificationService.notifyApplicationSubmitted(saved);
         return toResponse(saved);
     }
@@ -195,6 +200,8 @@ public class LeaveApplicationService {
         log.info("Leave application {} has been {}", id, request.status());
 
         if (request.status() == LeaveApplicationStatus.APPROVED) {
+            leaveBalanceService.recordLeaveApproval(saved.getEmployee(), saved.getLeaveType(),
+                    saved.getNumberOfDays(), saved.getId());
             notificationService.notifyApplicationApproved(saved);
         } else {
             notificationService.notifyApplicationRejected(saved);
@@ -214,9 +221,12 @@ public class LeaveApplicationService {
             throw new BadRequestException("Only PENDING or APPROVED leave applications can be cancelled");
         }
 
+        boolean wasApproved = application.getStatus() == LeaveApplicationStatus.APPROVED;
         application.setStatus(LeaveApplicationStatus.CANCELLED);
 
         LeaveApplication saved = leaveApplicationRepository.save(application);
+        leaveBalanceService.recordLeaveCancellation(saved.getEmployee(), saved.getLeaveType(),
+                saved.getNumberOfDays(), saved.getId(), wasApproved);
         log.info("Leave application cancelled with id: {}", id);
         notificationService.notifyApplicationCancelled(saved);
         return toResponse(saved);
