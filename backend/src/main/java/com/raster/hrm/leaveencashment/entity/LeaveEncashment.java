@@ -1,9 +1,11 @@
-package com.raster.hrm.leavebalance.entity;
+package com.raster.hrm.leaveencashment.entity;
 
 import com.raster.hrm.employee.entity.Employee;
 import com.raster.hrm.leavetype.entity.LeaveType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,16 +15,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "leave_balances", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"employee_id", "leave_type_id", "year"})
-})
-public class LeaveBalance {
+@Table(name = "leave_encashments")
+public class LeaveEncashment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,23 +38,27 @@ public class LeaveBalance {
     @Column(name = "\"year\"", nullable = false)
     private int year;
 
-    @Column(name = "credited", nullable = false, precision = 7, scale = 2)
-    private BigDecimal credited = BigDecimal.ZERO;
+    @Column(name = "number_of_days", nullable = false, precision = 5, scale = 2)
+    private BigDecimal numberOfDays;
 
-    @Column(name = "used", nullable = false, precision = 7, scale = 2)
-    private BigDecimal used = BigDecimal.ZERO;
+    @Column(name = "per_day_salary", nullable = false, precision = 12, scale = 2)
+    private BigDecimal perDaySalary;
 
-    @Column(name = "pending", nullable = false, precision = 7, scale = 2)
-    private BigDecimal pending = BigDecimal.ZERO;
+    @Column(name = "total_amount", nullable = false, precision = 14, scale = 2)
+    private BigDecimal totalAmount;
 
-    @Column(name = "available", nullable = false, precision = 7, scale = 2)
-    private BigDecimal available = BigDecimal.ZERO;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private EncashmentStatus status = EncashmentStatus.PENDING;
 
-    @Column(name = "carry_forwarded", nullable = false, precision = 7, scale = 2)
-    private BigDecimal carryForwarded = BigDecimal.ZERO;
+    @Column(name = "approved_by", length = 100)
+    private String approvedBy;
 
-    @Column(name = "encashed", nullable = false, precision = 7, scale = 2)
-    private BigDecimal encashed = BigDecimal.ZERO;
+    @Column(name = "approved_at")
+    private LocalDateTime approvedAt;
+
+    @Column(name = "remarks", length = 500)
+    private String remarks;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -74,7 +77,6 @@ public class LeaveBalance {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -107,52 +109,60 @@ public class LeaveBalance {
         this.year = year;
     }
 
-    public BigDecimal getCredited() {
-        return credited;
+    public BigDecimal getNumberOfDays() {
+        return numberOfDays;
     }
 
-    public void setCredited(BigDecimal credited) {
-        this.credited = credited;
+    public void setNumberOfDays(BigDecimal numberOfDays) {
+        this.numberOfDays = numberOfDays;
     }
 
-    public BigDecimal getUsed() {
-        return used;
+    public BigDecimal getPerDaySalary() {
+        return perDaySalary;
     }
 
-    public void setUsed(BigDecimal used) {
-        this.used = used;
+    public void setPerDaySalary(BigDecimal perDaySalary) {
+        this.perDaySalary = perDaySalary;
     }
 
-    public BigDecimal getPending() {
-        return pending;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setPending(BigDecimal pending) {
-        this.pending = pending;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public BigDecimal getAvailable() {
-        return available;
+    public EncashmentStatus getStatus() {
+        return status;
     }
 
-    public void setAvailable(BigDecimal available) {
-        this.available = available;
+    public void setStatus(EncashmentStatus status) {
+        this.status = status;
     }
 
-    public BigDecimal getCarryForwarded() {
-        return carryForwarded;
+    public String getApprovedBy() {
+        return approvedBy;
     }
 
-    public void setCarryForwarded(BigDecimal carryForwarded) {
-        this.carryForwarded = carryForwarded;
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
     }
 
-    public BigDecimal getEncashed() {
-        return encashed;
+    public LocalDateTime getApprovedAt() {
+        return approvedAt;
     }
 
-    public void setEncashed(BigDecimal encashed) {
-        this.encashed = encashed;
+    public void setApprovedAt(LocalDateTime approvedAt) {
+        this.approvedAt = approvedAt;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -1,0 +1,156 @@
+<div class="leave-encashment-form-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>New Encashment Request</h2>
+          <p>Submit a new leave encashment request</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee</mat-label>
+            <mat-select formControlName="employeeId">
+              @for (emp of employees; track emp.id) {
+                <mat-option [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('employeeId')?.hasError('required') && form.get('employeeId')?.touched) {
+              <mat-error>Employee is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Leave Type</mat-label>
+            <mat-select formControlName="leaveTypeId">
+              @for (lt of leaveTypes; track lt.id) {
+                <mat-option [value]="lt.id">{{ lt.name }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('leaveTypeId')?.hasError('required') && form.get('leaveTypeId')?.touched) {
+              <mat-error>Leave type is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Year</mat-label>
+            <input matInput type="number" formControlName="year">
+            @if (form.get('year')?.hasError('required') && form.get('year')?.touched) {
+              <mat-error>Year is required</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="check-eligibility-action">
+            @if (checkingEligibility) {
+              <button mat-raised-button color="accent" type="button" disabled>
+                <mat-spinner diameter="20"></mat-spinner>
+              </button>
+            } @else {
+              <button mat-raised-button color="accent" type="button"
+                      (click)="checkEligibility()">
+                <mat-icon>verified</mat-icon> Check Eligibility
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Eligibility Result -->
+        @if (eligibility) {
+          <mat-card class="eligibility-card" [class.eligible]="eligibility.eligible" [class.not-eligible]="!eligibility.eligible">
+            <mat-card-content>
+              @if (eligibility.eligible) {
+                <div class="eligibility-header">
+                  <mat-icon color="primary">check_circle</mat-icon>
+                  <strong>Eligible for Encashment</strong>
+                </div>
+                <div class="eligibility-details">
+                  <div class="detail-item">
+                    <span class="detail-label">Available Balance</span>
+                    <span class="detail-value">{{ eligibility.availableBalance }} days</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Min Required Balance</span>
+                    <span class="detail-value">{{ eligibility.minRequiredBalance }} days</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Max Encashable Days</span>
+                    <span class="detail-value">{{ eligibility.maxEncashableDays }} days</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Per Day Salary</span>
+                    <span class="detail-value">{{ eligibility.perDaySalary | currency:'INR' }}</span>
+                  </div>
+                </div>
+              } @else {
+                <div class="eligibility-header">
+                  <mat-icon color="warn">cancel</mat-icon>
+                  <strong>Not Eligible</strong>
+                </div>
+                <p>{{ eligibility.reason }}</p>
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+
+        @if (eligibility?.eligible) {
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Number of Days</mat-label>
+              <input matInput type="number" formControlName="numberOfDays"
+                     placeholder="Enter number of days" min="1"
+                     [max]="eligibility!.maxEncashableDays"
+                     (input)="onDaysChange()">
+              @if (form.get('numberOfDays')?.hasError('required') && form.get('numberOfDays')?.touched) {
+                <mat-error>Number of days is required</mat-error>
+              }
+              @if (form.get('numberOfDays')?.hasError('min')) {
+                <mat-error>Number of days must be at least 1</mat-error>
+              }
+              @if (form.get('numberOfDays')?.hasError('max')) {
+                <mat-error>Cannot exceed {{ eligibility!.maxEncashableDays }} days</mat-error>
+              }
+            </mat-form-field>
+
+            @if (calculatedAmount > 0) {
+              <div class="amount-preview">
+                <span class="amount-label">Estimated Amount</span>
+                <span class="amount-value">{{ calculatedAmount | currency:'INR' }}</span>
+              </div>
+            }
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="remarks" rows="3" placeholder="Optional remarks"></textarea>
+            </mat-form-field>
+          </div>
+        }
+
+        <div class="form-actions">
+          <a mat-button routerLink="/leave-encashments">Cancel</a>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="submitting || !eligibility?.eligible">
+            @if (submitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Submit Request
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -56,6 +56,7 @@ class LeaveBalanceControllerTest {
                 new BigDecimal("2.00"),
                 new BigDecimal("7.00"),
                 BigDecimal.ZERO,
+                BigDecimal.ZERO,
                 LocalDateTime.of(2025, 1, 1, 0, 0),
                 LocalDateTime.of(2025, 1, 1, 0, 0)
         );
@@ -166,6 +167,7 @@ class LeaveBalanceControllerTest {
                 new BigDecimal("3.00"),
                 new BigDecimal("2.00"),
                 new BigDecimal("12.00"),
+                BigDecimal.ZERO,
                 BigDecimal.ZERO,
                 LocalDateTime.of(2025, 1, 1, 0, 0),
                 LocalDateTime.of(2025, 1, 1, 0, 0)

@@ -11,6 +11,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -33,6 +34,12 @@ public class LeaveType {
 
     @Column(name = "description", length = 500)
     private String description;
+
+    @Column(name = "encashable", nullable = false)
+    private boolean encashable = false;
+
+    @Column(name = "min_encashment_balance", precision = 5, scale = 2)
+    private BigDecimal minEncashmentBalance = BigDecimal.ZERO;
 
     @Column(name = "active", nullable = false)
     private boolean active = true;
@@ -92,6 +99,22 @@ public class LeaveType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isEncashable() {
+        return encashable;
+    }
+
+    public void setEncashable(boolean encashable) {
+        this.encashable = encashable;
+    }
+
+    public BigDecimal getMinEncashmentBalance() {
+        return minEncashmentBalance;
+    }
+
+    public void setMinEncashmentBalance(BigDecimal minEncashmentBalance) {
+        this.minEncashmentBalance = minEncashmentBalance;
     }
 
     public boolean isActive() {

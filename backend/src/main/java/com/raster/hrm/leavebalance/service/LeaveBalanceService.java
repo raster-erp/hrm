@@ -125,7 +125,7 @@ public class LeaveBalanceService {
 
         balance.setCredited(balance.getCredited().add(request.amount()));
         balance.setAvailable(balance.getCredited().add(balance.getCarryForwarded())
-                .subtract(balance.getUsed()).subtract(balance.getPending()));
+                .subtract(balance.getUsed()).subtract(balance.getPending()).subtract(balance.getEncashed()));
 
         LeaveBalance saved = leaveBalanceRepository.save(balance);
 
@@ -184,7 +184,7 @@ public class LeaveBalanceService {
                 LeaveBalance nextYearBalance = getOrCreateBalance(employee, leaveType, nextYear);
                 nextYearBalance.setCarryForwarded(carryForward);
                 nextYearBalance.setAvailable(nextYearBalance.getCredited().add(carryForward)
-                        .subtract(nextYearBalance.getUsed()).subtract(nextYearBalance.getPending()));
+                        .subtract(nextYearBalance.getUsed()).subtract(nextYearBalance.getPending()).subtract(nextYearBalance.getEncashed()));
                 leaveBalanceRepository.save(nextYearBalance);
                 balancesCreated++;
 
@@ -216,7 +216,7 @@ public class LeaveBalanceService {
         balance.setPending(balance.getPending().subtract(days));
         balance.setUsed(balance.getUsed().add(days));
         balance.setAvailable(balance.getCredited().add(balance.getCarryForwarded())
-                .subtract(balance.getUsed()).subtract(balance.getPending()));
+                .subtract(balance.getUsed()).subtract(balance.getPending()).subtract(balance.getEncashed()));
 
         leaveBalanceRepository.save(balance);
 
@@ -232,7 +232,7 @@ public class LeaveBalanceService {
 
         balance.setPending(balance.getPending().add(days));
         balance.setAvailable(balance.getCredited().add(balance.getCarryForwarded())
-                .subtract(balance.getUsed()).subtract(balance.getPending()));
+                .subtract(balance.getUsed()).subtract(balance.getPending()).subtract(balance.getEncashed()));
 
         leaveBalanceRepository.save(balance);
 
@@ -253,7 +253,7 @@ public class LeaveBalanceService {
             balance.setPending(balance.getPending().subtract(days));
         }
         balance.setAvailable(balance.getCredited().add(balance.getCarryForwarded())
-                .subtract(balance.getUsed()).subtract(balance.getPending()));
+                .subtract(balance.getUsed()).subtract(balance.getPending()).subtract(balance.getEncashed()));
 
         leaveBalanceRepository.save(balance);
 
@@ -261,6 +261,23 @@ public class LeaveBalanceService {
                 days, balance.getAvailable(),
                 ReferenceType.LEAVE_APPLICATION, applicationId,
                 "Leave cancelled - " + days + " day(s) restored", null);
+    }
+
+    // ── Called by LeaveEncashmentService on encashment approval ──────────
+
+    public void recordEncashment(Employee employee, LeaveType leaveType, BigDecimal days, Long encashmentId) {
+        int year = java.time.LocalDate.now().getYear();
+        LeaveBalance balance = getOrCreateBalance(employee, leaveType, year);
+
+        balance.setEncashed(balance.getEncashed().add(days));
+        balance.setAvailable(balance.getCredited().add(balance.getCarryForwarded())
+                .subtract(balance.getUsed()).subtract(balance.getPending()).subtract(balance.getEncashed()));
+        leaveBalanceRepository.save(balance);
+
+        recordTransaction(employee, leaveType, TransactionType.ENCASHMENT,
+                days.negate(), balance.getAvailable(),
+                ReferenceType.ENCASHMENT, encashmentId,
+                "Leave encashment - " + days + " day(s)", null);
     }
 
     // ── Private helpers ─────────────────────────────────────────────────
@@ -347,6 +364,7 @@ public class LeaveBalanceService {
                 balance.getPending(),
                 balance.getAvailable(),
                 balance.getCarryForwarded(),
+                balance.getEncashed(),
                 balance.getCreatedAt(),
                 balance.getUpdatedAt()
         );

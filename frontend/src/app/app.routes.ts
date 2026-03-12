@@ -106,4 +106,8 @@ export const routes: Routes = [
     path: 'leave-balances',
     loadChildren: () => import('./features/leave-balance/leave-balance.routes').then(m => m.LEAVE_BALANCE_ROUTES)
   },
+  {
+    path: 'leave-encashments',
+    loadChildren: () => import('./features/leave-encashment/leave-encashment.routes').then(m => m.LEAVE_ENCASHMENT_ROUTES)
+  },
 ];
