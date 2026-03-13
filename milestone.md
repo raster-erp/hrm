@@ -444,9 +444,9 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define payroll cycle (cut-off dates, processing schedule) | Not Started |
-| Requirements | Define inputs to payroll (attendance, leaves, overtime, deductions, arrears) | Not Started |
-| Requirements | Define payroll locks, verification, and finalization workflow | Not Started |
+| Requirements | Define payroll cycle (cut-off dates, processing schedule) | Done |
+| Requirements | Define inputs to payroll (attendance, leaves, overtime, deductions, arrears) | Done |
+| Requirements | Define payroll locks, verification, and finalization workflow | Done |
 | Database Design | Design `payroll_runs` table with period, status, and processing metadata | Done |
 | Database Design | Design `payroll_details` table with component-wise breakup per employee | Done |
 | Database Design | Design `payroll_adjustments` table for ad-hoc additions/deductions | Done |
@@ -456,9 +456,9 @@
 | Backend Development | Build net salary computation and rounding logic | Done |
 | Backend Development | Implement payroll verification and finalization workflow APIs | Done |
 | Backend Development | Build payroll reversal API for error correction before finalization | Done |
-| Frontend Development | Build payroll processing dashboard with step-by-step wizard | Not Started |
-| Frontend Development | Build payroll review grid with component-wise columns and variance flags | Not Started |
-| Frontend Development | Build adjustment entry interface for ad-hoc items | Not Started |
+| Frontend Development | Build payroll processing dashboard with step-by-step wizard | Done |
+| Frontend Development | Build payroll review grid with component-wise columns and variance flags | Done |
+| Frontend Development | Build adjustment entry interface for ad-hoc items | Done |
 | Frontend Development | Build payroll comparison view (current vs. previous month) | Not Started |
 | Integration Testing | Validate payroll computation accuracy with sample datasets | Not Started |
 | Integration Testing | Verify attendance and leave data integration into payroll | Not Started |

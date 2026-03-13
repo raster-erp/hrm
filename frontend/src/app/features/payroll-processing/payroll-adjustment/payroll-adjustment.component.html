@@ -1,0 +1,165 @@
+<div class="payroll-adjustment-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>tune</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Payroll Adjustments</h2>
+          <p>Manage ad-hoc additions and deductions for this payroll run</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Run
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adjustment Form -->
+  <mat-card class="adjustment-form-card">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Add Adjustment</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="adjustmentForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee ID</mat-label>
+            <input matInput type="number" formControlName="employeeId" placeholder="Enter employee ID">
+            @if (adjustmentForm.get('employeeId')?.hasError('required') && adjustmentForm.get('employeeId')?.touched) {
+              <mat-error>Employee ID is required</mat-error>
+            }
+            @if (adjustmentForm.get('employeeId')?.hasError('min') && adjustmentForm.get('employeeId')?.touched) {
+              <mat-error>Employee ID must be positive</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Adjustment Type</mat-label>
+            <mat-select formControlName="adjustmentType">
+              @for (type of adjustmentTypes; track type.value) {
+                <mat-option [value]="type.value">{{ type.label }}</mat-option>
+              }
+            </mat-select>
+            @if (adjustmentForm.get('adjustmentType')?.hasError('required') && adjustmentForm.get('adjustmentType')?.touched) {
+              <mat-error>Adjustment type is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Component Name</mat-label>
+            <input matInput formControlName="componentName" placeholder="e.g. Bonus, Penalty">
+            @if (adjustmentForm.get('componentName')?.hasError('required') && adjustmentForm.get('componentName')?.touched) {
+              <mat-error>Component name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount" placeholder="Enter amount">
+            @if (adjustmentForm.get('amount')?.hasError('required') && adjustmentForm.get('amount')?.touched) {
+              <mat-error>Amount is required</mat-error>
+            }
+            @if (adjustmentForm.get('amount')?.hasError('min') && adjustmentForm.get('amount')?.touched) {
+              <mat-error>Amount must be greater than zero</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Reason</mat-label>
+            <textarea matInput formControlName="reason" placeholder="Enter reason for adjustment" rows="2"></textarea>
+            @if (adjustmentForm.get('reason')?.hasError('required') && adjustmentForm.get('reason')?.touched) {
+              <mat-error>Reason is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+            @if (saving) {
+              <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+            }
+            Add Adjustment
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Adjustments Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="adjustment-table">
+      <ng-container matColumnDef="employeeCode">
+        <th mat-header-cell *matHeaderCellDef>Emp Code</th>
+        <td mat-cell *matCellDef="let adj">
+          <span class="code-badge">{{ adj.employeeCode }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <td mat-cell *matCellDef="let adj">{{ adj.employeeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="adjustmentType">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let adj">
+          <span class="type-chip" [class]="adj.adjustmentType === 'ADDITION' ? 'type-addition' : 'type-deduction'">
+            {{ adj.adjustmentType }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="componentName">
+        <th mat-header-cell *matHeaderCellDef>Component</th>
+        <td mat-cell *matCellDef="let adj">{{ adj.componentName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let adj">{{ adj.amount | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef>Reason</th>
+        <td mat-cell *matCellDef="let adj">{{ adj.reason }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let adj">
+          <div class="row-actions">
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deleteAdjustment(adj); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>tune</mat-icon>
+        <p>No adjustments found for this payroll run</p>
+      </div>
+    }
+  </div>
+</div>

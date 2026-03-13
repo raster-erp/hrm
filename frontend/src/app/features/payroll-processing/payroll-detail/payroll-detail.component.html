@@ -1,0 +1,240 @@
+<div class="payroll-detail-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>calculate</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Payroll Run: {{ formatPeriod() }}</h2>
+          <p>Review payroll details and manage workflow</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to List
+        </button>
+        @if (run) {
+          @if (run.status === 'DRAFT') {
+            <button mat-raised-button color="primary" (click)="computePayroll()">
+              <mat-icon>play_arrow</mat-icon>
+              Compute
+            </button>
+          }
+          @if (run.status === 'COMPUTED') {
+            <button mat-raised-button color="accent" (click)="verifyRun()">
+              <mat-icon>check_circle</mat-icon>
+              Verify
+            </button>
+          }
+          @if (run.status === 'VERIFIED') {
+            <button mat-raised-button color="primary" (click)="finalizeRun()">
+              <mat-icon>lock</mat-icon>
+              Finalize
+            </button>
+          }
+          @if (run.status === 'COMPUTED' || run.status === 'VERIFIED') {
+            <button mat-raised-button color="warn" (click)="reverseRun()">
+              <mat-icon>undo</mat-icon>
+              Reverse
+            </button>
+          }
+          @if (run.status !== 'FINALIZED' && run.status !== 'REVERSED') {
+            <button mat-raised-button [routerLink]="['/payroll-processing', runId, 'adjustments']">
+              <mat-icon>tune</mat-icon>
+              Adjustments
+            </button>
+          }
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Run Summary -->
+  @if (run && !loading) {
+    <div class="summary-cards">
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Status</span>
+            <span class="status-chip" [class]="getStatusClass(run.status)">{{ run.status }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Employees</span>
+            <span class="summary-value">{{ run.employeeCount }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Total Gross</span>
+            <span class="summary-value">{{ run.totalGross | number:'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Total Deductions</span>
+            <span class="summary-value">{{ run.totalDeductions | number:'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Total Net</span>
+            <span class="summary-value">{{ run.totalNet | number:'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+
+  <!-- Details Loading -->
+  @if (detailsLoading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Details Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="payroll-detail-table">
+      <ng-container matColumnDef="employeeCode">
+        <th mat-header-cell *matHeaderCellDef>Emp Code</th>
+        <td mat-cell *matCellDef="let detail">
+          <span class="code-badge">{{ detail.employeeCode }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef>Employee</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.employeeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="basicSalary">
+        <th mat-header-cell *matHeaderCellDef>Basic Salary</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.basicSalary | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="grossSalary">
+        <th mat-header-cell *matHeaderCellDef>Gross Salary</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.grossSalary | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalDeductions">
+        <th mat-header-cell *matHeaderCellDef>Deductions</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.totalDeductions | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="netSalary">
+        <th mat-header-cell *matHeaderCellDef>Net Salary</th>
+        <td mat-cell *matCellDef="let detail">
+          <span [class.variance-flag]="hasVariance(detail)">
+            {{ detail.netSalary | number:'1.2-2' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="daysPayable">
+        <th mat-header-cell *matHeaderCellDef>Days Payable</th>
+        <td mat-cell *matCellDef="let detail">{{ detail.daysPayable }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lopDays">
+        <th mat-header-cell *matHeaderCellDef>LOP Days</th>
+        <td mat-cell *matCellDef="let detail">
+          <span [class.lop-highlight]="detail.lopDays > 0">{{ detail.lopDays }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let detail">
+          <div class="row-actions">
+            <button mat-icon-button matTooltip="View Breakup"
+                    (click)="viewBreakup(detail); $event.stopPropagation()">
+              <mat-icon>receipt_long</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!detailsLoading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>receipt_long</mat-icon>
+        <p>No payroll details found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+
+  <!-- Component Breakup Panel -->
+  @if (selectedDetail) {
+    <div class="breakup-overlay" (click)="closeBreakup()">
+      <mat-card class="breakup-panel" (click)="$event.stopPropagation()">
+        <mat-card-header>
+          <mat-card-title>
+            <div class="breakup-header">
+              <h3>Component Breakup: {{ selectedDetail.employeeName }}</h3>
+              <button mat-icon-button (click)="closeBreakup()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (breakupItems.length > 0) {
+            <table class="breakup-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of breakupItems; track item.name) {
+                  <tr>
+                    <td>{{ item.name }}</td>
+                    <td><span class="code-badge">{{ item.type }}</span></td>
+                    <td>{{ item.amount | number:'1.2-2' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          } @else {
+            <p class="no-breakup">No component breakup data available</p>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+</div>

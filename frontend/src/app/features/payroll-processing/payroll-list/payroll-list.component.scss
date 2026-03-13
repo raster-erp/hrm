@@ -1,0 +1,39 @@
+@use 'styles/variables' as *;
+
+.payroll-list-container {
+  width: 100%;
+}
+
+.payroll-table {
+  width: 100%;
+}
+
+.status-draft {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-processing {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-computed {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.status-verified {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
+.status-finalized {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-reversed {
+  background-color: #ffebee;
+  color: #c62828;
+}
