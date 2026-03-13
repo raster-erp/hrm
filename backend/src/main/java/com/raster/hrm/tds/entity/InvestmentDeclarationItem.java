@@ -32,14 +32,14 @@ public class InvestmentDeclarationItem {
     @Column(name = "section", nullable = false, length = 20)
     private String section;
 
-    @Column(name = "description", length = 200)
+    @Column(name = "description", nullable = false, length = 200)
     private String description;
 
     @Column(name = "declared_amount", nullable = false, precision = 14, scale = 2)
     private BigDecimal declaredAmount;
 
-    @Column(name = "verified_amount", precision = 14, scale = 2)
-    private BigDecimal verifiedAmount;
+    @Column(name = "verified_amount", nullable = false, precision = 14, scale = 2)
+    private BigDecimal verifiedAmount = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "proof_status", nullable = false, length = 20)
