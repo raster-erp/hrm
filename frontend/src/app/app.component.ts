@@ -101,6 +101,10 @@ export class AppComponent implements OnInit {
         { path: '/salary-structures', label: 'Salary Structures', icon: 'account_tree' },
         { path: '/employee-salary', label: 'Salary Assignments', icon: 'payments' },
         { path: '/payroll-processing', label: 'Payroll Processing', icon: 'calculate' },
+        { path: '/tax-slabs', label: 'Tax Slabs', icon: 'receipt_long' },
+        { path: '/investment-declarations', label: 'Investment Declarations', icon: 'savings' },
+        { path: '/tax-computations', label: 'Tax Computation', icon: 'account_balance_wallet' },
+        { path: '/proof-submission', label: 'Proof Submission', icon: 'verified' },
       ]
     },
     {

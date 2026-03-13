@@ -481,9 +481,9 @@
 | Backend Development | Build proof submission and verification APIs | Done |
 | Backend Development | Implement professional tax computation by employee state | Done |
 | Backend Development | Build Form 16 / Form 12BB data generation APIs | Done |
-| Frontend Development | Build investment declaration form with section-wise inputs | In Progress |
-| Frontend Development | Build tax computation summary view with month-wise TDS breakup | In Progress |
-| Frontend Development | Build proof submission upload interface | In Progress |
+| Frontend Development | Build investment declaration form with section-wise inputs | Done |
+| Frontend Development | Build tax computation summary view with month-wise TDS breakup | Done |
+| Frontend Development | Build proof submission upload interface | Done |
 | Integration Testing | Validate TDS computation against multiple income and investment scenarios | Not Started |
 | UAT & QA | Conduct user acceptance testing with real salary and investment data | Not Started |
 | Deployment | Deploy TDS and statutory deduction module to staging and production | Not Started |
