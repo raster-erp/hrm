@@ -1,0 +1,132 @@
+@use 'styles/variables' as *;
+
+.payroll-detail-container {
+  width: 100%;
+}
+
+.payroll-detail-table {
+  width: 100%;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.variance-flag {
+  color: #e65100;
+  font-weight: 600;
+}
+
+.lop-highlight {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.status-draft {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-processing {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-computed {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.status-verified {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
+.status-finalized {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-reversed {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.breakup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.breakup-panel {
+  min-width: 400px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.breakup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.breakup-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    font-weight: 600;
+  }
+}
+
+.no-breakup {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: $bp-mobile) {
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .breakup-panel {
+    min-width: unset;
+    margin: 16px;
+  }
+}

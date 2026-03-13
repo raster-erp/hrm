@@ -100,6 +100,7 @@ export class AppComponent implements OnInit {
         { path: '/salary-components', label: 'Salary Components', icon: 'account_balance' },
         { path: '/salary-structures', label: 'Salary Structures', icon: 'account_tree' },
         { path: '/employee-salary', label: 'Salary Assignments', icon: 'payments' },
+        { path: '/payroll-processing', label: 'Payroll Processing', icon: 'calculate' },
       ]
     },
     {

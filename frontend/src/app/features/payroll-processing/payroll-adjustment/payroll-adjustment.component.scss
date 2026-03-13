@@ -1,0 +1,54 @@
+@use 'styles/variables' as *;
+
+.payroll-adjustment-container {
+  width: 100%;
+}
+
+.adjustment-form-card {
+  max-width: $form-max-width-md;
+  margin-bottom: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+  padding: $content-padding 0;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.adjustment-table {
+  width: 100%;
+}
+
+.type-addition {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.type-deduction {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+@media (max-width: $bp-mobile) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
