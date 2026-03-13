@@ -469,21 +469,21 @@
 
 | Phase | Task | Status |
 |-------|------|--------|
-| Requirements | Define income tax slab configurations (old and new regime) | Not Started |
-| Requirements | Define investment declaration and proof submission workflows | Not Started |
-| Requirements | Define professional tax slab configurations by state | Not Started |
-| Database Design | Design `tax_slabs` table with regime, slab ranges, and rates | Not Started |
-| Database Design | Design `investment_declarations` table with section-wise declared amounts | Not Started |
-| Database Design | Design `tax_computations` table with projected and actual TDS per month | Not Started |
-| Backend Development | Build tax regime selection and investment declaration APIs | Not Started |
-| Backend Development | Build projected annual income computation engine | Not Started |
-| Backend Development | Build monthly TDS computation engine (spread across remaining months) | Not Started |
-| Backend Development | Build proof submission and verification APIs | Not Started |
-| Backend Development | Implement professional tax computation by employee state | Not Started |
-| Backend Development | Build Form 16 / Form 12BB data generation APIs | Not Started |
-| Frontend Development | Build investment declaration form with section-wise inputs | Not Started |
-| Frontend Development | Build tax computation summary view with month-wise TDS breakup | Not Started |
-| Frontend Development | Build proof submission upload interface | Not Started |
+| Requirements | Define income tax slab configurations (old and new regime) | Done |
+| Requirements | Define investment declaration and proof submission workflows | Done |
+| Requirements | Define professional tax slab configurations by state | Done |
+| Database Design | Design `tax_slabs` table with regime, slab ranges, and rates | Done |
+| Database Design | Design `investment_declarations` table with section-wise declared amounts | Done |
+| Database Design | Design `tax_computations` table with projected and actual TDS per month | Done |
+| Backend Development | Build tax regime selection and investment declaration APIs | Done |
+| Backend Development | Build projected annual income computation engine | Done |
+| Backend Development | Build monthly TDS computation engine (spread across remaining months) | Done |
+| Backend Development | Build proof submission and verification APIs | Done |
+| Backend Development | Implement professional tax computation by employee state | Done |
+| Backend Development | Build Form 16 / Form 12BB data generation APIs | Done |
+| Frontend Development | Build investment declaration form with section-wise inputs | In Progress |
+| Frontend Development | Build tax computation summary view with month-wise TDS breakup | In Progress |
+| Frontend Development | Build proof submission upload interface | In Progress |
 | Integration Testing | Validate TDS computation against multiple income and investment scenarios | Not Started |
 | UAT & QA | Conduct user acceptance testing with real salary and investment data | Not Started |
 | Deployment | Deploy TDS and statutory deduction module to staging and production | Not Started |

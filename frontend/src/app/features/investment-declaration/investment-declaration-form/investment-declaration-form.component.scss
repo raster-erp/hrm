@@ -1,0 +1,72 @@
+@use 'styles/variables' as *;
+
+.investment-declaration-form-container {
+  max-width: $form-max-width-md;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+  padding: $content-padding 0;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.items-section {
+  padding: 16px 0;
+}
+
+.items-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.item-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.no-items-msg {
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 12px 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@media (max-width: $bp-mobile) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .item-row {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,131 @@
+<div class="tax-slab-list-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>receipt_long</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Tax Slabs</h2>
+          <p>Manage income tax slab configurations</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" routerLink="/tax-slabs/new">
+          <mat-icon>add</mat-icon>
+          Add Tax Slab
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Regime</mat-label>
+      <mat-select [(ngModel)]="selectedRegime" (selectionChange)="onSearch()">
+        <mat-option value="">All Regimes</mat-option>
+        @for (regime of regimes; track regime) {
+          <mat-option [value]="regime">{{ regime }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Financial Year</mat-label>
+      <input matInput [(ngModel)]="financialYear" placeholder="e.g. 2024-25" (keyup.enter)="onSearch()">
+    </mat-form-field>
+
+    <button mat-icon-button matTooltip="Search" (click)="onSearch()">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button mat-icon-button matTooltip="Clear Filters" (click)="clearFilters()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="tax-slab-table">
+      <ng-container matColumnDef="regime">
+        <th mat-header-cell *matHeaderCellDef>Regime</th>
+        <td mat-cell *matCellDef="let slab">
+          <span class="code-badge">{{ slab.regime }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="financialYear">
+        <th mat-header-cell *matHeaderCellDef>Financial Year</th>
+        <td mat-cell *matCellDef="let slab">{{ slab.financialYear }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="slabFrom">
+        <th mat-header-cell *matHeaderCellDef>Slab From</th>
+        <td mat-cell *matCellDef="let slab">{{ slab.slabFrom }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="slabTo">
+        <th mat-header-cell *matHeaderCellDef>Slab To</th>
+        <td mat-cell *matCellDef="let slab">{{ slab.slabTo ?? '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="rate">
+        <th mat-header-cell *matHeaderCellDef>Rate (%)</th>
+        <td mat-cell *matCellDef="let slab">{{ slab.rate }}%</td>
+      </ng-container>
+
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let slab">
+          <span class="status-chip" [class]="slab.active ? 'status-active' : 'status-inactive'">
+            {{ slab.active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let slab">
+          <div class="row-actions">
+            <button mat-icon-button matTooltip="Edit"
+                    (click)="editSlab(slab); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deleteSlab(slab); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>receipt_long</mat-icon>
+        <p>No tax slabs found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
