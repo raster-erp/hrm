@@ -475,12 +475,12 @@
 | Database Design | Design `tax_slabs` table with regime, slab ranges, and rates | Done |
 | Database Design | Design `investment_declarations` table with section-wise declared amounts | Done |
 | Database Design | Design `tax_computations` table with projected and actual TDS per month | Done |
-| Backend Development | Build tax regime selection and investment declaration APIs | Not Started |
-| Backend Development | Build projected annual income computation engine | Not Started |
-| Backend Development | Build monthly TDS computation engine (spread across remaining months) | Not Started |
-| Backend Development | Build proof submission and verification APIs | Not Started |
-| Backend Development | Implement professional tax computation by employee state | Not Started |
-| Backend Development | Build Form 16 / Form 12BB data generation APIs | Not Started |
+| Backend Development | Build tax regime selection and investment declaration APIs | Done |
+| Backend Development | Build projected annual income computation engine | Done |
+| Backend Development | Build monthly TDS computation engine (spread across remaining months) | Done |
+| Backend Development | Build proof submission and verification APIs | Done |
+| Backend Development | Implement professional tax computation by employee state | Done |
+| Backend Development | Build Form 16 / Form 12BB data generation APIs | Done |
 | Frontend Development | Build investment declaration form with section-wise inputs | Not Started |
 | Frontend Development | Build tax computation summary view with month-wise TDS breakup | Not Started |
 | Frontend Development | Build proof submission upload interface | Not Started |
