@@ -13,5 +13,7 @@ public interface EmployeeSalaryDetailRepository extends JpaRepository<EmployeeSa
 
     List<EmployeeSalaryDetail> findByEmployeeIdOrderByEffectiveDateDesc(Long employeeId);
 
+    List<EmployeeSalaryDetail> findByActiveTrue();
+
     Page<EmployeeSalaryDetail> findAll(Pageable pageable);
 }

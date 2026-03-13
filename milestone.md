@@ -447,15 +447,15 @@
 | Requirements | Define payroll cycle (cut-off dates, processing schedule) | Not Started |
 | Requirements | Define inputs to payroll (attendance, leaves, overtime, deductions, arrears) | Not Started |
 | Requirements | Define payroll locks, verification, and finalization workflow | Not Started |
-| Database Design | Design `payroll_runs` table with period, status, and processing metadata | Not Started |
-| Database Design | Design `payroll_details` table with component-wise breakup per employee | Not Started |
-| Database Design | Design `payroll_adjustments` table for ad-hoc additions/deductions | Not Started |
-| Backend Development | Build payroll initialization API (pull attendance, leave, overtime data) | Not Started |
-| Backend Development | Build gross salary computation engine (apply structure to each employee) | Not Started |
-| Backend Development | Build deduction computation engine (PF, ESI, TDS, loan EMIs, advances) | Not Started |
-| Backend Development | Build net salary computation and rounding logic | Not Started |
-| Backend Development | Implement payroll verification and finalization workflow APIs | Not Started |
-| Backend Development | Build payroll reversal API for error correction before finalization | Not Started |
+| Database Design | Design `payroll_runs` table with period, status, and processing metadata | Done |
+| Database Design | Design `payroll_details` table with component-wise breakup per employee | Done |
+| Database Design | Design `payroll_adjustments` table for ad-hoc additions/deductions | Done |
+| Backend Development | Build payroll initialization API (pull attendance, leave, overtime data) | Done |
+| Backend Development | Build gross salary computation engine (apply structure to each employee) | Done |
+| Backend Development | Build deduction computation engine (PF, ESI, TDS, loan EMIs, advances) | Done |
+| Backend Development | Build net salary computation and rounding logic | Done |
+| Backend Development | Implement payroll verification and finalization workflow APIs | Done |
+| Backend Development | Build payroll reversal API for error correction before finalization | Done |
 | Frontend Development | Build payroll processing dashboard with step-by-step wizard | Not Started |
 | Frontend Development | Build payroll review grid with component-wise columns and variance flags | Not Started |
 | Frontend Development | Build adjustment entry interface for ad-hoc items | Not Started |
