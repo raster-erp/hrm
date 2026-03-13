@@ -472,9 +472,9 @@
 | Requirements | Define income tax slab configurations (old and new regime) | Not Started |
 | Requirements | Define investment declaration and proof submission workflows | Not Started |
 | Requirements | Define professional tax slab configurations by state | Not Started |
-| Database Design | Design `tax_slabs` table with regime, slab ranges, and rates | Not Started |
-| Database Design | Design `investment_declarations` table with section-wise declared amounts | Not Started |
-| Database Design | Design `tax_computations` table with projected and actual TDS per month | Not Started |
+| Database Design | Design `tax_slabs` table with regime, slab ranges, and rates | Done |
+| Database Design | Design `investment_declarations` table with section-wise declared amounts | Done |
+| Database Design | Design `tax_computations` table with projected and actual TDS per month | Done |
 | Backend Development | Build tax regime selection and investment declaration APIs | Not Started |
 | Backend Development | Build projected annual income computation engine | Not Started |
 | Backend Development | Build monthly TDS computation engine (spread across remaining months) | Not Started |
