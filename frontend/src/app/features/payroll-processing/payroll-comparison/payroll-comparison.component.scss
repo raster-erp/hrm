@@ -1,0 +1,71 @@
+@use 'styles/variables' as *;
+
+.payroll-comparison-container {
+  width: 100%;
+}
+
+.comparison-table {
+  width: 100%;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.variance-positive {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.variance-negative {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.no-previous-run {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 24px;
+  text-align: center;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: var(--text-secondary);
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

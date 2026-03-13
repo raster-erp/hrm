@@ -1,0 +1,150 @@
+<div class="payroll-comparison-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>compare_arrows</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Payroll Comparison</h2>
+          <p>Compare current vs. previous month payroll</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to List
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- No Previous Run -->
+  @if (noPreviousRun && !loading) {
+    <div class="no-previous-run">
+      <mat-icon>info</mat-icon>
+      <p>No previous payroll run found for comparison</p>
+    </div>
+  }
+
+  <!-- Summary Cards -->
+  @if (currentRun && previousRun && !loading) {
+    <div class="summary-cards">
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Current Period</span>
+            <span class="summary-value">{{ formatPeriod(currentRun) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Previous Period</span>
+            <span class="summary-value">{{ formatPeriod(previousRun) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Current Total Net</span>
+            <span class="summary-value">{{ currentRun.totalNet | number:'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Previous Total Net</span>
+            <span class="summary-value">{{ previousRun.totalNet | number:'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-item">
+            <span class="summary-label">Net Variance</span>
+            <span class="summary-value" [class]="getVarianceClass(currentRun.totalNet - previousRun.totalNet)">
+              {{ currentRun.totalNet - previousRun.totalNet | number:'1.2-2' }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" class="comparison-table">
+        <ng-container matColumnDef="employeeCode">
+          <th mat-header-cell *matHeaderCellDef>Emp Code</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="code-badge">{{ row.employeeCode }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="employeeName">
+          <th mat-header-cell *matHeaderCellDef>Employee</th>
+          <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="currentGross">
+          <th mat-header-cell *matHeaderCellDef>Current Gross</th>
+          <td mat-cell *matCellDef="let row">{{ row.currentGross | number:'1.2-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="previousGross">
+          <th mat-header-cell *matHeaderCellDef>Previous Gross</th>
+          <td mat-cell *matCellDef="let row">{{ row.previousGross | number:'1.2-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="grossVariance">
+          <th mat-header-cell *matHeaderCellDef>Gross Variance</th>
+          <td mat-cell *matCellDef="let row">
+            <span [class]="getVarianceClass(row.grossVariance)">
+              {{ row.grossVariance | number:'1.2-2' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currentNet">
+          <th mat-header-cell *matHeaderCellDef>Current Net</th>
+          <td mat-cell *matCellDef="let row">{{ row.currentNet | number:'1.2-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="previousNet">
+          <th mat-header-cell *matHeaderCellDef>Previous Net</th>
+          <td mat-cell *matCellDef="let row">{{ row.previousNet | number:'1.2-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="netVariance">
+          <th mat-header-cell *matHeaderCellDef>Net Variance</th>
+          <td mat-cell *matCellDef="let row">
+            <span [class]="getVarianceClass(row.netVariance)">
+              {{ row.netVariance | number:'1.2-2' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (!loading && dataSource.data.length === 0) {
+        <div class="no-data">
+          <mat-icon>compare_arrows</mat-icon>
+          <p>No comparison data available</p>
+        </div>
+      }
+    </div>
+  }
+</div>

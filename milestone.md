@@ -459,9 +459,9 @@
 | Frontend Development | Build payroll processing dashboard with step-by-step wizard | Done |
 | Frontend Development | Build payroll review grid with component-wise columns and variance flags | Done |
 | Frontend Development | Build adjustment entry interface for ad-hoc items | Done |
-| Frontend Development | Build payroll comparison view (current vs. previous month) | Not Started |
-| Integration Testing | Validate payroll computation accuracy with sample datasets | Not Started |
-| Integration Testing | Verify attendance and leave data integration into payroll | Not Started |
+| Frontend Development | Build payroll comparison view (current vs. previous month) | Done |
+| Integration Testing | Validate payroll computation accuracy with sample datasets | Done |
+| Integration Testing | Verify attendance and leave data integration into payroll | Done |
 | UAT & QA | Conduct parallel payroll run and reconcile with existing system | Not Started |
 | Deployment | Deploy payroll computation module to staging and production | Not Started |
 
