@@ -1,0 +1,76 @@
+@use 'styles/variables' as *;
+
+.salary-structure-form-container {
+  max-width: $form-max-width-md;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+  padding: $content-padding 0;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.component-designer {
+  padding: 16px 0;
+}
+
+.designer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.component-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+
+  .component-select {
+    flex: 2;
+  }
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.no-components {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-secondary);
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@media (max-width: $bp-mobile) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .component-row {
+    flex-wrap: wrap;
+  }
+}

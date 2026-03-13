@@ -95,6 +95,14 @@ export class AppComponent implements OnInit {
       ]
     },
     {
+      label: 'Payroll',
+      items: [
+        { path: '/salary-components', label: 'Salary Components', icon: 'account_balance' },
+        { path: '/salary-structures', label: 'Salary Structures', icon: 'account_tree' },
+        { path: '/employee-salary', label: 'Salary Assignments', icon: 'payments' },
+      ]
+    },
+    {
       label: 'Actions',
       items: [
         { path: '/transfers', label: 'Transfers', icon: 'swap_horiz' },

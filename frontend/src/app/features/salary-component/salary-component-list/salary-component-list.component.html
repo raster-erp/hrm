@@ -1,0 +1,130 @@
+<div class="salary-component-list-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>account_balance</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Salary Components</h2>
+          <p>Manage salary component master data</p>
+        </div>
+      </div>
+      <div class="page-hero-actions">
+        <button mat-raised-button class="btn-hero" routerLink="/salary-components/new">
+          <mat-icon>add</mat-icon>
+          Add Component
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="selectedType" (selectionChange)="onSearch()">
+        <mat-option value="">All Types</mat-option>
+        @for (type of types; track type) {
+          <mat-option [value]="type">{{ type }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-icon-button matTooltip="Clear Filters" (click)="clearFilters()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="salary-component-table">
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>Code</th>
+        <td mat-cell *matCellDef="let comp">
+          <span class="code-badge">{{ comp.code }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let comp">{{ comp.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let comp">
+          <span class="code-badge">{{ comp.type }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="computationType">
+        <th mat-header-cell *matHeaderCellDef>Computation</th>
+        <td mat-cell *matCellDef="let comp">{{ comp.computationType }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxable">
+        <th mat-header-cell *matHeaderCellDef>Taxable</th>
+        <td mat-cell *matCellDef="let comp">
+          <mat-icon>{{ comp.taxable ? 'check_circle' : 'cancel' }}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let comp">
+          <span class="status-chip" [class]="comp.active ? 'status-active' : 'status-inactive'">
+            {{ comp.active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let comp">
+          <div class="row-actions">
+            <button mat-icon-button [matTooltip]="comp.active ? 'Deactivate' : 'Activate'"
+                    (click)="toggleActive(comp); $event.stopPropagation()">
+              <mat-icon>{{ comp.active ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Edit"
+                    (click)="editComponent(comp); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete"
+                    (click)="deleteComponent(comp); $event.stopPropagation()">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>account_balance</mat-icon>
+        <p>No salary components found</p>
+      </div>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
