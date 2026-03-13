@@ -1,0 +1,198 @@
+<div class="tax-computation-container">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-info">
+        <div class="page-hero-icon">
+          <mat-icon>receipt_long</mat-icon>
+        </div>
+        <div class="page-hero-text">
+          <h2>Tax Computation</h2>
+          <p>Compute monthly TDS and generate Form 16</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Filters -->
+  <div class="filters-row">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <div class="filter-fields">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Employee ID</mat-label>
+          <input matInput type="number" formControlName="employeeId" placeholder="Enter Employee ID">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Financial Year</mat-label>
+          <input matInput formControlName="financialYear" placeholder="e.g. 2025-26">
+        </mat-form-field>
+
+        <button mat-raised-button class="btn-hero" type="submit">
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+
+        <button mat-raised-button type="button" (click)="onGenerateForm16()" [disabled]="form16Loading">
+          <mat-icon>description</mat-icon>
+          Form 16
+        </button>
+
+        <button mat-raised-button type="button" (click)="toggleComputeSection()">
+          <mat-icon>calculate</mat-icon>
+          Compute TDS
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Compute TDS Section -->
+  @if (showComputeSection) {
+    <mat-card class="compute-section">
+      <mat-card-header>
+        <mat-card-title>Compute Monthly TDS</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="computeForm" (ngSubmit)="onCompute()" class="compute-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee ID</mat-label>
+            <input matInput type="number" formControlName="employeeId" placeholder="Enter Employee ID">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Financial Year</mat-label>
+            <input matInput formControlName="financialYear" placeholder="e.g. 2025-26">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Month (1-12)</mat-label>
+            <input matInput type="number" formControlName="month" placeholder="1-12" min="1" max="12">
+          </mat-form-field>
+
+          <button mat-raised-button class="btn-hero" type="submit" [disabled]="computeLoading">
+            @if (computeLoading) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              <ng-container>
+                <mat-icon>calculate</mat-icon>
+                Compute
+              </ng-container>
+            }
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <!-- Monthly TDS Breakup Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="tax-computation-table">
+      <ng-container matColumnDef="month">
+        <th mat-header-cell *matHeaderCellDef>Month</th>
+        <td mat-cell *matCellDef="let row">{{ getMonthName(row.month) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="grossAnnualIncome">
+        <th mat-header-cell *matHeaderCellDef>Gross Annual Income</th>
+        <td mat-cell *matCellDef="let row">{{ row.grossAnnualIncome | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalExemptions">
+        <th mat-header-cell *matHeaderCellDef>Exemptions</th>
+        <td mat-cell *matCellDef="let row">{{ row.totalExemptions | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxableIncome">
+        <th mat-header-cell *matHeaderCellDef>Taxable Income</th>
+        <td mat-cell *matCellDef="let row">{{ row.taxableIncome | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="monthlyTds">
+        <th mat-header-cell *matHeaderCellDef>Monthly TDS</th>
+        <td mat-cell *matCellDef="let row">{{ row.monthlyTds | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="tdsDeductedTillDate">
+        <th mat-header-cell *matHeaderCellDef>TDS Deducted</th>
+        <td mat-cell *matCellDef="let row">{{ row.tdsDeductedTillDate | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="remainingTds">
+        <th mat-header-cell *matHeaderCellDef>Remaining TDS</th>
+        <td mat-cell *matCellDef="let row">{{ row.remainingTds | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="regime">
+        <th mat-header-cell *matHeaderCellDef>Regime</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="code-badge">{{ row.regime }}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <div class="no-data">
+        <mat-icon>receipt_long</mat-icon>
+        <p>No tax computations found</p>
+      </div>
+    }
+  </div>
+
+  <!-- Form 16 Summary -->
+  @if (form16Loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  @if (form16Data) {
+    <mat-card class="form16-card">
+      <mat-card-header>
+        <mat-card-title>Form 16 Summary — {{ form16Data.employeeName }} ({{ form16Data.financialYear }})</mat-card-title>
+        <mat-card-subtitle>Regime: {{ form16Data.regime }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.grossAnnualIncome | number }}</div>
+            <div class="summary-label">Gross Annual Income</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.totalExemptions | number }}</div>
+            <div class="summary-label">Total Exemptions</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.taxableIncome | number }}</div>
+            <div class="summary-label">Taxable Income</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.totalTaxPayable | number }}</div>
+            <div class="summary-label">Total Tax Payable</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.totalTdsDeducted | number }}</div>
+            <div class="summary-label">TDS Deducted</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.cess | number }}</div>
+            <div class="summary-label">Cess</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">{{ form16Data.surcharge | number }}</div>
+            <div class="summary-label">Surcharge</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,48 @@
+@use 'styles/variables' as *;
+
+.tax-computation-container {
+  width: 100%;
+}
+
+.tax-computation-table {
+  width: 100%;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.summary-card {
+  text-align: center;
+  padding: 16px;
+
+  .summary-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .summary-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+}
+
+.compute-section {
+  margin: 16px 0;
+
+  .compute-form {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.form16-card {
+  margin: 16px 0;
+}

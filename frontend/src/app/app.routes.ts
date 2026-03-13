@@ -142,4 +142,8 @@ export const routes: Routes = [
     path: 'payroll-processing',
     loadChildren: () => import('./features/payroll-processing/payroll-processing.routes').then(m => m.PAYROLL_PROCESSING_ROUTES)
   },
+  {
+    path: 'tax-computations',
+    loadChildren: () => import('./features/tax-computation/tax-computation.routes').then(m => m.TAX_COMPUTATION_ROUTES)
+  },
 ];
