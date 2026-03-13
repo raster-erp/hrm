@@ -143,7 +143,19 @@ export const routes: Routes = [
     loadChildren: () => import('./features/payroll-processing/payroll-processing.routes').then(m => m.PAYROLL_PROCESSING_ROUTES)
   },
   {
+    path: 'tax-slabs',
+    loadChildren: () => import('./features/tax-slab/tax-slab.routes').then(m => m.TAX_SLAB_ROUTES)
+  },
+  {
+    path: 'investment-declarations',
+    loadChildren: () => import('./features/investment-declaration/investment-declaration.routes').then(m => m.INVESTMENT_DECLARATION_ROUTES)
+  },
+  {
     path: 'tax-computations',
     loadChildren: () => import('./features/tax-computation/tax-computation.routes').then(m => m.TAX_COMPUTATION_ROUTES)
+  },
+  {
+    path: 'proof-submission',
+    loadChildren: () => import('./features/proof-submission/proof-submission.routes').then(m => m.PROOF_SUBMISSION_ROUTES)
   },
 ];
