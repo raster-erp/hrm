@@ -1,0 +1,75 @@
+@use 'styles/variables' as *;
+
+.proof-submission-container {
+  width: 100%;
+}
+
+.proof-table {
+  width: 100%;
+}
+
+.search-card {
+  margin-bottom: 24px;
+}
+
+.search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .search-field {
+    flex: 1;
+    max-width: 300px;
+  }
+}
+
+.declaration-card {
+  margin-bottom: 24px;
+}
+
+.declaration-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.info-item {
+  .info-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  .info-value {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.inline-form-card {
+  margin-top: 16px;
+}
+
+.form-context {
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.proof-form-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+  flex-wrap: wrap;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 150px;
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 4px;
+}
